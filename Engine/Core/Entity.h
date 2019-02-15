@@ -124,20 +124,20 @@ public:
 	void OrbitAboutPointEntity(Entity* e, vec3 v, quat q);
 
 	// Rotate around parent (both rotation and translation)
-	void RotateAboutParent(quat q);
+	void RevolveAboutParent(quat q);
 	// Rotate around world (both rotation and translation)
-	void RotateAboutWorld(quat q);
+	void RevolveAboutWorld(quat q);
 	// Rotate around another entity (both rotation and translation)
-	void RotateAboutEntity(Entity* e, quat q);
+	void RevolveAboutEntity(Entity* e, quat q);
 	
 	// Rotate about point offset via self (both rotation and translation)
-	void RotateAboutPoint(vec3 v, quat q);
+	void RevolveAboutPoint(vec3 v, quat q);
 	// Rotate about point offset from parent (both rotation and translation)
-	void RotateAboutPointParent(vec3 v, quat q);
+	void RevolveAboutPointParent(vec3 v, quat q);
 	// Rotate about point offset from world (both rotation and translation)
-	void RotateAboutPointWorld(vec3 v, quat q);
+	void RevolveAboutPointWorld(vec3 v, quat q);
 	// Rotate about point offset from another entity (both rotation and translation)
-	void RotateAboutPointEntity(Entity* e, vec3 v, quat q);
+	void RevolveAboutPointEntity(Entity* e, vec3 v, quat q);
 };
 
 #endif

@@ -393,7 +393,7 @@ void Entity::OrbitAboutPointEntity(Entity* e, vec3 v, quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutParent(quat q)
+void Entity::RevolveAboutParent(quat q)
 {
 	local.SetPosition(rotate(q, local.GetPosition()));
 	local.RotateGlobal(q);
@@ -401,7 +401,7 @@ void Entity::RotateAboutParent(quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutWorld(quat q)
+void Entity::RevolveAboutWorld(quat q)
 {
 	if (parent != nullptr)
 	{
@@ -418,7 +418,7 @@ void Entity::RotateAboutWorld(quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutEntity(Entity* e, quat q)
+void Entity::RevolveAboutEntity(Entity* e, quat q)
 {
 	quat eRot = e->GetWorldRotation();
 
@@ -436,7 +436,7 @@ void Entity::RotateAboutEntity(Entity* e, quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutPoint(vec3 v, quat q)
+void Entity::RevolveAboutPoint(vec3 v, quat q)
 {
 	vec3 offset = rotate(local.GetRotation(), v);
 
@@ -446,7 +446,7 @@ void Entity::RotateAboutPoint(vec3 v, quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutPointParent(vec3 v, quat q)
+void Entity::RevolveAboutPointParent(vec3 v, quat q)
 {
 	local.SetPosition(rotate(q, local.GetPosition() - v) + v);
 	local.RotateGlobal(q);
@@ -454,7 +454,7 @@ void Entity::RotateAboutPointParent(vec3 v, quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutPointWorld(vec3 v, quat q)
+void Entity::RevolveAboutPointWorld(vec3 v, quat q)
 {
 	if (parent != nullptr)
 	{
@@ -471,7 +471,7 @@ void Entity::RotateAboutPointWorld(vec3 v, quat q)
 	RequireUpdate();
 }
 
-void Entity::RotateAboutPointEntity(Entity* e, vec3 v, quat q)
+void Entity::RevolveAboutPointEntity(Entity* e, vec3 v, quat q)
 {
 	quat eRot = e->GetWorldRotation();
 
