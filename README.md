@@ -2,17 +2,29 @@
 
 ## Coding Standards
 
-Use constructor initializater lists.
-
-Use define blocks instead of `#pragma once` for header guards.
+### Coding Style
 
 Class, method, function, and other such entities are named with pascal case.
 
 Variable names are named with camel case.
 
+Determine how we're handling open curly braces (same line versus next line).
+
+### Best Practices
+
+Use define blocks instead of `#pragma once` for header guards.
+
+Use constructor initializater lists.
+
+Use `const` and `inline` where applicable.
+
+Limit includes as much as possible.
+
+### Engine Preferences
+
 Use the fixed-size numeric types defined in `types.h`.
 
-Determine how we're handling open curly braces (same line versus next line).
+Do not perform raw IO outside of specifically designated engine subsystems.
 
 ## Setting Up the Project
 
@@ -27,6 +39,8 @@ When including glm in a file, ensure that you `#define GLM_ENABLE_EXPERIMENTAL` 
 ```
 
 ### Boost
+
+_Note : this guide is primarily targeted at setting up a Windows development environment. You can probably just use your package manager on Linux._
 
 1. Download boost at : https://www.boost.org/users/history/version_1_69_0.html
 
