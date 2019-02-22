@@ -8,7 +8,7 @@ Class, method, function, and other such entities are named with pascal case.
 
 Variable names are named with camel case.
 
-Determine how we're handling open curly braces (same line versus next line).
+Curly braces on a new line.
 
 ### Best Practices
 
@@ -50,6 +50,8 @@ _Note : this guide is primarily targeted at setting up a Windows development env
 
 4. Run the newly generated `b2` executable (this will take a while)
 
-5. (Visual Studio) Go to your project properties and add `$(ProjectDir)Engine\boost_1_69_0` to `Include Directories`
+5. (Visual Studio) Go to your project properties, and set Configuration and Platform options to All
 
-6. (Visual Studio) In the same place, add `$(ProjectDir)Engine\boost_1_69_0\stage\lib` to `Library Directories`
+6. (Visual Studio) Add `$(ProjectDir)Engine\boost_1_69_0` to `Include Directories`
+
+7. (Visual Studio) Add `$(ProjectDir)Engine\boost_1_69_0\stage\lib` to `Library Directories`
