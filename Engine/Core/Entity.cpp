@@ -1,7 +1,5 @@
 #include "Entity.h"
 
-#include "Game.h"
-
 Entity::Entity() :
 	children(),
 	parent(nullptr),
