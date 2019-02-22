@@ -10,6 +10,8 @@ Variable names are named with camel case.
 
 Curly braces on a new line.
 
+`private` before `protected` before `public`; match order in source files.
+
 Tabs for spaces, except when matching indentation.
 
 ```cpp
