@@ -10,13 +10,45 @@ Variable names are named with camel case.
 
 Curly braces on a new line.
 
+Tabs for spaces, except when matching indentation.
+
+```cpp
+void Foo(u64 arg)
+{
+	Bar(arg,
+            true,
+            nullptr);
+}
+```
+
 ### Best Practices
 
 Use define blocks instead of `#pragma once` for header guards.
 
+```cpp
+#ifndef HEADER_NAME_H_
+#define HEADER_NAME_H_
+
+// Header file contents
+
+#endif
+```
+
 Use constructor initializater lists.
 
+```cpp
+MyClass::MyClass(u64 arg) :
+	memberVariable(arg)
+{
+	// Possibly do something here
+}
+```
+
 Use `const` and `inline` where applicable.
+
+```cpp
+inline u64 GetVar() const { return memberVariable; }
+```
 
 Limit includes as much as possible.
 
@@ -25,6 +57,8 @@ Limit includes as much as possible.
 Use the fixed-size numeric types defined in `types.h`.
 
 Do not perform raw IO outside of specifically designated engine subsystems.
+
+We will be maintaining a Linux build, with full intention of this engine supporting cross-platform development. Don't break this with platform-specific code.
 
 ## Setting Up the Project
 
