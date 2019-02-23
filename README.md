@@ -18,8 +18,8 @@ Tabs for spaces, except when matching indentation.
 void Foo(u64 arg)
 {
 	Bar(arg,
-            true,
-            nullptr);
+	    true,
+	    nullptr);
 }
 ```
 
