@@ -22,11 +22,13 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
     <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\Entity.h" />
+    <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />

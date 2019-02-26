@@ -2,8 +2,8 @@
 #define OBJECT_H_
 
 #define GLM_ENABLE_EXPERIMENTAL
-#include "../glm/glm.hpp"
-#include "../glm/gtx/quaternion.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtx/quaternion.hpp"
 
 #include <boost/container/string.hpp>
 #include <boost/container/vector.hpp>
