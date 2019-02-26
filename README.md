@@ -74,6 +74,44 @@ When including glm in a file, ensure that you `#define GLM_ENABLE_EXPERIMENTAL` 
 #include "../glm/gtx/quaternion.hpp"
 ```
 
+### GLEW
+
+The OpenGL Extension Wrangler Library is useful for determining the level of OpenGL functionality that the target platform supports. The following guide will help enable it in your environment:
+
+1. Download GLEW at : https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0-win32.zip/download
+
+2. After extracting all files, move the `GL` folder located in `glew-2.1.0\include` to your project's `include` directory
+
+3. Copy the library files in `glew-2.1.0\lib\Release\x64` to your project's `libraries` directory
+
+4. (Visual Studio) Go to your project properties, and set Configuration and Platform options to All
+
+5. (Visual Studio) Go to C/C++ -> General. Add `$(ProjectDir)include` to `Additional Include Directories` if it is not already there
+
+6. (Visual Studio) Go to Linker -> General. Add `$(ProjectDir)libraries` to `Additional Library Directories` if it is not already there
+
+7. (Visual Studio) Go to Linker -> Input. Add `glew32s.lib` to `Additional Dependencies`
+
+8. (Visual Studio) Go to C/C++ -> Preprocessor. Add `GLEW_STATIC` to `Preprocessor Definitions`
+
+### GLFW
+
+The Graphics Library Framework is useful for assisting in simple window creation and input handling. The following guide will help enable it in your environment:
+
+1. Download GLEW at : https://www.glfw.org/download.html
+
+2. After extracting all files, move the `GLFW` folder to your project's `include` directory
+
+3. Copy the library files in `lib-vc2015` to your project's `libraries` directory
+
+4. (Visual Studio) Go to your project properties, and set Configuration and Platform options to All
+
+5. (Visual Studio) Go to C/C++ -> General. Add `$(ProjectDir)include` to `Additional Include Directories` if it is not already there
+
+6. (Visual Studio) Go to Linker -> General. Add `$(ProjectDir)libraries` to `Additional Library Directories` if it is not already there
+
+7. (Visual Studio) Go to Linker -> Input. Add `glfw3.lib` to `Additional Dependencies`
+
 ### Boost
 
 _Note : this guide is primarily targeted at setting up a Windows development environment. You can probably just use your package manager on Linux._
