@@ -1,17 +1,17 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
+#define CORE_OBJECT_NO_DYNAMIC_UPDATE
+
 #define GLM_ENABLE_EXPERIMENTAL
-#include "glm/glm.hpp"
-#include "glm/gtx/quaternion.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include <boost/container/string.hpp>
 #include <boost/container/vector.hpp>
 
 #include "Types.h"
 #include "Transform.h"
-
-// TODO : Implement const transformational information fetching with staggered update (possible optimization for multi-threading with scripting integration)
 
 // Base class for Entities and any other objects that would make use of parent-child transformational relationships (e.g. bones for model animation)
 class Object
@@ -24,19 +24,29 @@ private:
 	mat4 world;
 	mat4 invWorld;
 	quat worldRotation;
+#ifdef CORE_OBJECT_NO_DYNAMIC_UPDATE
+	vec3 worldPosition;
+#endif
 
 	// Transform defining transformation relative to parent
 	Transform local;
 
 	// Control variables for determining when to recalculate world or inverse matrix
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
 	bool needsUpdated;
 	bool needsInverseUpdated;
 	bool needsRotationUpdated;
+#endif
 
 	// Helper methods
 	void AddChild(Object* newChild);
 	void RemoveChild(Object* child);
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
 	void RequireUpdate();
+#else
+// Effectively disabled
+#define RequireUpdate() 
+#endif
 
 public:
 	Object();
@@ -65,7 +75,8 @@ public:
 	inline vec3 GetWorldForward() { return rotate(GetWorldRotation(), vec3(0.0f, 0.0f, 1.0f)); }
 	inline vec3 GetWorldRight()   { return rotate(GetWorldRotation(), vec3(1.0f, 0.0f, 0.0f)); }
 	inline vec3 GetWorldUp()      { return rotate(GetWorldRotation(), vec3(0.0f, 1.0f, 0.0f)); }
-
+	
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
 	// Not const because these can regenerate cached data under the hood
 	vec3 GetWorldPosition();
 	quat GetWorldRotation();
@@ -73,6 +84,15 @@ public:
 	// Ditto
 	mat4 GetWorldMatrix();
 	mat4 GetInverseMatrix();
+#else
+	inline vec3 GetWorldPosition() const { return worldPosition; }
+	inline quat GetWorldRotation() const { return worldRotation; }
+	inline mat4 GetWorldMatrix() const { return world; }
+	inline mat4 GetInverseMatrix() const { return invWorld; }
+
+	void UpdateTransformationsRoot();
+	void UpdateTransformationsChild();
+#endif
 
 	// Set position with respect to parent
 	void SetPosition(vec3 position);

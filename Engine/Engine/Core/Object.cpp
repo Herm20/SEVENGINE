@@ -6,10 +6,12 @@ Object::Object() :
 	world(identity<mat4>()),
 	invWorld(identity<mat4>()),
 	worldRotation(identity<quat>()),
-	local(),
-	needsUpdated(false),
+	local()
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
+	,needsUpdated(false),
 	needsInverseUpdated(false),
 	needsRotationUpdated(false)
+#endif
 {
 	// Nothing interesting to do here
 }
@@ -20,10 +22,12 @@ Object::Object(const Transform& t, Object* parentObject) :
 	world(identity<mat4>()),
 	invWorld(identity<mat4>()),
 	worldRotation(identity<quat>()),
-	local(t),
-	needsUpdated(true),
+	local(t)
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
+	,needsUpdated(true),
 	needsInverseUpdated(true),
 	needsRotationUpdated(true)
+#endif
 {
 	if (parent != nullptr)
 	{
@@ -56,6 +60,7 @@ void Object::RemoveChild(Object* child)
 	}
 }
 
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
 void Object::RequireUpdate()
 {
 	needsUpdated = true;
@@ -69,6 +74,7 @@ void Object::RequireUpdate()
 		children[i]->RequireUpdate();
 	}
 }
+#endif
 
 void Object::Destroy()
 {
@@ -101,6 +107,8 @@ void Object::SetParent(Object* newParent, bool keepWorldTransform)
 
 	RequireUpdate();
 }
+
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
 
 vec3 Object::GetWorldPosition()
 {
@@ -161,6 +169,26 @@ mat4 Object::GetInverseMatrix()
 
 	return invWorld;
 }
+
+#else
+
+void Object::UpdateTransformationsRoot()
+{
+	world = local.GetMatrix();
+	invWorld = inverse(world);
+	worldRotation = local.GetRotation();
+	worldPosition = local.GetPosition();
+}
+
+void Object::UpdateTransformationsChild()
+{
+	world = parent->world * local.GetMatrix();
+	invWorld = inverse(world);
+	worldRotation = cross(parent->worldRotation, local.GetRotation());
+	worldPosition = parent->world * vec4(local.GetPosition(), 1.0f);
+}
+
+#endif
 
 void Object::SetPosition(vec3 v)
 {
