@@ -1,8 +1,6 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
-#define CORE_OBJECT_NO_DYNAMIC_UPDATE
-
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
