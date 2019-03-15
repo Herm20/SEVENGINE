@@ -2,6 +2,7 @@
 
 #define INPUTPOLLER_H_
 
+#include "InputManager.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
@@ -14,8 +15,9 @@ class Input
 	static bool m_keys[Max_keys];
 	static bool m_mouse_buttons[Max_Buttons];
 	static double mouseX, mouseY;
-
+	InputManager inputmanager;
 public:
+	Input(GLFWwindow* window);
 	inline double GetX() { return mouseX; }
 	inline double GetY() { return mouseY; }
 	void Init(GLFWwindow* window); // initializer takes a pointer to the window from the renderer class

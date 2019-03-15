@@ -4,18 +4,26 @@ bool Input::m_mouse_buttons[Max_Buttons];
 double Input::mouseX;
 double Input::mouseY;
 
+
 //Private Callbacks///////////////
 //callback for key presses
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	Input::m_keys[key] = action!=GLFW_RELEASE;
+	Input::m_keys[key] = action == GLFW_PRESS;// modifies the list of key states
+	if (action == GLFW_PRESS)
+	{
+		InputManager::ValidateKeyInput(key);
+	}
 }
 
 //callback for  mouse presses
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) 
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	Input::m_mouse_buttons[button] = action != GLFW_RELEASE;
-	std::cout << "Mouse pressed" << std::endl;
+	Input::m_mouse_buttons[button] = action == GLFW_PRESS;// modifies the list of key states
+	if (action != GLFW_PRESS)
+	{
+		InputManager::ValidateMouseInput(button);
+	}
 }
 
 //callback for updating mouse cursor position
@@ -25,6 +33,11 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 	Input::mouseY = ypos;
 }
 //////////////////////////////////
+
+Input::Input(GLFWwindow* window) 
+{
+	Init(window);
+}
 
 //initializer
 void Input::Init(GLFWwindow* window)
@@ -38,7 +51,7 @@ void Input::Init(GLFWwindow* window)
 	{
 		Input::m_mouse_buttons[i] = false;
 	}
-
+	
 	//setting up cqallbacks
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
