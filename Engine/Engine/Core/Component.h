@@ -3,7 +3,8 @@
 
 #include <string>
 #include "Types.h"
-#include "Entity.h"
+
+class Entity;
 
 /*! \class Component
 *  \brief Base class for components
