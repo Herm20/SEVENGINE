@@ -1,19 +1,19 @@
 #include "CollisionManager.h"
 
-inline vec3 e(const Object& o) { return o.GetScale(); }
-inline vec3 c(const Object& o) { return o.GetPosition(); }
-inline mat3 u(const Object& o) { return (mat3)o.GetRotation(); };
+inline vec3 e(const Collider& coll) { return coll.GetScale(); }
+inline vec3 c(const Collider& coll) { return coll.GetPosition(); }
+inline mat3 u(const Collider& coll) { return (mat3)coll.GetRotation(); };
 
 bool CollisionManager::TestAxis(vec3 L, vec3 cA, vec3 cB, vec3 rA, vec3 rB) {
 	return abs( dot(L, (cA - cB)) ) > abs( dot(L, rA) ) + abs( dot(L, rB) );
 }
 
 // Radial Projection Vectors
-vec3 CollisionManager::GetRadialVectorOBB(const Object& o, vec3 L) {
-	return u(o) * ( sign(L * u(o)) * e(o) );
+vec3 CollisionManager::GetRadialVectorOBB(const Collider& coll, vec3 L) {
+	return u(coll) * ( sign(L * u(coll)) * e(coll) );
 }
 
-bool CollisionManager::CollidesOBBvOBB(const Object& a, const Object& b) {
+bool CollisionManager::CollidesOBBvOBB(const Collider& a, const Collider& b) {
 
 	vec3 cA = c(a);
 	vec3 cB = c(b);

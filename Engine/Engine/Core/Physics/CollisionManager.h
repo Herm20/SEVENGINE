@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "../Object.h"
+#include "Collider.h"
 
 using namespace glm;
 
@@ -14,10 +15,10 @@ private:
 	bool TestAxis(vec3 L, vec3 cA, vec3 cB, vec3 rA, vec3 rB);
 
 	// Radial Projection Vectors
-	vec3 GetRadialVectorOBB(const Object& o, vec3 L);
+	vec3 GetRadialVectorOBB(const Collider& o, vec3 L);
 
 	// Collision Tests
-	bool CollidesOBBvOBB(const Object& a, const Object& b);
+	bool CollidesOBBvOBB(const Collider& a, const Collider& b);
 
 public:
 
