@@ -3,10 +3,16 @@
 
 #include "Object.h"
 
+#include <boost/unordered_set.hpp>
+
+class Component;
+
 class Entity : public Object
 {
 private:
-	boost::container::vector<boost::container::string> tags;
+	boost::unordered_set<boost::container::string> tags;
+
+	boost::container::vector<Component*> components;
 
 	// Scene and component stuff goes here
 public:
@@ -16,9 +22,24 @@ public:
 
 	void Destroy() override;
 
+	// <TAGS>
+
+	inline boost::unordered_set<boost::container::string> GetTags() const { return tags; }
+	inline bool HasTag(boost::container::string tag) const { return tags.count(tag) >= 0; }
+
 	// Will probably move tag system purely into script-side once that's up-and-running
 	void AddTag(boost::container::string tag);
 	void RemoveTag(boost::container::string tag);
+	void AddTags(boost::unordered_set<boost::container::string> newTags);
+
+	// </TAGS>
+
+	// <COMPONENTS>
+
+	inline boost::container::vector<Component*> GetComponents() const { return components; }
+	// TODO : Would like to query specific components by type and name
+
+	// </COMPONENTS>
 
 	// Scene and component stuff goes here
 };

@@ -17,7 +17,7 @@ public:
 	Component(Entity* ent);
 	Component(const Component &c);
 	~Component();
-	inline Entity* GetEntity() { return entity; }
+	inline Entity* GetEntity() const { return entity; }
 	const Component & operator=(const Component &c);
 };
 
