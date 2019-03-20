@@ -18,6 +18,7 @@
 #include <cstring>
 #include <boost/filesystem.hpp>
 #include <boost/unordered_map.hpp>
+#include <boost/shared_ptr.hpp>
 #include "FileLoader.h"
 
 //Predefinied cause these don't exist yet
@@ -30,17 +31,22 @@ class Texture;
 class AssetManager
 {
 private:
-	boost::unordered::unordered_map<std::string, std::shared_ptr<Mesh>> meshes;
-	boost::unordered::unordered_map<std::string, std::shared_ptr<Texture>> textures;
+	boost::unordered::unordered_map<std::string, boost::shared_ptr<Mesh>> meshes;
+	boost::unordered::unordered_map<std::string, boost::shared_ptr<Texture>> textures;
 	void LoadDir(const boost::filesystem::path &path);
 
 public:
 	AssetManager();
 	AssetManager(const AssetManager&);
-	std::shared_ptr<Mesh> GetMesh(const char* id);
-	std::shared_ptr<Texture> GetTexture(const char* id);
+	boost::shared_ptr<Mesh> GetMesh(const char* id);
+	boost::shared_ptr<Texture> GetTexture(const char* id);
 	//void SaveAssets();
 	void LoadAsset(const char* path, const char* ext, std::string name);
+
+	/*! \brief Loads the specified file / folder
+	 *
+	 * \param (char*) path - The path of the file or folder
+	 */
 	inline void LoadDirectory(const char* path) { LoadDir(boost::filesystem::path(path)); }
 	void operator=(const AssetManager&);
 	~AssetManager();

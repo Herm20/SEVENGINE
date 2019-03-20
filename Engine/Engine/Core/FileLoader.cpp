@@ -36,7 +36,7 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		//Get all the indices in the submesh
 		for(u32 j = 0; j < mesh->mNumFaces; j++)
 		{
-			aiFace face = mesh->mFaces[i];
+			aiFace face = mesh->mFaces[j];
 			for(u32 k = 0; k < face.mNumIndices; k++)
 				inds.push_back(face.mIndices[k]);
 		}
@@ -49,13 +49,13 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		for(u32 j = 0; j < mesh->mNumVertices; j++)
 		{
 			Vertex v;
-			v.pos = glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
-			v.norm = glm::vec3(mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z);
-			v.tan = glm::vec3(mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z);
-			v.bitan = glm::vec3(mesh->mBitangents[i].x, mesh->mBitangents[i].y, mesh->mBitangents[i].z);
+			v.pos = glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z);
+			v.norm = glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z);
+			v.tan = glm::vec3(mesh->mTangents[j].x, mesh->mTangents[j].y, mesh->mTangents[j].z);
+			v.bitan = glm::vec3(mesh->mBitangents[j].x, mesh->mBitangents[j].y, mesh->mBitangents[j].z);
 
 			if(uvs)
-				v.uv = glm::vec2(mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y);
+				v.uv = glm::vec2(mesh->mTextureCoords[0][j].x, mesh->mTextureCoords[0][j].y);
 			else
 				v.uv = glm::vec2(0.0f, 0.0f);
 
@@ -112,14 +112,12 @@ boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
  */
 void FileLoader::LoadTexture(const char* path, unsigned char* &data, i32* width, i32* height, i32* channels)
 {
-	//print("\tLoading texture file %s . . .", path);
 	data = stbi_load(path, width, height, channels, 0);
 
 	if(data == nullptr) {
-		//printf("file could not be loaded!\n");
+		//TODO: Error here, log something at some point
 		return;
 	}
-	//printf("successful\n");
 }
 
 /*! \brief Deletes texture data
@@ -141,16 +139,12 @@ void FileLoader::DeleteTexture(unsigned char* &data)
  */
 void FileLoader::LoadTextureHDR(const char* path, float* &data, i32* width, i32* height, i32* channels)
 {
-	//printf("\tLoading hdr file %s . . . ", path);
-
 	data = stbi_loadf(path, width, height, channels, 0);
 
 	if(data == nullptr) {
-		//printf("file could not be loaded!\n");
+		//TODO: Error here, log something at some point
 		return;
 	}
-
-	//printf("successful\n");
 }
 
 /*! \brief Deletes texture data
@@ -169,15 +163,13 @@ void FileLoader::DeleteTextureHDR(float* &data)
  */
 void FileLoader::LoadText(const char* path, char* &data)
 {
-	//printf("\tLoading file %s . . . ", path);
-
 	std::ifstream file;
 	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
 	file.open(path, std::ios::in);
 
 	if(!file.is_open()) {
-		//printf("file failed to load!\n");
+		//TODO: Error here, log something at some point
 		file.clear();
 		std::string err = "failed to open file: ";
 		err += std::string(path);
@@ -193,8 +185,6 @@ void FileLoader::LoadText(const char* path, char* &data)
 	file.read(data, size);
 	data[size] = 0;
 	file.close();
-
-	//printf("file loaded successfully\n");
 }
 
 /*! \brief Deletes text data

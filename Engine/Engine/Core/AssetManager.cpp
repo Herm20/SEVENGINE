@@ -24,9 +24,9 @@ AssetManager::AssetManager()
  *
  * \param (char*) id - The id of the mesh in the map
  *
- * \return (std::shared_ptr<Mesh>) Pointer to the retrieved mesh
+ * \return (boost::shared_ptr<Mesh>) Pointer to the retrieved mesh
  */
-//std::shared_ptr<Mesh> AssetManager::getMesh(const char* id)
+//boost::shared_ptr<Mesh> AssetManager::getMesh(const char* id)
 //{
 //	if(AssetManager::loadedMeshes.find(id) != AssetManager::loadedMeshes.end())
 //		return AssetManager::loadedMeshes[id];
@@ -38,9 +38,9 @@ AssetManager::AssetManager()
  *
  * \param (char*) id - The id of the texture in the map
  *
- * \return (std::shared_ptr<Texture>) Pointer to the retrieved texture
+ * \return (boost::shared_ptr<Texture>) Pointer to the retrieved texture
  */
-//std::shared_ptr<Texture> AssetManager::getTexture(const char* id)
+//boost::shared_ptr<Texture> AssetManager::getTexture(const char* id)
 //{
 //	if(AssetManager::loadedTextures.find(id) != AssetManager::loadedTextures.end())
 //		return AssetManager::loadedTextures[id];
@@ -58,6 +58,7 @@ AssetManager::AssetManager()
  */
 void AssetManager::LoadAsset(const char* path, const char* ext, std::string name)
 {
+	//Mesh files
 	if(strcmp(ext, ".obj") == 0 || strcmp(ext, ".fbx") == 0 || strcmp(ext, ".dae") == 0)
 	{
 		if(this->meshes.find(name) == this->meshes.end())
@@ -71,6 +72,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 		}
 	}
 
+	//Texture files
 	else if(strcmp(ext, ".png") == 0 || strcmp(ext, ".jpg") == 0 ||
 		    strcmp(ext, ".tga") == 0 || strcmp(ext, ".hdr") == 0)
 	{
@@ -105,7 +107,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 		}
 	}
 
-	else if(strcmp(ext, ".txt") == 0 || strcmp(ext, ".glsl") == 0)
+	else if(strcmp(ext, ".txt") == 0)
 	{
 		char* txt = nullptr;
 		FileLoader::LoadText(path, txt);
@@ -114,16 +116,18 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 
 		FileLoader::DeleteText(txt);
 	}
-}
 
-/*! \brief Loads the specified file / folder
- *
- * \param (char*) path - The path of the file or folder
- */
-//void AssetManager::LoadDirectory(const char* path)
-//{
-//	LoadDir(boost::filesystem::path(path));
-//}
+	//Other text files
+	else if(strcmp(ext, ".glsl") == 0 || strcmp(ext, ".vert") || strcmp(ext, ".frag"))
+	{
+		char* txt = nullptr;
+		FileLoader::LoadText(path, txt);
+
+		//TODO: Load in the shaders
+
+		FileLoader::DeleteText(txt);
+	}
+}
 
 /*! \brief Function to actually load the files
  */

@@ -6,8 +6,8 @@
  * \param (u32) indexCount - The index count
  */
 MeshData::MeshData(u32 vertCount, u32 indCount) :
-	verts(std::shared_ptr<Vertex[]>(new Vertex[vertCount])),
-	inds(std::shared_ptr<u32[]>(new u32[indCount])),
+	verts(boost::shared_ptr<Vertex[]>(new Vertex[vertCount])),
+	inds(boost::shared_ptr<u32[]>(new u32[indCount])),
 	vCount(vertCount),
 	iCount(indCount)
 {
@@ -16,12 +16,12 @@ MeshData::MeshData(u32 vertCount, u32 indCount) :
 
 /*! \brief MeshData constructor
  *
- * \param (std::shared_ptr<Vertex[]>) verts - The vertex data of the mesh
- * \param (std::shared_ptr<u32[]>) inds - The index data of the mesh
+ * \param (boost::shared_ptr<Vertex[]>) verts - The vertex data of the mesh
+ * \param (boost::shared_ptr<u32[]>) inds - The index data of the mesh
  * \param (u32) vertexCount - The vertex count
  * \param (u32) indexCount - The index count
  */
-MeshData::MeshData(std::shared_ptr<Vertex[]> verts, std::shared_ptr<u32[]> inds, u32 vCount, u32 iCount) :
+MeshData::MeshData(boost::shared_ptr<Vertex[]> verts, boost::shared_ptr<u32[]> inds, u32 vCount, u32 iCount) :
 	verts(verts),
 	inds(inds),
 	vCount(vCount),
@@ -36,8 +36,8 @@ MeshData::MeshData(std::shared_ptr<Vertex[]> verts, std::shared_ptr<u32[]> inds,
  */
 MeshData::MeshData(const MeshData &md)
 {
-	this->verts = std::shared_ptr<Vertex[]>(md.verts);
-	this->inds = std::shared_ptr<u32[]>(md.inds);
+	this->verts = boost::shared_ptr<Vertex[]>(md.verts);
+	this->inds = boost::shared_ptr<u32[]>(md.inds);
 	this->vCount = md.vCount;
 	this->iCount = md.iCount;
 }
@@ -68,8 +68,8 @@ void MeshData::CopyIndicesFromVector(boost::container::vector<u32> inds)
  */
 const MeshData & MeshData::operator=(const MeshData &md)
 {
-	this->verts = std::shared_ptr<Vertex[]>(md.verts);
-	this->inds = std::shared_ptr<u32[]>(md.inds);
+	this->verts = boost::shared_ptr<Vertex[]>(md.verts);
+	this->inds = boost::shared_ptr<u32[]>(md.inds);
 	this->vCount = md.vCount;
 	this->iCount = md.iCount;
 
