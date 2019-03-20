@@ -41,7 +41,7 @@ public:
 	std::shared_ptr<Texture> GetTexture(const char* id);
 	//void SaveAssets();
 	void LoadAsset(const char* path, const char* ext, std::string name);
-	void LoadDirectory(const char* path);
+	inline void LoadDirectory(const char* path) { LoadDir(boost::filesystem::path(path)); }
 	void operator=(const AssetManager&);
 	~AssetManager();
 };

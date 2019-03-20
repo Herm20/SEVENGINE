@@ -120,10 +120,10 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
  *
  * \param (char*) path - The path of the file or folder
  */
-void AssetManager::LoadDirectory(const char* path)
-{
-	LoadDir(boost::filesystem::path(path));
-}
+//void AssetManager::LoadDirectory(const char* path)
+//{
+//	LoadDir(boost::filesystem::path(path));
+//}
 
 /*! \brief Function to actually load the files
  */
