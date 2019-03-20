@@ -2,9 +2,10 @@
 #define ENTITY_H_
 
 #include "Object.h"
-#include "Component.h"
 
 #include <boost/unordered_set.hpp>
+
+class Component;
 
 class Entity : public Object
 {
