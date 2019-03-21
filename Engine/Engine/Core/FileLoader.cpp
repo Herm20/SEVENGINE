@@ -63,7 +63,7 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		}
 
 		//Set the mesh data and push it
-		MeshData data(verts.size(), inds.size());
+		MeshData data;
 		data.CopyVerticesFromVector(verts);
 		data.CopyIndicesFromVector(inds);
 		meshes.push_back(data);

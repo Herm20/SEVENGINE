@@ -1,15 +1,8 @@
 #include "MeshData.h"
 
 /*! \brief MeshData constructor
- *
- * \param (u32) vertexCount - The vertex count
- * \param (u32) indexCount - The index count
  */
-MeshData::MeshData(u32 vertCount, u32 indCount) :
-	verts(boost::shared_ptr<Vertex[]>(new Vertex[vertCount])),
-	inds(boost::shared_ptr<u32[]>(new u32[indCount])),
-	vCount(vertCount),
-	iCount(indCount)
+MeshData::MeshData()
 {
 
 }
@@ -44,19 +37,23 @@ MeshData::MeshData(const MeshData &md)
 
 /*! \brief Copies vertex information from a vertex array
  *
- * \param (boost::container::vector<Vertex>) verts - The vertex array to copy
+ * \param (const boost::container::vector<Vertex> &) verts - The vertex array to copy
  */
-void MeshData::CopyVerticesFromVector(boost::container::vector<Vertex> verts)
+void MeshData::CopyVerticesFromVector(const boost::container::vector<Vertex> &verts)
 {
+	vCount = verts.size();
+	this->verts = boost::shared_ptr<Vertex[]>(new Vertex[vCount]);
 	std::copy(verts.begin(), verts.end(), this->verts.get());
 }
 
 /*! \brief Copies index information from an index array
  *
- * \param (boost::container::vector<u32>) inds - The index array to copy
+ * \param (const boost::container::vector<u32> &) inds - The index array to copy
  */
-void MeshData::CopyIndicesFromVector(boost::container::vector<u32> inds)
+void MeshData::CopyIndicesFromVector(const boost::container::vector<u32> &inds)
 {
+	iCount = inds.size();
+	this->inds = boost::shared_ptr<u32[]>(new u32[iCount]);
 	std::copy(inds.begin(), inds.end(), this->inds.get());
 }
 
