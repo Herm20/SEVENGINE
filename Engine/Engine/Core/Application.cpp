@@ -16,6 +16,7 @@ Application::~Application()
 
 void Application::Init()
 {
+	renderer = new Renderer;
 	printf("INIT\n");
 }
 
@@ -26,11 +27,13 @@ void Application::Run()
 	{
 		// Update objects, process input, draw objects to the screen, et cetera
 		boost::this_thread::sleep_for(boost::chrono::milliseconds(250));
-		printf("TEST\n");
+		//printf("TEST\n");
+		renderer->Draw();
 	}
 }
 
 void Application::Exit()
 {
+	delete renderer;
 	printf("END\n");
 }
