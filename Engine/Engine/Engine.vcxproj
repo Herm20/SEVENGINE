@@ -29,6 +29,7 @@
     <ClCompile Include="Core\Physics\Collider.cpp" />
     <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
+    <ClCompile Include="Core\Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
@@ -40,8 +41,13 @@
     <ClInclude Include="Core\Physics\Collider.h" />
     <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
+    <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FragmentShader.glsl" />
+    <None Include="VertexShader.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
