@@ -1,5 +1,4 @@
 #include "Component.h"
-#include "Entity.h"
 
 Component::Component(Entity* ent) :
 	entity(ent)
