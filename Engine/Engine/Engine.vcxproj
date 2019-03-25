@@ -20,30 +20,43 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp" />
+    <ClCompile Include="Core\AssetManager.cpp" />
+    <ClCompile Include="Core\AudioManager.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
+    <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\InputPoller.cpp" />
     <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\Mesh.cpp" />
+    <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Physics\Collider.cpp" />
     <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
+    <ClCompile Include="Core\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
+    <ClInclude Include="Core\AssetManager.h" />
+    <ClInclude Include="Core\AudioManager.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\Entity.h" />
+    <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\InputPoller.h" />
+    <ClInclude Include="Core\Mesh.h" />
+    <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Physics\Collider.h" />
     <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Shader.h" />
+    <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Core\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
@@ -138,7 +151,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -158,7 +171,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -182,7 +195,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -206,7 +219,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmodL_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

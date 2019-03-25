@@ -2,6 +2,8 @@
 #define APPLICATION_H_
 
 #include "Renderer.h"
+#include "Timer.h"
+#include "AudioManager.h"
 
 class Application
 {
@@ -10,6 +12,10 @@ public:
 	~Application();
 
 	Renderer * renderer;
+	// Printing fps
+	static Timer Time;
+
+	AudioManager masterBG;
 
 	// Initialize core engine systems and resources
 	void Init();

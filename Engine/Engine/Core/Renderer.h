@@ -6,7 +6,6 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
-
 #include "Shader.h"
 
 using namespace glm;
@@ -17,8 +16,8 @@ class Renderer
 private:
 	//Window related variables
 	GLFWwindow * window;
-	int height = 480;
-	int width = 640;
+	int height = 800;
+	int width = 1280;
 
 	//Drawing related variables
 	GLuint vertexArrayID;
