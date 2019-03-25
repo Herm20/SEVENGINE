@@ -20,12 +20,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp" />
+    <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
+    <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\InputPoller.cpp" />
     <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\Mesh.cpp" />
+    <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
     <ClCompile Include="Core\Physics\Collider.cpp" />
     <ClCompile Include="Core\Physics\CollisionManager.cpp" />
@@ -35,11 +39,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
+    <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\Entity.h" />
+    <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\InputPoller.h" />
+    <ClInclude Include="Core\Mesh.h" />
+    <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Physics\Collider.h" />
     <ClInclude Include="Core\Physics\CollisionManager.h" />
@@ -48,6 +56,7 @@
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />
+    <ClInclude Include="Core\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.glsl" />
