@@ -1,13 +1,9 @@
 #ifndef VERTEX_H_
 #define VERTEX_H_
 
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 
-/*! \struct Vertex
- *  \brief Helper structure for holding mesh data
- */
-struct Vertex
-{
+struct Vertex {
 	glm::vec3 pos;
 	glm::vec2 uv;
 	glm::vec3 norm;
@@ -15,4 +11,4 @@ struct Vertex
 	glm::vec3 bitan;
 };
 
-#endif
+#endif // !VERTEX_H_
