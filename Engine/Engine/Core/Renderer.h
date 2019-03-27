@@ -40,7 +40,6 @@ public:
 	GLFWwindow* GetWindow();
 	void CreateBasicProgram();
 	void Draw();
-	void DrawEntity(Entity* _entity);
 };
 
 #endif

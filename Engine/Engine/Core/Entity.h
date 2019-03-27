@@ -2,7 +2,7 @@
 #define ENTITY_H_
 
 #include "Object.h"
-#include "Mesh.h"
+#include "MeshData.h"
 
 #include <boost/unordered_set.hpp>
 
@@ -34,7 +34,7 @@ public:
 	void AddTags(boost::unordered_set<boost::container::string> newTags);
 
 	// Shared pointer for mesh data
-	boost::shared_ptr<Mesh> mData;
+	boost::shared_ptr<MeshData> mData;
 
 	void SetMesh();
 

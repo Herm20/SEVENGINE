@@ -1,8 +1,8 @@
-#include "Mesh.h"
+#include "MeshData.h"
 
 /*! \brief Mesh constructor
  */
-Mesh::Mesh()
+MeshData::MeshData()
 {
 
 }
@@ -14,7 +14,7 @@ Mesh::Mesh()
  * \param (u32) vertexCount - The vertex count
  * \param (u32) indexCount - The index count
  */
-Mesh::Mesh(boost::shared_ptr<Vertex[]> verts, boost::shared_ptr<u32[]> inds, u32 vCount, u32 iCount) :
+MeshData::MeshData(boost::shared_ptr<Vertex[]> verts, boost::shared_ptr<u32[]> inds, u32 vCount, u32 iCount) :
 	vCount(vCount),
 	iCount(iCount),
 	verts(verts),
@@ -27,7 +27,7 @@ Mesh::Mesh(boost::shared_ptr<Vertex[]> verts, boost::shared_ptr<u32[]> inds, u32
  *
  * \param (const Mesh &) md - The mesh data to copy
  */
-Mesh::Mesh(const Mesh &md)
+MeshData::MeshData(const MeshData &md)
 {
 	this->verts = boost::shared_ptr<Vertex[]>(md.verts);
 	this->inds = boost::shared_ptr<u32[]>(md.inds);
@@ -39,7 +39,7 @@ Mesh::Mesh(const Mesh &md)
  *
  * \param (const boost::container::vector<Vertex> &) verts - The vertex array to copy
  */
-void Mesh::CopyVerticesFromVector(const boost::container::vector<Vertex> &verts)
+void MeshData::CopyVerticesFromVector(const boost::container::vector<Vertex> &verts)
 {
 	vCount = verts.size();
 	this->verts = boost::shared_ptr<Vertex[]>(new Vertex[vCount]);
@@ -50,7 +50,7 @@ void Mesh::CopyVerticesFromVector(const boost::container::vector<Vertex> &verts)
  *
  * \param (const boost::container::vector<u32> &) inds - The index array to copy
  */
-void Mesh::CopyIndicesFromVector(const boost::container::vector<u32> &inds)
+void MeshData::CopyIndicesFromVector(const boost::container::vector<u32> &inds)
 {
 	iCount = inds.size();
 	this->inds = boost::shared_ptr<u32[]>(new u32[iCount]);
@@ -63,7 +63,7 @@ void Mesh::CopyIndicesFromVector(const boost::container::vector<u32> &inds)
  *
  * \return (const Mesh &) This mesh data after copying
  */
-const Mesh & Mesh::operator=(const Mesh &md)
+const MeshData & MeshData::operator=(const MeshData &md)
 {
 	this->verts = boost::shared_ptr<Vertex[]>(md.verts);
 	this->inds = boost::shared_ptr<u32[]>(md.inds);
@@ -75,7 +75,7 @@ const Mesh & Mesh::operator=(const Mesh &md)
 
 /*! \brief Mesh data destructor
  */
-Mesh::~Mesh()
+MeshData::~MeshData()
 {
 
 }

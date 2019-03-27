@@ -31,7 +31,7 @@ class Texture;
 class AssetManager
 {
 private:
-	boost::unordered::unordered_map<std::string, boost::shared_ptr<Mesh>> meshes;
+	boost::unordered::unordered_map<std::string, boost::shared_ptr<MeshData>> meshes;
 	boost::unordered::unordered_map<std::string, boost::shared_ptr<Texture>> textures;
 	boost::unordered::unordered_map<std::string, boost::shared_ptr<Shader>> shaders;
 	void LoadDir(const boost::filesystem::path &path);
@@ -40,7 +40,7 @@ private:
 public:
 	AssetManager();
 	AssetManager(const AssetManager&);
-	boost::shared_ptr<Mesh> GetMesh(std::string id) const;
+	boost::shared_ptr<MeshData> GetMesh(std::string id) const;
 	boost::shared_ptr<Texture> GetTexture(std::string id) const;
 	boost::shared_ptr<Shader> GetShader(std::string id) const;
 	//void SaveAssets();

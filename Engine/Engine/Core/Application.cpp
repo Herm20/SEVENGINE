@@ -35,7 +35,7 @@ void Application::Init()
 
 void Application::Load()
 {
-	boost::shared_ptr<Mesh> data = assetMan->GetMesh("Mario");
+	boost::shared_ptr<MeshData> data = assetMan->GetMesh("Mario");
 }
 
 

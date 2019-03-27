@@ -93,35 +93,7 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	CreateTriangle();
-
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(
-		0,			//attribute 0. Must match the layout in the shader
-		3,			//size
-		GL_FLOAT,	//type
-		GL_FALSE,	//normalized?
-		0,			//stride
-		(void*)0	//array buffer offset
-	);
-
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
-
-	//Swap front and back buffers
-	glfwSwapBuffers(window);
-
-	//Poll for and process events
-	glfwPollEvents();
-}
-
-void Renderer::DrawEntity(Entity * _entity)
-{
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_entity->mData->getVertices()), _entity->mData->getVertices(), GL_STATIC_DRAW);
-
+	//Draw that triangle that we made
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(
