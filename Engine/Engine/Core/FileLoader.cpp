@@ -14,7 +14,7 @@
 
 namespace FileLoader
 {
-	static void ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<MeshData> &meshes);
+	static void ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<Mesh> &meshes);
 };
 
 /*! \brief Converts an assimp scene to a series of meshes
@@ -23,7 +23,7 @@ namespace FileLoader
  * \param (const aiScene*) scene - The ai scene to gather info from
  * \param (boost::container::vector<MeshData> &) meshes - Vector to store the mesh data after processing
  */
-void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<MeshData> &meshes)
+void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<Mesh> &meshes)
 {
 	//Iterate through the submeshes
 	for(u32 i = 0; i < node->mNumMeshes; i++)
@@ -63,7 +63,7 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		}
 
 		//Set the mesh data and push it
-		MeshData data;
+		Mesh data;
 		data.CopyVerticesFromVector(verts);
 		data.CopyIndicesFromVector(inds);
 		meshes.push_back(data);
@@ -82,7 +82,7 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
  *
  * \return (boost::container::vector<MeshData>) Vector of all loaded MeshData
  */
-boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
+boost::container::vector<Mesh> FileLoader::LoadMeshData(const char* path)
 {
 	char* src = nullptr;
 
@@ -97,7 +97,7 @@ boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
 												 aiProcess_SortByPType);
 
 
-	boost::container::vector<MeshData> meshes;
+	boost::container::vector<Mesh> meshes;
 	ProcessAINode(scene->mRootNode, scene, meshes);
 	return meshes;
 }

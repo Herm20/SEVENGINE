@@ -8,6 +8,7 @@
 #include <fstream>
 #include "AssetManager.h"
 #include "Shader.h"
+#include "Entity.h"
 
 using namespace glm;
 using namespace std;
@@ -29,6 +30,7 @@ private:
 	boost::shared_ptr<Shader> vertexShader;
 	boost::shared_ptr<Shader> fragmentShader;
 	const AssetManager* am;
+	Entity* dummyEnt;
 
 	//Temporary proof function
 	void CreateTriangle();
@@ -38,6 +40,7 @@ public:
 	GLFWwindow* GetWindow();
 	void CreateBasicProgram();
 	void Draw();
+	void DrawEntity(Entity* _entity);
 };
 
 #endif

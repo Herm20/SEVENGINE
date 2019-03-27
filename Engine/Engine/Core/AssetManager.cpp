@@ -25,7 +25,7 @@ AssetManager::AssetManager()
  *
  * \return (boost::shared_ptr<MeshData>) Pointer to the retrieved mesh
  */
-boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
+boost::shared_ptr<Mesh> AssetManager::GetMesh(std::string id) const
 {
 	if(this->meshes.find(id) != this->meshes.end())
 		return this->meshes.find(id)->second;
@@ -74,7 +74,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 	{
 		if(this->meshes.find(name) == this->meshes.end())
 		{
-			boost::container::vector<MeshData> meshData = FileLoader::LoadMeshData(path);
+			boost::container::vector<Mesh> meshData = FileLoader::LoadMeshData(path);
 
 			for(u32 i = 0; i < meshData.size(); i++)
 			{
@@ -84,7 +84,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 				if(i > 0)
 					modName += std::to_string(i);
 
-				meshes[name] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
+				meshes[name] = boost::shared_ptr<Mesh>(new Mesh(meshData[i]));
 			}
 		}
 	}

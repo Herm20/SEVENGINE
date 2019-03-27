@@ -14,6 +14,7 @@ public:
 
 	Renderer * renderer;
 	AssetManager* assetMan;
+	Entity* ent;
 	// Printing fps
 	static Timer Time;
 
@@ -27,6 +28,9 @@ public:
 
 	// Cleanup for program exit
 	void Exit();
+
+	// Load Assets
+	void Load();
 };
 
 #endif

@@ -16,11 +16,14 @@ Application::~Application()
 	// Nothing interesting to do here (yet)
 }
 
+
 void Application::Init()
 {
 	assetMan = new AssetManager();
+	//ent = new Entity();
 	renderer = new Renderer(assetMan);
 	assetMan->LoadDirectory("Assets");
+	Load();
 
 	//TODO: Change this to dynamically create programs
 	renderer->CreateBasicProgram();
@@ -29,6 +32,12 @@ void Application::Init()
 	//masterBG.Play(false);
 	printf("INIT\n");
 }
+
+void Application::Load()
+{
+	boost::shared_ptr<Mesh> data = assetMan->GetMesh("Mario");
+}
+
 
 void Application::Run()
 {
@@ -52,3 +61,5 @@ void Application::Exit()
 	delete renderer;
 	printf("END\n");
 }
+
+
