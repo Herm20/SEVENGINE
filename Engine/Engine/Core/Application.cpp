@@ -63,7 +63,7 @@ void Application::Init()
 
 void Application::Load()
 {
-	boost::shared_ptr<MeshData> data = assetMan->GetMesh("Mario");
+
 }
 
 void Application::Run()
@@ -104,9 +104,9 @@ void Application::CamMovement()
 
 	glfwGetCursorPos(renderer->GetWindow(), &x, &y);
 
-	camera->rotation.y -= sens * (x - w * .5f);
-	camera->rotation.x -= sens * (y - h * .5f);
-	camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
+	//camera->rotation.y -= sens * (x - w * .5f);
+	//camera->rotation.x -= sens * (y - h * .5f);
+	//camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
 	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 

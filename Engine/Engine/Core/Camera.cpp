@@ -5,7 +5,7 @@ using namespace glm;
 
 Camera::Camera()
 {
-	location = { 0,0,0 };
+	location = { 0,0,-5 };
 	rotation = { 0,0,0 };
 }
 
@@ -20,7 +20,7 @@ void Camera::update()
 	glm::mat3 rotMat = (glm::mat3)glm::yawPitchRoll(rotation.y, rotation.x, rotation.z);
 
 	glm::vec3 eye = location;
-	glm::vec3 center = eye + rotMat * glm::vec3(0, 0, -1);
+	glm::vec3 center = eye + rotMat * glm::vec3(0, 0, 1);
 	glm::vec3 up = rotMat * glm::vec3(0, 1, 0);
 
 	glm::mat4 lookAtMat = glm::lookAt(eye, center, up);
@@ -40,10 +40,9 @@ void Camera::update()
 	// update to the world veiw matrix
 	cameraMatrix = perspectiveMat * lookAtMat;
 
-	glUniform3fv(5, 1, &location[0]);
-
 	// upload the matrix
-	glUniformMatrix4fv(4, 1, GL_FALSE, &cameraMatrix[0][0]);
+	glUniformMatrix4fv(4, 1, GL_FALSE, &lookAtMat[0][0]);
+	glUniformMatrix4fv(5, 1, GL_FALSE, &perspectiveMat[0][0]);
 }
 
 void Camera::movement(GLFWwindow* winPtr, int winHeight, int winWidth)

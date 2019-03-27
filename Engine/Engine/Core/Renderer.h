@@ -9,6 +9,7 @@
 #include "AssetManager.h"
 #include "Shader.h"
 #include "Entity.h"
+#include "Mesh.h"
 
 
 using namespace glm;
@@ -35,6 +36,10 @@ private:
 
 	//Temporary proof function
 	void CreateTriangle();
+	Mesh* testMesh;
+	glm::mat4 lookMat;
+	glm::mat4 persMat;
+
 public:
 	Renderer(const AssetManager* am);
 	~Renderer();
