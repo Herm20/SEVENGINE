@@ -5,6 +5,9 @@
 #include "Timer.h"
 #include "AudioManager.h"
 #include "AssetManager.h"
+#include "Camera.h"
+#include <map>
+
 
 class Application
 {
@@ -14,7 +17,7 @@ public:
 
 	Renderer * renderer;
 	AssetManager* assetMan;
-	Entity* ent;
+	Camera* camera;
 	// Printing fps
 	static Timer Time;
 
@@ -31,6 +34,10 @@ public:
 
 	// Load Assets
 	void Load();
+
+	/// SUPER TEMP
+	void CamMovement();
+	/// SUPER TEMP
 };
 
 #endif

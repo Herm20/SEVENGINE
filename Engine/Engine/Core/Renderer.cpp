@@ -50,6 +50,16 @@ GLFWwindow * Renderer::GetWindow()
 	return window;
 }
 
+int Renderer::GetWindowHeight()
+{
+	return height;
+}
+
+int Renderer::GetWindowWidth()
+{
+	return width;
+}
+
 void Renderer::CreateBasicProgram()
 {
 	vertexShader = am->GetShader("VertexShader");

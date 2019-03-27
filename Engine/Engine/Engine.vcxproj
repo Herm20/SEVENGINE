@@ -22,6 +22,7 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
+    <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
     <ClCompile Include="Core\FileLoader.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
+    <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\Entity.h" />
     <ClInclude Include="Core\FileLoader.h" />
@@ -57,8 +59,8 @@
     <ClInclude Include="Core\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FragmentShader.glsl" />
-    <None Include="VertexShader.glsl" />
+    <None Include="Assets\FragmentShader.frag" />
+    <None Include="Assets\VertexShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

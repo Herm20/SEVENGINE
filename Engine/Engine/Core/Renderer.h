@@ -10,6 +10,7 @@
 #include "Shader.h"
 #include "Entity.h"
 
+
 using namespace glm;
 using namespace std;
 
@@ -38,6 +39,8 @@ public:
 	Renderer(const AssetManager* am);
 	~Renderer();
 	GLFWwindow* GetWindow();
+	int GetWindowHeight();
+	int GetWindowWidth();
 	void CreateBasicProgram();
 	void Draw();
 };
