@@ -15,9 +15,9 @@ Scene::~Scene()
 
 Entity* Scene::SpawnEntity(Entity* parent, const Transform& transform)
 {
-	u64 index = entities.size();
-	entities.emplace_back(this, index, transform, parent);
-	Entity* spawned = entities[index];
+	u64 index = entitiesAll.size();
+	entities.emplace_back(this, index, parent == nullptr ? entitiesTop.size() : U64_MAX, transform, parent);
+	Entity* spawned = &(entities[index]);
 
 	if (parent == nullptr) { entitiesTop.push_back(spawned); }
 	entitiesAll.push_back(spawned);

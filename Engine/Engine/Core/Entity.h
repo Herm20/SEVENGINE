@@ -2,6 +2,7 @@
 #define ENTITY_H_
 
 #include "Object.h"
+#include "SceneRef.h"
 
 #include <boost/unordered_set.hpp>
 
@@ -13,14 +14,13 @@ class Entity : public Object
 private:
 	boost::unordered_set<boost::container::string> tags;
 	boost::container::vector<Component*> components;
-	Scene* scene;
-	u64 sceneID;
+	SceneRef scene;
 
 	friend class Scene;
 
 public:
 	Entity();
-	Entity(Scene* parentScene, u64 sID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
+	Entity(Scene* parentScene, u64 sID, u64 tID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
 	~Entity();
 
 	void Destroy() override;

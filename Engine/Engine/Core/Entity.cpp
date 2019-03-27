@@ -5,17 +5,15 @@
 Entity::Entity() :
 	Object(),
 	tags(),
-	scene(nullptr),
-	sceneID(0)
+	scene()
 {
 	// Nothing interesting to do here
 }
 
-Entity::Entity(Scene* parentScene, u64 sID, const Transform& t, Entity* parentEntity) :
+Entity::Entity(Scene* parentScene, u64 sID, u64 tID, const Transform& t, Entity* parentEntity) :
 	Object(t, parentEntity),
 	tags(),
-	scene(parentScene),
-	sceneID(sID)
+	scene(parentScene, sID, tID)
 {
 	// Nothing interesting to do here
 }
