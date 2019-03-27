@@ -4,14 +4,18 @@
 
 Entity::Entity() :
 	Object(),
-	tags()
+	tags(),
+	scene(nullptr),
+	sceneID(0)
 {
 	// Nothing interesting to do here
 }
 
-Entity::Entity(const Transform& t, Entity* parentEntity) :
+Entity::Entity(Scene* parentScene, u64 sID, const Transform& t, Entity* parentEntity) :
 	Object(t, parentEntity),
-	tags()
+	tags(),
+	scene(parentScene),
+	sceneID(sID)
 {
 	// Nothing interesting to do here
 }

@@ -5,19 +5,22 @@
 
 #include <boost/unordered_set.hpp>
 
+class Scene;
 class Component;
 
 class Entity : public Object
 {
 private:
 	boost::unordered_set<boost::container::string> tags;
-
 	boost::container::vector<Component*> components;
+	Scene* scene;
+	u64 sceneID;
 
-	// Scene and component stuff goes here
+	friend class Scene;
+
 public:
 	Entity();
-	Entity(const Transform& t, Entity* parentEntity = nullptr);
+	Entity(Scene* parentScene, u64 sID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
 	~Entity();
 
 	void Destroy() override;
