@@ -18,7 +18,12 @@ Application::~Application()
 
 void Application::Init()
 {
-	renderer = new Renderer;
+	assetMan = new AssetManager();
+	renderer = new Renderer(assetMan);
+	assetMan->LoadDirectory("Assets");
+
+	//TODO: Change this to dynamically create programs
+	renderer->CreateBasicProgram();
 	//masterBG.InitSound();
 	//masterBG.LoadFile("audio/gameMusic.mp3");
 	//masterBG.Play(false);
@@ -43,6 +48,7 @@ void Application::Run()
 
 void Application::Exit()
 {
+	delete assetMan;
 	delete renderer;
 	printf("END\n");
 }

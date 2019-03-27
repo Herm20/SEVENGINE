@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Timer.h"
 #include "AudioManager.h"
+#include "AssetManager.h"
 
 class Application
 {
@@ -12,6 +13,7 @@ public:
 	~Application();
 
 	Renderer * renderer;
+	AssetManager* assetMan;
 	// Printing fps
 	static Timer Time;
 

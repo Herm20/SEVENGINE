@@ -15,10 +15,10 @@ MeshData::MeshData()
  * \param (u32) indexCount - The index count
  */
 MeshData::MeshData(boost::shared_ptr<Vertex[]> verts, boost::shared_ptr<u32[]> inds, u32 vCount, u32 iCount) :
-	verts(verts),
-	inds(inds),
 	vCount(vCount),
-	iCount(iCount)
+	iCount(iCount),
+	verts(verts),
+	inds(inds)
 {
 
 }

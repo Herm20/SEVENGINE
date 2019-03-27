@@ -1,9 +1,9 @@
 #include "Shader.h"
 
-Shader::Shader(string fileName, GLenum shaderType)
+Shader::Shader(const char* shaderSrc, GLenum shaderType)
 {
 	this->shaderType = shaderType;
-	Compile(fileName);
+	Compile(shaderSrc);
 }
 
 Shader::~Shader()
@@ -13,37 +13,12 @@ Shader::~Shader()
 }
 
 //Reads the shader code from a separate file into a usable shader object
-bool Shader::Compile(string fileName)
+bool Shader::Compile(const char* shaderSrc)
 {
-	//Opens the file to a binary stream
-	ifstream inFile(fileName, ios::binary);
-	char* fileContents;
-	
-	//Reads the binary stream to a char* string
-	if (inFile.is_open())
-	{
-		inFile.seekg(0, ios::end);
-		int length = (int)inFile.tellg();
-		inFile.seekg(0, ios::beg);
-
-		fileContents = new char[length + 1];
-
-		inFile.read(fileContents, length);
-		fileContents[length] = 0;
-
-		inFile.close();
-	}
-	else
-	{
-		printf("A Shader Failed To Load\n");
-		return false;
-	}
-
-	//Attempts to create and compile shader from char*  string
+	//Attempts to create and compile shader from char* string
 	shaderID = glCreateShader(shaderType);
-	glShaderSource(shaderID, 1, &fileContents, 0);
+	glShaderSource(shaderID, 1, &shaderSrc, 0);
 	glCompileShader(shaderID);
-	delete[] fileContents;
 
 	//Determines compilation success
 	GLint compilation = 0;
@@ -69,7 +44,7 @@ GLuint Shader::GetID()
 	return shaderID;
 }
 
-GLenum Shader::GetShaderType() 
+GLenum Shader::GetShaderType()
 {
 	return shaderType;
 }

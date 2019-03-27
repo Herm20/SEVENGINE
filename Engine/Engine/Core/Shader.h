@@ -15,12 +15,12 @@ private:
 	//The shader ID is the main way of referencing the shader object itself
 	GLuint shaderID;
 	GLenum shaderType;
-	
-	bool Compile(string fileName);
+
+	bool Compile(const char* shaderSrc);
 public:
-	Shader(string fileName, GLenum shaderType);
+	Shader(const char* shaderSrc, GLenum shaderType);
 	~Shader();
-	
+
 	GLuint GetID();
 	GLenum GetShaderType();
 };

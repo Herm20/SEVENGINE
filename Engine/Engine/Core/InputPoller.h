@@ -12,10 +12,11 @@
 
 class Input
 {
+	InputManager* inputmanager;
 	static bool m_keys[Max_keys];
 	static bool m_mouse_buttons[Max_Buttons];
 	static double mouseX, mouseY;
-	InputManager inputmanager;
+	
 public:
 	Input(GLFWwindow* window);
 	inline double GetX() { return mouseX; }
