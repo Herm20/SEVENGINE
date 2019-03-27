@@ -8,7 +8,7 @@ class Mesh
 public:
 	Mesh();
 	~Mesh();
-	bool Load(MeshData* _data);
-	void Render(MeshData* _data);
+	//boost::shared_ptr<MeshData> data;
+	void Render();
 };
 #endif // !MESH_H

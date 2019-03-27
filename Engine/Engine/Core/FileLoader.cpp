@@ -166,7 +166,7 @@ void FileLoader::LoadText(const char* path, char* &data)
 	std::ifstream file;
 	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	file.open(path, std::ios::in);
+	file.open(path, std::ios::binary);
 
 	if(!file.is_open()) {
 		//TODO: Error here, log something at some point
@@ -182,8 +182,10 @@ void FileLoader::LoadText(const char* path, char* &data)
 	file.seekg(0, std::ios::beg);
 
 	data = new char[size + 1];
+	std::fill(data, data + sizeof(char) * (size + 1), 0);
 	file.read(data, size);
 	data[size] = 0;
+
 	file.close();
 }
 

@@ -1,8 +1,0 @@
-#version 460 core
-
-in vec3 color;
-
-void main(void)
-{
-	gl_FragColor = vec4(color, 1.0);
-}

@@ -12,7 +12,7 @@
 //int InputManager::contextState;
 //int InputManager::moveIndex;
 //std::chrono::duration<float> InputManager::lastMoveTime;
-InputManager* InputManager::instance;
+/*InputManager* InputManager::instance;
 
 InputManager::InputManager()
 {
@@ -163,4 +163,4 @@ void InputManager::ExecuteCombo(const char* combo) // helper function to map the
 InputManager::~InputManager() 
 {
 	delete instance;
-}
+}*/
