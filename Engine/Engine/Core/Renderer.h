@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
+#include "AssetManager.h"
 #include "Shader.h"
 
 using namespace glm;
@@ -25,16 +26,17 @@ private:
 
 	//Shader variables
 	GLuint mainShaderProgram;
-	Shader* vertexShader;
-	Shader* fragmentShader;
+	boost::shared_ptr<Shader> vertexShader;
+	boost::shared_ptr<Shader> fragmentShader;
+	const AssetManager* am;
 
 	//Temporary proof function
 	void CreateTriangle();
 public:
-	Renderer();
+	Renderer(const AssetManager* am);
 	~Renderer();
 	GLFWwindow* GetWindow();
-	bool LoadShaders();
+	void CreateBasicProgram();
 	void Draw();
 };
 

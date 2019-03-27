@@ -20,9 +20,9 @@
 #include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
 #include "FileLoader.h"
+#include "Shader.h"
 
 //Predefinied cause these don't exist yet
-class Mesh;
 class Texture;
 
 /*! \class AssetManager
@@ -31,17 +31,19 @@ class Texture;
 class AssetManager
 {
 private:
-	boost::unordered::unordered_map<std::string, boost::shared_ptr<Mesh>> meshes;
+	boost::unordered::unordered_map<std::string, boost::shared_ptr<MeshData>> meshes;
 	boost::unordered::unordered_map<std::string, boost::shared_ptr<Texture>> textures;
+	boost::unordered::unordered_map<std::string, boost::shared_ptr<Shader>> shaders;
 	void LoadDir(const boost::filesystem::path &path);
+	void LoadAsset(const char* path, const char* ext, std::string name);
 
 public:
 	AssetManager();
 	AssetManager(const AssetManager&);
-	boost::shared_ptr<Mesh> GetMesh(const char* id);
-	boost::shared_ptr<Texture> GetTexture(const char* id);
+	boost::shared_ptr<MeshData> GetMesh(std::string id) const;
+	boost::shared_ptr<Texture> GetTexture(std::string id) const;
+	boost::shared_ptr<Shader> GetShader(std::string id) const;
 	//void SaveAssets();
-	void LoadAsset(const char* path, const char* ext, std::string name);
 
 	/*! \brief Loads the specified file / folder
 	 *
