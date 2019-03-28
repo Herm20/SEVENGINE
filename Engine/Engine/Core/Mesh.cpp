@@ -17,7 +17,7 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 	// Store data in buffer
 	glBufferData(
 		GL_ARRAY_BUFFER,
-		sizeof(Vertex) * 3,
+		sizeof(Vertex) * vertCount,
 		&vertBufData[0],
 		GL_STATIC_DRAW
 	);
@@ -67,7 +67,7 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(
 		GL_ELEMENT_ARRAY_BUFFER,
-		sizeof(u32) * 3,
+		sizeof(u32) * indexCount,
 		&indBufData[0],
 		GL_STATIC_DRAW
 	);
@@ -76,6 +76,6 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 
 void Mesh::Render() {
 	glBindVertexArray(this->vao);
-	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	//glDrawArrays(GL_TRIANGLES, 0, this->vertCount);
 }
