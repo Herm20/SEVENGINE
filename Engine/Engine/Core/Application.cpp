@@ -68,8 +68,7 @@ void Application::Run()
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
 	{
 		Time.update();
-		camera->movement(renderer->GetWindow(), renderer->GetWindowHeight(), renderer->GetWindowWidth());
-		//camera->update();
+		camera->update();
 		CamMovement();
 
 //#if defined _WIN32
