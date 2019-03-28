@@ -9,20 +9,25 @@ class SceneRef
 {
 private:
 	Scene* scene;
+	u64 index;
 	u64 sceneID;
 	u64 topID;
+
+	friend class Scene;
 
 public:
 	inline SceneRef() :
 		scene(nullptr),
+		index(U64_MAX),
 		sceneID(U64_MAX),
 		topID(U64_MAX)
 	{
 		// Nothing interesting to do here
 	}
 	
-	inline SceneRef(Scene* parentScene, u64 sID, u64 tID = U64_MAX) :
+	inline SceneRef(Scene* parentScene, u64 ind, u64 sID, u64 tID = U64_MAX) :
 		scene(parentScene),
+		index(ind),
 		sceneID(sID),
 		topID(tID)
 	{
@@ -35,12 +40,9 @@ public:
 	}
 
 	inline Scene* GetScene()   { return scene; }
+	inline u64    GetIndex()   { return index; }
 	inline u64    GetSceneID() { return sceneID; }
 	inline u64    GetTopID()   { return topID; }
-
-	inline void Move(u64 sID) { sceneID = sID; }
-	inline void Move(u64 sID, u64 tID) { sceneID = sID; topID = tID; }
-	inline void Move(Scene* newParentScene, u64 sID, u64 tID) { scene = newParentScene; sceneID = sID; topID = tID; }
 };
 
 #endif

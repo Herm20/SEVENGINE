@@ -16,6 +16,9 @@ private:
 	boost::container::vector<Component*> components;
 	SceneRef scene;
 
+	// Actually handles internal entity deletion, called by managing scene
+	void DestroyInternal();
+
 	friend class Scene;
 
 public:
@@ -23,7 +26,8 @@ public:
 	Entity(Scene* parentScene, u64 sID, u64 tID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
 	~Entity();
 
-	void Destroy() override;
+	// Flags the entity for deletion
+	void Destroy();
 
 	// <TAGS>
 

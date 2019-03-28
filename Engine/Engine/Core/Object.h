@@ -15,9 +15,6 @@
 class Object
 {
 private:
-	boost::container::vector<Object*> children;
-	Object* parent;
-
 	// Cached data for speeding up repeated access operations
 	mat4 world;
 	mat4 invWorld;
@@ -36,9 +33,6 @@ private:
 	bool needsRotationUpdated;
 #endif
 
-	// Helper methods
-	void AddChild(Object* newChild);
-	void RemoveChild(Object* child);
 #ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
 	void RequireUpdate();
 #else
@@ -46,13 +40,20 @@ private:
 #define RequireUpdate() 
 #endif
 
+	// TODO : Why is C++ bad about this ; find something more clever to do
+	friend class Entity;
+
+protected:
+	boost::container::vector<Object*> children;
+	Object* parent;
+
+	void AddChild(Object* newChild);
+	void RemoveChild(Object* child);
+
 public:
 	Object();
 	Object(const Transform& t, Object* parentObject = nullptr);
 	virtual ~Object();
-
-	// Destroy the object and its children - if you want support for a time-to-destroy parameter, ping me and I'll implement it script-side (because scripts are the only place something like that would conceivably be needed and it saves implementation bloat here)
-	virtual void Destroy();
 
 	// Changes the parent Object to another or none (nullptr)
 	void SetParent(Object* newParent, bool keepWorldTransform);

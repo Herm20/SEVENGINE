@@ -26,5 +26,23 @@ Entity* Scene::SpawnEntity(Entity* parent, const Transform& transform)
 
 void Scene::DestroyEntity(Entity* entity)
 {
-	// TODO : Sort out which direction destruction happens (scene to entity vs entity to scene)
+	// TODO : Something more elegant here
+	if (entity->scene.GetScene() == this)
+	{
+		SceneRef reference = entity->scene;
+		entity->DestroyInternal();
+
+		entityArrayGaps.push_back(reference.index);
+
+		entitiesAll[reference.sceneID] = entitiesAll[entitiesAll.size() - 1];
+		entitiesAll[reference.sceneID]->scene.sceneID = reference.sceneID;
+		entitiesAll.pop_back();
+
+		if (entitiesTop[reference.topID] != U64_MAX)
+		{
+			entitiesTop[reference.topID] = entitiesTop[entitiesTop.size() - 1];
+			entitiesTop[reference.topID]->scene.topID = reference.topID;
+			entitiesTop.pop_back();
+		}
+	}
 }
