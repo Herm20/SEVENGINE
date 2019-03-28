@@ -8,17 +8,16 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 	vertCount = meshData->getVertexCount();
 	const Vertex* vertBufData = meshData->getVertices();
 
-	GLuint vertBuf;
-	glGenVertexArrays(1, &vertArr);
-	glGenBuffers(1, &vertBuf);
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
-	glBindVertexArray(vertArr);
-	glBindBuffer(GL_ARRAY_BUFFER, vertBuf);
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	// Store data in buffer
 	glBufferData(
 		GL_ARRAY_BUFFER,
-		sizeof(Vertex) * this->vertCount,
+		sizeof(Vertex) * 3,
 		&vertBufData[0],
 		GL_STATIC_DRAW
 	);
@@ -60,9 +59,23 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 
 	// TODO: Add in tangents and bitangents
 
+	// Index buffer
+	indexCount = meshData->getIndexCount();
+	const u32* indBufData = meshData->getIndices();
+
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(
+		GL_ELEMENT_ARRAY_BUFFER,
+		sizeof(u32) * 3,
+		&indBufData[0],
+		GL_STATIC_DRAW
+	);
+
 }
 
 void Mesh::Render() {
-	glBindVertexArray(this->vertArr);
-	glDrawArrays(GL_TRIANGLES, 0, this->vertCount);
+	glBindVertexArray(this->vao);
+	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+	//glDrawArrays(GL_TRIANGLES, 0, this->vertCount);
 }

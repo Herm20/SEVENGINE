@@ -27,6 +27,9 @@ private:
 	GLuint vertexArrayID;
 	GLuint vertexBuffer;
 
+	GLuint indexArrayID;
+	GLuint indexBuffer;
+
 	//Shader variables
 	GLuint mainShaderProgram;
 	boost::shared_ptr<Shader> vertexShader;

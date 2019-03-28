@@ -11,7 +11,10 @@ class Mesh {
 private:
 
 	unsigned int vertCount;
-	GLuint vertArr;
+	unsigned int indexCount;
+	GLuint vao;
+	GLuint vbo;
+	GLuint ibo;
 
 public:
 

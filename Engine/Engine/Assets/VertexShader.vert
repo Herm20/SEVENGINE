@@ -14,9 +14,9 @@ out vec3 normFs;
 
 void main(void)
 {
-	//gl_Position = vec4(position, 1);
-	//uvFs = uv;
-	//return;
+	gl_Position = vec4(position, 1);
+	uvFs = uv;
+	return;
 
 	mat4 modelView = view * model;
 
