@@ -52,14 +52,22 @@ public:
 	boost::shared_ptr<Shader> GetShader(std::string id) const;
 	void SaveAssets();
 	void SaveAssetToFile(const char* dir, const char* filename, const char* content);
-	void SetAssetDir(std::string dir);
+
+	/*! \brief Sets the asset directory to used
+	 *
+	 * \param (std::string) dir - The directory to use for assets
+	 */
+	inline void SetAssetDir(std::string dir) { assetDir = boost::filesystem::path(dir); };
 
 	/*! \brief Loads the specified file / folder
 	 *
 	 * \param (char*) path - The path of the file or folder
 	 */
 	inline void LoadDirectory(const char* path) { LoadDir(boost::filesystem::path(path)); }
-	void LoadAssetsFromAssetDir();
+
+	/*! \brief Loads all the assets in the specified asset directory
+	 */
+	inline void LoadAssetsFromAssetDir() { LoadDir(assetDir); };
 	void operator=(const AssetManager&);
 	~AssetManager();
 };

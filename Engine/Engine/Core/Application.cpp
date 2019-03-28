@@ -18,10 +18,11 @@ Application::~Application()
 
 void Application::Init()
 {
-	Logger::Log(Logger::LOGTYPE::MSG, "Init session");
+	Logger::Log(Logger::LogType::MSG, "Init session");
 	assetMan = new AssetManager();
 	renderer = new Renderer(assetMan);
-	assetMan->LoadDirectory("Assets");
+	assetMan->SetAssetDir("Assets");
+	assetMan->LoadAssetsFromAssetDir();
 
 	//TODO: Change this to dynamically create programs
 	renderer->CreateBasicProgram();
@@ -52,9 +53,11 @@ void Application::Run()
 
 void Application::Exit()
 {
-	Logger::Log(Logger::LOGTYPE::MSG, "End session");
-	assetMan->SaveAssetToFile("Log", "log.txt", Logger::GetLog());
 	assetMan->SaveAssets();
+	Logger::Log(Logger::LogType::MSG, "End session");
+	std::string name = Logger::GetFormatedSystemTime();
+	name += "-log.txt";
+	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;
 	delete renderer;
 }

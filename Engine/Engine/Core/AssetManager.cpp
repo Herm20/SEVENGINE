@@ -74,18 +74,30 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 	{
 		if(this->meshes.find(name) == this->meshes.end())
 		{
-			boost::container::vector<MeshData> meshData = FileLoader::LoadMeshData(path);
+			boost::filesystem::path meshFile(path);
+			meshFile.replace_extension(boost::filesystem::path(".mesh"));
 
-			for(u32 i = 0; i < meshData.size(); i++)
+			if(boost::filesystem::exists(meshFile))
 			{
-				//TODO: Change the name so multiple meshes don't overwrite each other
-				std::string modName = name;
-
-				if(i > 0)
-					modName += std::to_string(i);
-
+				MeshData data = FileLoader::LoadQuickMeshData(meshFile.c_str());
 				meshShortNames[name] = path;
-				meshes[path] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
+				meshes[path] = boost::shared_ptr<MeshData>(new MeshData(data));
+			}
+
+			else
+			{
+				boost::container::vector<MeshData> meshData = FileLoader::LoadMeshData(path);
+
+				for(u32 i = 0; i < meshData.size(); i++)
+				{
+					std::string modName = name;
+
+					if(i > 0)
+						modName += std::to_string(i);
+
+					meshShortNames[name] = path;
+					meshes[path] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
+				}
 			}
 		}
 	}
@@ -155,51 +167,10 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 		shaders[path] = boost::shared_ptr<Shader>(new Shader(txt, type));
 		FileLoader::DeleteText(txt);
 	}
-
-	else if(strcmp(ext, ".mesh") == 0)
-	{
-		char* txt = nullptr;
-		FileLoader::LoadText(path, txt);
-		//TODO: Other mesh stuff
-
-		bool isInds = false;
-		std::stringstream ss(txt);
-		std::string tmp;
-		boost::container::vector<Vertex> verts;
-		boost::container::vector<u32> inds;
-
-		while(ss >> tmp)
-		{
-			if(isdigit(tmp[0]))
-			{
-				if(isInds)
-				{
-					inds.push_back(atoi(tmp.c_str()));
-				}
-
-				else
-				{
-					Vertex v;
-					ss >> v.pos.x >> v.pos.y >> v.pos.z;
-					ss >> v.uv.x >> v.uv.y;
-					ss >> v.norm.x >> v.norm.y >> v.norm.z;
-					ss >> v.tan.x >> v.tan.y >> v.tan.z;
-					ss >> v.bitan.x >> v.bitan.y >> v.bitan.z;
-
-					verts.push_back(v);
-				}
-			}
-
-			else if(tmp[0] == 'i')
-			{
-				isInds = true;
-			}
-		}
-
-		FileLoader::DeleteText(txt);
-	}
 }
 
+/*! \brief Saves all assets to the asset directory
+ */
 void AssetManager::SaveAssets()
 {
 	for(auto it = meshes.begin(); it != meshes.end(); it++)
@@ -256,8 +227,16 @@ void AssetManager::SaveAssets()
 			SaveAssetToFile(path.parent_path().c_str(), path.filename().c_str(), fileContents.c_str());
 		}
 	}
+
+	//TODO: Save other assets maybe
 }
 
+/*! \brief Saves an asset to a file
+ *
+ * \param (const char*) dir - The directory to save the file in
+ * \param (const char*) filename - The name for the file (including the extension)
+ * \param (const char*) content - The content of the file
+ */
 void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const char* content)
 {
 	boost::filesystem::path path(dir);
@@ -288,12 +267,12 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 		file.open(path.append(filename).c_str());
 		file << content;
 		file.close();
-	}
-}
 
-void AssetManager::SetAssetDir(std::string dir)
-{
-	assetDir = boost::filesystem::path(dir);
+		std::string out = "'";
+		out += path.string();
+		out += "' written successfully";
+		Logger::Log(Logger::MSG, out.c_str());
+	}
 }
 
 /*! \brief Function to actually load the files
@@ -321,11 +300,6 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 			}
 		}
 	}
-}
-
-void AssetManager::LoadAssetsFromAssetDir()
-{
-	LoadDir(assetDir);
 }
 
 /*! \brief Asset loader destructor

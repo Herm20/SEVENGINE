@@ -31,7 +31,7 @@ bool Shader::Compile(const char* shaderSrc)
 		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &logLength);
 		GLchar* infoLog = new GLchar[logLength];
 		glGetShaderInfoLog(shaderID, logLength, 0, infoLog);
-		Logger::Log(Logger::LOGTYPE::ERROR, infoLog);
+		Logger::Log(Logger::LogType::ERROR, infoLog);
 		glDeleteShader(shaderID);
 		delete[] infoLog;
 		return false;

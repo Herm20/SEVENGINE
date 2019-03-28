@@ -7,9 +7,10 @@
 
 namespace Logger
 {
-	enum LOGTYPE { MSG, ERROR, WARNING };
-	void Log(LOGTYPE type, const char* msg);
+	enum LogType { MSG, ERROR, WARNING };
+	void Log(LogType type, const char* msg);
 	const char* GetLog();
+	std::string GetFormatedSystemTime();
 };
 
 #endif
