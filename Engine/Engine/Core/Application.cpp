@@ -108,7 +108,7 @@ void Application::CamMovement()
 	//camera->rotation.x -= sens * (y - h * .5f);
 	//camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
-	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+	//glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
