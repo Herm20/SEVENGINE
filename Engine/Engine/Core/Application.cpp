@@ -68,16 +68,14 @@ void Application::Run()
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
 	{
 		Time.update();
-		camera->update();
 		CamMovement();
+		camera->update();
 
-//#if defined _WIN32
-//		system("CLS");
-//#elif defined __unix__
-//		system("clear");
-//#endif
-		// Update objects, process input, draw objects to the screen, et cetera
-		boost::this_thread::sleep_for(boost::chrono::milliseconds(250));
+  #if defined _WIN32
+		system("CLS");
+  #elif defined __unix__
+		system("clear");
+  #endif
 		renderer->Draw();
 	}
 }
@@ -97,49 +95,36 @@ void Application::Exit()
 void Application::CamMovement()
 {
 	// FPS Controls
-	float sens = .005;
 	int w = renderer->GetWindowWidth();
 	int h = renderer->GetWindowHeight();
-	double x;
-	double y;
-
-	glfwGetCursorPos(renderer->GetWindow(), &x, &y);
-
-	//camera->rotation.y -= sens * (x - w * .5f);
-	//camera->rotation.x -= sens * (y - h * .5f);
-	//camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
-
-	//glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
 
 	if (inputIsDown[GLFW_KEY_A])
-	{
-		camera->velocity += R * glm::vec3(-1, 0, 0);
-	}
-
-	if (inputIsDown[GLFW_KEY_D])
-	{
 		camera->velocity += R * glm::vec3(1, 0, 0);
-	}
+	
+	if (inputIsDown[GLFW_KEY_D])
+		camera->velocity += R * glm::vec3(-1, 0, 0);
 
 	if (inputIsDown[GLFW_KEY_W])
-	{
-		camera->velocity += R * glm::vec3(0, 0, -1);
-	}
-
-	if (inputIsDown[GLFW_KEY_S])
-	{
 		camera->velocity += R * glm::vec3(0, 0, 1);
-	}
+		
+	if (inputIsDown[GLFW_KEY_S])
+		camera->velocity += R * glm::vec3(0, 0, -1);
 
-	float speed = 1.f;
+	if (inputIsDown[GLFW_KEY_SPACE])
+		camera->velocity += R * glm::vec3(0, 1, 0);
+
+	if (inputIsDown[GLFW_KEY_X])
+		camera->velocity += R * glm::vec3(0, -1, 0);
+	
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed;
+		camera->velocity = glm::normalize(camera->velocity) * 1.0f;
 	}
 
 	camera->location += camera->velocity * Time.dt;
+	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP
