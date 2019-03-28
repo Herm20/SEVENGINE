@@ -13,6 +13,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #endif
 
+#include "Logger.h"
 #include "Types.h"
 #include "MeshData.h"
 
@@ -21,6 +22,7 @@
  */
 namespace FileLoader
 {
+	MeshData LoadQuickMeshData(const char* path);
 	boost::container::vector<MeshData> LoadMeshData(const char* path);
 	void LoadTexture(const char* path, unsigned char* &data, i32* width, i32* height, i32* channels);
 	void DeleteTexture(unsigned char* &data);

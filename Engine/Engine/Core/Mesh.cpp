@@ -5,8 +5,8 @@
 
 Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 
-	vertCount = meshData->getVertexCount();
-	const Vertex* vertBufData = meshData->getVertices();
+	vertCount = meshData->GetVertexCount();
+	const Vertex* vertBufData = meshData->GetVertices();
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -60,8 +60,8 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 	// TODO: Add in tangents and bitangents
 
 	// Index buffer
-	indexCount = meshData->getIndexCount();
-	const u32* indBufData = meshData->getIndices();
+	indexCount = meshData->GetIndexCount();
+	const u32* indBufData = meshData->GetIndices();
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);

@@ -27,8 +27,8 @@ AssetManager::AssetManager()
  */
 boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
 {
-	if(this->meshes.find(id) != this->meshes.end())
-		return this->meshes.find(id)->second;
+	if(this->meshes.find(this->meshShortNames.find(id)->second) != this->meshes.end())
+		return this->meshes.find(this->meshShortNames.find(id)->second)->second;
 
 	return nullptr;
 }
@@ -55,8 +55,8 @@ boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
  */
 boost::shared_ptr<Shader> AssetManager::GetShader(std::string id) const
 {
-	 if(this->shaders.find(id) != this->shaders.end())
-		return this->shaders.find(id)->second;
+	 if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
+		return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
 
 	return nullptr;
 }
@@ -74,17 +74,30 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 	{
 		if(this->meshes.find(name) == this->meshes.end())
 		{
-			boost::container::vector<MeshData> meshData = FileLoader::LoadMeshData(path);
+			boost::filesystem::path meshFile(path);
+			meshFile.replace_extension(boost::filesystem::path(".mesh"));
 
-			for(u32 i = 0; i < meshData.size(); i++)
+			if(boost::filesystem::exists(meshFile))
 			{
-				//TODO: Change the name so multiple meshes don't overwrite each other
-				std::string modName = name;
+				MeshData data = FileLoader::LoadQuickMeshData(meshFile.c_str());
+				meshShortNames[name] = path;
+				meshes[path] = boost::shared_ptr<MeshData>(new MeshData(data));
+			}
 
-				if(i > 0)
-					modName += std::to_string(i);
+			else
+			{
+				boost::container::vector<MeshData> meshData = FileLoader::LoadMeshData(path);
 
-				meshes[name] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
+				for(u32 i = 0; i < meshData.size(); i++)
+				{
+					std::string modName = name;
+
+					if(i > 0)
+						modName += std::to_string(i);
+
+					meshShortNames[name] = path;
+					meshes[path] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
+				}
 			}
 		}
 	}
@@ -101,8 +114,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 
 			if(strcmp(ext, ".hdr") == 0)
 			{
-				float* data;
-				//float* data = nullptr;
+				float* data = nullptr;
 				FileLoader::LoadTextureHDR(path, data, &width, &height, &channels);
 
 				//TODO: Create a new texture with the data
@@ -112,8 +124,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 
 			else
 			{
-				unsigned char* data;
-				//unsigned char* data = nullptr;
+				unsigned char* data = nullptr;
 				FileLoader::LoadTexture(path, data, &width, &height, &channels);
 				//TODO: Create a new texture with the data
 
@@ -152,8 +163,115 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 		else if(strcmp(ext, ".comp") == 0)
 			type = GL_COMPUTE_SHADER;
 
-		shaders[name] = boost::shared_ptr<Shader>(new Shader(txt, type));
+		shaderShortNames[name] = path;
+		shaders[path] = boost::shared_ptr<Shader>(new Shader(txt, type));
 		FileLoader::DeleteText(txt);
+	}
+}
+
+/*! \brief Saves all assets to the asset directory
+ */
+void AssetManager::SaveAssets()
+{
+	for(auto it = meshes.begin(); it != meshes.end(); it++)
+	{
+		boost::filesystem::path path(it->first);
+
+		if(strcmp(path.extension().c_str(), ".mesh") != 0)
+			path.replace_extension(boost::filesystem::path(".mesh"));
+
+		if(!boost::filesystem::exists(path))
+		{
+			std::string fileContents = "";
+
+			for(u32 i = 0; i < it->second->GetVertexCount(); i++)
+			{
+				fileContents += to_string(it->second->GetVertices()[i].pos.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].pos.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].pos.z);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].uv.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].uv.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].norm.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].norm.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].norm.z);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].tan.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].tan.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].tan.z);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].bitan.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].bitan.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].bitan.z);
+				fileContents += " ";
+			}
+
+			fileContents += "i ";
+
+			for(u32 i = 0; i < it->second->GetIndexCount(); i++)
+			{
+				fileContents += to_string(it->second->GetIndices()[i]);
+				fileContents += " ";
+			}
+
+			SaveAssetToFile(path.parent_path().c_str(), path.filename().c_str(), fileContents.c_str());
+		}
+	}
+
+	//TODO: Save other assets maybe
+}
+
+/*! \brief Saves an asset to a file
+ *
+ * \param (const char*) dir - The directory to save the file in
+ * \param (const char*) filename - The name for the file (including the extension)
+ * \param (const char*) content - The content of the file
+ */
+void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const char* content)
+{
+	boost::filesystem::path path(dir);
+
+	if(!boost::filesystem::exists(path))
+	{
+		if(boost::filesystem::create_directory(path))
+		{
+			std::string msg = "Directory '";
+			msg.append(path.c_str());
+			msg.append("' created Successfully");
+			Logger::Log(Logger::MSG, msg.c_str());
+		}
+
+		else
+		{
+			std::string msg = "Failed to created directory '";
+			msg.append(path.c_str());
+			msg.append("'!");
+			Logger::Log(Logger::ERROR, msg.c_str());
+			return;
+		}
+	}
+
+	if(boost::filesystem::is_directory(path))
+	{
+		ofstream file;
+		file.open(path.append(filename).c_str());
+		file << content;
+		file.close();
+
+		std::string out = "'";
+		out += path.string();
+		out += "' written successfully";
+		Logger::Log(Logger::MSG, out.c_str());
 	}
 }
 
@@ -161,8 +279,12 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
  */
 void AssetManager::LoadDir(const boost::filesystem::path &path)
 {
-	if(!boost::filesystem::exists(path)) {
-		//printf("Directory not found");
+	if(!boost::filesystem::exists(path))
+	{
+		std::string msg = "Directory '";
+		msg.append(path.c_str());
+		msg.append("' not found!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
 
@@ -178,7 +300,6 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 			}
 		}
 	}
-
 }
 
 /*! \brief Asset loader destructor

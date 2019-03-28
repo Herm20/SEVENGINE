@@ -87,10 +87,9 @@ void Renderer::CreateBasicProgram()
 		glGetProgramiv(mainShaderProgram, GL_INFO_LOG_LENGTH, &logLength);
 		GLchar* infoLog = new GLchar[logLength];
 		glGetProgramInfoLog(mainShaderProgram, logLength, 0, infoLog);
-		printf(infoLog);
+		Logger::Log(Logger::ERROR, infoLog);
 		glDeleteProgram(mainShaderProgram);
 		delete[] infoLog;
-		//TODO: Print error
 	}
 
 	glm::vec3 eye = glm::vec3(0, 0, 0);
@@ -148,4 +147,9 @@ void Renderer::CreateTriangle()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tri_buffer_data), tri_buffer_data, GL_STATIC_DRAW);
 
+}
+
+bool Renderer::ShouldClose()
+{
+	return glfwWindowShouldClose(window);
 }

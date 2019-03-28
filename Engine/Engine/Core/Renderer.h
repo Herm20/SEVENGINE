@@ -10,7 +10,7 @@
 #include "Shader.h"
 #include "Entity.h"
 #include "Mesh.h"
-
+#include "Logger.h"
 
 using namespace glm;
 using namespace std;
@@ -51,6 +51,7 @@ public:
 	int GetWindowWidth();
 	void CreateBasicProgram();
 	void Draw();
+	bool ShouldClose();
 };
 
 #endif

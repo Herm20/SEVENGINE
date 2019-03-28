@@ -35,20 +35,32 @@ Application::~Application()
 	// Nothing interesting to do here (yet)
 }
 
+
 void Application::Init()
 {
-	Logger::Log(Logger::LogType::MSG, "Initializing engine");
+<<<<<<< HEAD
+	Logger::Log(Logger::LogType::MSG, "Init session");
+=======
+	
+>>>>>>> f25e1bd3016380b31c4e3ac114d8404ed99f51eb
 	assetMan = new AssetManager();
 	camera = new Camera();
 	renderer = new Renderer(assetMan);
+<<<<<<< HEAD
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
+=======
+	assetMan->LoadDirectory("Assets");
+	Load();
+>>>>>>> f25e1bd3016380b31c4e3ac114d8404ed99f51eb
 
 	//TODO: Change this to dynamically create programs
 	renderer->CreateBasicProgram();
 	//masterBG.InitSound();
 	//masterBG.LoadFile("audio/gameMusic.mp3");
 	//masterBG.Play(false);
+<<<<<<< HEAD
+=======
 
 	/// SUPER TEMP
 	//Set the click function when loading game
@@ -56,6 +68,9 @@ void Application::Init()
 	// Set the keypress function when loading game
 	glfwSetMouseButtonCallback(renderer->GetWindow(), mouseClick);
 	///
+
+	printf("INIT\n");
+>>>>>>> f25e1bd3016380b31c4e3ac114d8404ed99f51eb
 }
 
 void Application::Load()
@@ -65,18 +80,25 @@ void Application::Load()
 
 void Application::Run()
 {
+	// Making it "true" for now
+<<<<<<< HEAD
+	while (!renderer->ShouldClose())
+=======
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
+>>>>>>> f25e1bd3016380b31c4e3ac114d8404ed99f51eb
 	{
 		Time.update();
 		camera->movement(renderer->GetWindow(), renderer->GetWindowHeight(), renderer->GetWindowWidth());
 		//camera->update();
 		CamMovement();
 
-//#if defined _WIN32
-//		system("CLS");
-//#elif defined __unix__
-//		system("clear");
-//#endif
+		//printf("Time: %f", Time.fps);
+
+#if defined _WIN32
+		system("CLS");
+#elif defined __unix__
+		system("clear");
+#endif
 		// Update objects, process input, draw objects to the screen, et cetera
 		boost::this_thread::sleep_for(boost::chrono::milliseconds(250));
 		renderer->Draw();
@@ -86,7 +108,7 @@ void Application::Run()
 void Application::Exit()
 {
 	assetMan->SaveAssets();
-	Logger::Log(Logger::LogType::MSG, "Exiting engine");
+	Logger::Log(Logger::LogType::MSG, "End session");
 	std::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
@@ -144,3 +166,4 @@ void Application::CamMovement()
 	camera->location += camera->velocity * Time.dt;
 }
 /// SUPER TEMP
+

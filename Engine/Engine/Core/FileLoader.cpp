@@ -17,6 +17,95 @@ namespace FileLoader
 	static void ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<MeshData> &meshes);
 };
 
+/*! \brief Loads a mesh as meshdata
+ *
+ * \param (const char*) path - Path to the mesh file
+ *
+ * \return (boost::container::vector<MeshData>) Vector of all loaded MeshData
+ */
+boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
+{
+	Assimp::Importer import;
+	const aiScene* scene = import.ReadFile(path, aiProcess_CalcTangentSpace |
+												 aiProcess_Triangulate |
+												 aiProcess_JoinIdenticalVertices|
+												 aiProcess_SortByPType |
+												 aiProcess_GenSmoothNormals |
+												 aiProcess_FixInfacingNormals );
+
+
+	boost::container::vector<MeshData> meshes;
+	ProcessAINode(scene->mRootNode, scene, meshes);
+
+	std::string msg = "'";
+	msg.append(path);
+
+	if(meshes.size() == 0) {
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
+		return meshes;
+	}
+
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
+	return meshes;
+}
+
+/*! \brief Loads meshdata from a .mesh file
+ *
+ * \param (const char*) path - Path to the mesh file
+ *
+ * \return (MeshData) The loaded MeshData
+ */
+MeshData FileLoader::LoadQuickMeshData(const char* path)
+{
+	char* txt = nullptr;
+	FileLoader::LoadText(path, txt);
+
+	bool isInds = false;
+	std::stringstream ss(txt);
+	std::string tmp;
+	boost::container::vector<Vertex> verts;
+	boost::container::vector<u32> inds;
+
+	while(ss >> tmp)
+	{
+		if(!isalpha(tmp[0]))
+		{
+			if(isInds)
+			{
+				inds.push_back(atoi(tmp.c_str()));
+			}
+
+			else
+			{
+				Vertex v;
+				v.pos.x = atoi(tmp.c_str());
+				ss >> v.pos.y >> v.pos.z;
+				ss >> v.uv.x >> v.uv.y;
+				ss >> v.norm.x >> v.norm.y >> v.norm.z;
+				ss >> v.tan.x >> v.tan.y >> v.tan.z;
+				ss >> v.bitan.x >> v.bitan.y >> v.bitan.z;
+
+				verts.push_back(v);
+			}
+		}
+
+		else if(tmp[0] == 'i')
+		{
+			isInds = true;
+		}
+	}
+
+	FileLoader::DeleteText(txt);
+
+	MeshData data;
+	data.CopyVerticesFromVector(verts);
+	data.CopyIndicesFromVector(inds);
+
+	return data;
+}
+
 /*! \brief Converts an assimp scene to a series of meshes
  *
  * \param (aiNode*) node - The ai node to process
@@ -31,7 +120,9 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		boost::container::vector<Vertex> verts;
 		boost::container::vector<u32> inds;
-		bool uvs;
+		bool uvs = false;
+		bool norms = false;
+		bool tansBitans = false;
 
 		//Get all the indices in the submesh
 		for(u32 j = 0; j < mesh->mNumFaces; j++)
@@ -42,22 +133,40 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		}
 
 		//Check if there are uvs
-		if(mesh->mTextureCoords[0])
+		if(mesh->HasTextureCoords(0))
 			uvs = true;
+		if(mesh->HasNormals())
+			norms = true;
+		if(mesh->HasTangentsAndBitangents())
+			tansBitans = true;
 
 		//Iterate though all the vertices
 		for(u32 j = 0; j < mesh->mNumVertices; j++)
 		{
 			Vertex v;
 			v.pos = glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z);
-			v.norm = glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z);
-			v.tan = glm::vec3(mesh->mTangents[j].x, mesh->mTangents[j].y, mesh->mTangents[j].z);
-			v.bitan = glm::vec3(mesh->mBitangents[j].x, mesh->mBitangents[j].y, mesh->mBitangents[j].z);
 
 			if(uvs)
 				v.uv = glm::vec2(mesh->mTextureCoords[0][j].x, mesh->mTextureCoords[0][j].y);
 			else
-				v.uv = glm::vec2(0.0f, 0.0f);
+				v.uv = glm::vec2();
+
+			if(norms)
+				v.norm = glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z);
+			else
+				v.norm = glm::vec3();
+
+			if(tansBitans)
+			{
+				v.tan = glm::vec3(mesh->mTangents[j].x, mesh->mTangents[j].y, mesh->mTangents[j].z);
+				v.bitan = glm::vec3(mesh->mBitangents[j].x, mesh->mBitangents[j].y, mesh->mBitangents[j].z);
+			}
+
+			else
+			{
+				v.tan = glm::vec3();
+				v.bitan = glm::vec3();
+			}
 
 			verts.push_back(v);
 		}
@@ -76,32 +185,6 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 	}
 }
 
-/*! \brief Loads a mesh as meshdata
- *
- * \param (const char*) path - Path to the mesh file
- *
- * \return (boost::container::vector<MeshData>) Vector of all loaded MeshData
- */
-boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
-{
-	char* src = nullptr;
-
-	FileLoader::LoadText(path, src);
-	std::stringstream ss(src);
-	FileLoader::DeleteText(src);
-
-	Assimp::Importer import;
-	const aiScene* scene = import.ReadFile(path, aiProcess_CalcTangentSpace |
-												 aiProcess_Triangulate |
-												 aiProcess_JoinIdenticalVertices|
-												 aiProcess_SortByPType);
-
-
-	boost::container::vector<MeshData> meshes;
-	ProcessAINode(scene->mRootNode, scene, meshes);
-	return meshes;
-}
-
 /*! \brief Loads a texture
  *
  * \param (const char*) path - Path to the texture
@@ -114,10 +197,17 @@ void FileLoader::LoadTexture(const char* path, unsigned char* &data, i32* width,
 {
 	data = stbi_load(path, width, height, channels, 0);
 
+	std::string msg = "'";
+	msg.append(path);
+
 	if(data == nullptr) {
-		//TODO: Error here, log something at some point
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
+
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
 }
 
 /*! \brief Deletes texture data
@@ -141,10 +231,17 @@ void FileLoader::LoadTextureHDR(const char* path, float* &data, i32* width, i32*
 {
 	data = stbi_loadf(path, width, height, channels, 0);
 
+	std::string msg = "'";
+	msg.append(path);
+
 	if(data == nullptr) {
-		//TODO: Error here, log something at some point
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
+
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
 }
 
 /*! \brief Deletes texture data
@@ -168,18 +265,19 @@ void FileLoader::LoadText(const char* path, char* &data)
 
 	file.open(path, std::ios::binary);
 
+	std::string msg = "'";
+	msg.append(path);
+
 	if(!file.is_open()) {
-		//TODO: Error here, log something at some point
 		file.clear();
-		std::string err = "failed to open file: ";
-		err += std::string(path);
-		throw std::runtime_error(err);
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
 
-	file.seekg(0, std::ios::end);
+	file.seekg(0, file.end);
 	size_t size = file.tellg();
-	file.seekg(0, std::ios::beg);
+	file.seekg(0, file.beg);
 
 	data = new char[size + 1];
 	std::fill(data, data + sizeof(char) * (size + 1), 0);
@@ -187,6 +285,9 @@ void FileLoader::LoadText(const char* path, char* &data)
 	data[size] = 0;
 
 	file.close();
+
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
 }
 
 /*! \brief Deletes text data
