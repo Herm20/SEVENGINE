@@ -1,0 +1,47 @@
+#ifndef APPLICATION_H_
+#define APPLICATION_H_
+
+#include "Renderer.h"
+#include "Timer.h"
+#include "AudioManager.h"
+#include "AssetManager.h"
+<<<<<<< HEAD
+#include "Logger.h"
+=======
+#include "Camera.h"
+#include <map>
+
+>>>>>>> f25e1bd3016380b31c4e3ac114d8404ed99f51eb
+
+class Application
+{
+public:
+	Application();
+	~Application();
+
+	Renderer* renderer;
+	AssetManager* assetMan;
+	Camera* camera;
+	// Printing fps
+	static Timer Time;
+
+	AudioManager masterBG;
+
+	// Initialize core engine systems and resources
+	void Init();
+
+	// Start the engine
+	void Run();
+
+	// Cleanup for program exit
+	void Exit();
+
+	// Load Assets
+	void Load();
+
+	/// SUPER TEMP
+	void CamMovement();
+	/// SUPER TEMP
+};
+
+#endif

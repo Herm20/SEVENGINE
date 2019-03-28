@@ -50,6 +50,16 @@ GLFWwindow * Renderer::GetWindow()
 	return window;
 }
 
+int Renderer::GetWindowHeight()
+{
+	return height;
+}
+
+int Renderer::GetWindowWidth()
+{
+	return width;
+}
+
 void Renderer::CreateBasicProgram()
 {
 	vertexShader = am->GetShader("VertexShader");
@@ -77,11 +87,23 @@ void Renderer::CreateBasicProgram()
 		glGetProgramiv(mainShaderProgram, GL_INFO_LOG_LENGTH, &logLength);
 		GLchar* infoLog = new GLchar[logLength];
 		glGetProgramInfoLog(mainShaderProgram, logLength, 0, infoLog);
-		printf(infoLog);
+		Logger::Log(Logger::ERROR, infoLog);
 		glDeleteProgram(mainShaderProgram);
 		delete[] infoLog;
-		//TODO: Print error
 	}
+
+	glm::vec3 eye = glm::vec3(0, 0, 0);
+	glm::vec3 center = eye * glm::vec3(0, 0, 1);
+	glm::vec3 up = glm::vec3(0, 1, 0);
+	lookMat = glm::lookAt(eye, center, up);
+
+	persMat = glm::perspective(3.14159f * 0.4f / 1.0f, 1920.f / 1080.f, 0.01f, 1000.f);
+
+	//glUniformMatrix4fv(4, 1, GL_FALSE, &lookMat[0][0]);
+	//glUniformMatrix4fv(5, 1, GL_FALSE, &persMat[0][0]);
+
+	testMesh = new Mesh(am->GetMesh("box"));
+
 }
 
 //Iterates through and draws all entities to the screen
@@ -93,20 +115,15 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//Draw that triangle that we made
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(
-		0,			//attribute 0. Must match the layout in the shader
-		3,			//size
-		GL_FLOAT,	//type
-		GL_FALSE,	//normalized?
-		0,			//stride
-		(void*)0	//array buffer offset
-	);
+	// Set transform
+	glm::vec3 position = glm::vec3(0, 0, 5);
+	glm::mat4 posMatrix = glm::translate(glm::mat4(), position);
+	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
+	// Draw object
+
+	testMesh->Render();
+	glBindVertexArray(0);
 
 	//Swap front and back buffers
 	glfwSwapBuffers(window);
@@ -129,6 +146,7 @@ void Renderer::CreateTriangle()
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tri_buffer_data), tri_buffer_data, GL_STATIC_DRAW);
+
 }
 
 bool Renderer::ShouldClose()

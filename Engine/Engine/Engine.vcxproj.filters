@@ -66,6 +66,9 @@
     <ClCompile Include="Core\MeshData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Core\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -122,18 +125,21 @@
     <ClInclude Include="Core\MeshData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Core\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Mesh.h">
+    <ClInclude Include="Core\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="VertexShader.glsl">
+    <None Include="Assets\FragmentShader.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="FragmentShader.glsl">
+    <None Include="Assets\VertexShader.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

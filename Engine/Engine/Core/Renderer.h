@@ -8,6 +8,9 @@
 #include <fstream>
 #include "AssetManager.h"
 #include "Shader.h"
+#include "Entity.h"
+#include "Mesh.h"
+#include "Logger.h"
 
 using namespace glm;
 using namespace std;
@@ -24,18 +27,28 @@ private:
 	GLuint vertexArrayID;
 	GLuint vertexBuffer;
 
+	GLuint indexArrayID;
+	GLuint indexBuffer;
+
 	//Shader variables
 	GLuint mainShaderProgram;
 	boost::shared_ptr<Shader> vertexShader;
 	boost::shared_ptr<Shader> fragmentShader;
 	const AssetManager* am;
+	Entity* dummyEnt;
 
 	//Temporary proof function
 	void CreateTriangle();
+	Mesh* testMesh;
+	glm::mat4 lookMat;
+	glm::mat4 persMat;
+
 public:
 	Renderer(const AssetManager* am);
 	~Renderer();
 	GLFWwindow* GetWindow();
+	int GetWindowHeight();
+	int GetWindowWidth();
 	void CreateBasicProgram();
 	void Draw();
 	bool ShouldClose();

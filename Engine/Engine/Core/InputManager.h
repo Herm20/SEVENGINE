@@ -1,8 +1,8 @@
-#ifndef INPUTMANAGER_H_
+/*#ifndef INPUTMANAGER_H_
 #define INPUTMANAGER_H_
 
 #include <GLFW/glfw3.h>
-#include "Timer.h"
+#include "Timer_Sad.h"
 #include <map>
 #include <Vector>
 
@@ -42,4 +42,4 @@ private:
 	//bunch of static callbacks for calling relevant methods from the entity class wrapper/interface for input.
 };
 
-#endif // !INPUTMANAGER_H_
+#endif // !INPUTMANAGER_H_*/

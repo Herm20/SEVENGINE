@@ -1,10 +1,12 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#include <map>
 #include "Renderer.h"
 #include "Timer.h"
 #include "AudioManager.h"
 #include "AssetManager.h"
+#include "Camera.h"
 #include "Logger.h"
 
 class Application
@@ -15,6 +17,7 @@ public:
 
 	Renderer* renderer;
 	AssetManager* assetMan;
+	Camera* camera;
 	// Printing fps
 	static Timer Time;
 
@@ -28,6 +31,13 @@ public:
 
 	// Cleanup for program exit
 	void Exit();
+
+	// Load Assets
+	void Load();
+
+	/// SUPER TEMP
+	void CamMovement();
+	/// SUPER TEMP
 };
 
 #endif

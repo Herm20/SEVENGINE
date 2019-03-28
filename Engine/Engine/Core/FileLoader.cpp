@@ -263,7 +263,7 @@ void FileLoader::LoadText(const char* path, char* &data)
 	std::ifstream file;
 	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	file.open(path, std::ios::in);
+	file.open(path, std::ios::binary);
 
 	std::string msg = "'";
 	msg.append(path);
@@ -280,8 +280,10 @@ void FileLoader::LoadText(const char* path, char* &data)
 	file.seekg(0, file.beg);
 
 	data = new char[size + 1];
+	std::fill(data, data + sizeof(char) * (size + 1), 0);
 	file.read(data, size);
 	data[size] = 0;
+
 	file.close();
 
 	msg.append("' loaded successfully");

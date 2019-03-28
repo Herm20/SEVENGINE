@@ -1,13 +1,13 @@
 #include "MeshData.h"
 
-/*! \brief MeshData constructor
+/*! \brief Mesh constructor
  */
 MeshData::MeshData()
 {
 
 }
 
-/*! \brief MeshData constructor
+/*! \brief Mesh constructor
  *
  * \param (boost::shared_ptr<Vertex[]>) verts - The vertex data of the mesh
  * \param (boost::shared_ptr<u32[]>) inds - The index data of the mesh
@@ -23,9 +23,9 @@ MeshData::MeshData(boost::shared_ptr<Vertex[]> verts, boost::shared_ptr<u32[]> i
 
 }
 
-/*! \brief MeshData copy constructor
+/*! \brief Mesh copy constructor
  *
- * \param (const MeshData &) md - The mesh data to copy
+ * \param (const Mesh &) md - The mesh data to copy
  */
 MeshData::MeshData(const MeshData &md)
 {
@@ -57,11 +57,11 @@ void MeshData::CopyIndicesFromVector(const boost::container::vector<u32> &inds)
 	std::copy(inds.begin(), inds.end(), this->inds.get());
 }
 
-/*! \brief MeshData copy constructor
+/*! \brief Mesh copy constructor
  *
- * \param (const MeshData &) md - The mesh data to copy
+ * \param (const Mesh &) md - The mesh data to copy
  *
- * \return (const MeshData &) This mesh data after copying
+ * \return (const Mesh &) This mesh data after copying
  */
 const MeshData & MeshData::operator=(const MeshData &md)
 {

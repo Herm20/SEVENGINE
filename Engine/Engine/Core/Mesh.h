@@ -1,14 +1,27 @@
-#ifndef MESH_H
-#define MESH_H
-#include "MeshData.h"
-#include <GL/glew.h>
+#ifndef MESH_H_
+#define MESH_H_
 
-class Mesh 
-{
+#include "MeshData.h"
+
+#include <GL/glew.h>
+#include <glm/glm.hpp>
+
+class Mesh {
+
+private:
+
+	unsigned int vertCount;
+	unsigned int indexCount;
+	GLuint vao;
+	GLuint vbo;
+	GLuint ibo;
+
 public:
-	Mesh();
-	~Mesh();
-	bool Load(MeshData* _data);
-	void Render(MeshData* _data);
+
+	Mesh(boost::shared_ptr<MeshData> meshData);
+
+	void Render();
+
 };
-#endif // !MESH_H
+
+#endif // !MESH_H_

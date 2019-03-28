@@ -12,7 +12,7 @@
 
 class Input
 {
-	InputManager* inputmanager;
+	//InputManager* inputmanager;
 	static bool m_keys[Max_keys];
 	static bool m_mouse_buttons[Max_Buttons];
 	static double mouseX, mouseY;
