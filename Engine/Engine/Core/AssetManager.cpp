@@ -79,7 +79,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 
 			if(boost::filesystem::exists(meshFile))
 			{
-				MeshData data = FileLoader::LoadQuickMeshData(meshFile.c_str());
+				MeshData data = FileLoader::LoadQuickMeshData(meshFile.string().c_str());
 				meshShortNames[name] = path;
 				meshes[path] = boost::shared_ptr<MeshData>(new MeshData(data));
 			}
@@ -177,7 +177,7 @@ void AssetManager::SaveAssets()
 	{
 		boost::filesystem::path path(it->first);
 
-		if(strcmp(path.extension().c_str(), ".mesh") != 0)
+		if(strcmp(path.extension().string().c_str(), ".mesh") != 0)
 			path.replace_extension(boost::filesystem::path(".mesh"));
 
 		if(!boost::filesystem::exists(path))
@@ -224,7 +224,7 @@ void AssetManager::SaveAssets()
 				fileContents += " ";
 			}
 
-			SaveAssetToFile(path.parent_path().c_str(), path.filename().c_str(), fileContents.c_str());
+			SaveAssetToFile(path.parent_path().string().c_str(), path.filename().string().c_str(), fileContents.c_str());
 		}
 	}
 
@@ -246,7 +246,7 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 		if(boost::filesystem::create_directory(path))
 		{
 			std::string msg = "Directory '";
-			msg.append(path.c_str());
+			msg.append(path.string().c_str());
 			msg.append("' created Successfully");
 			Logger::Log(Logger::MSG, msg.c_str());
 		}
@@ -254,7 +254,7 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 		else
 		{
 			std::string msg = "Failed to created directory '";
-			msg.append(path.c_str());
+			msg.append(path.string().c_str());
 			msg.append("'!");
 			Logger::Log(Logger::ERROR, msg.c_str());
 			return;
@@ -282,7 +282,7 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 	if(!boost::filesystem::exists(path))
 	{
 		std::string msg = "Directory '";
-		msg.append(path.c_str());
+		msg.append(path.string().c_str());
 		msg.append("' not found!");
 		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
