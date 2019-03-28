@@ -92,7 +92,9 @@ The OpenGL Extension Wrangler Library is useful for determining the level of Ope
 
 7. (Visual Studio) Go to Linker -> Input. Add `glew32s.lib` to `Additional Dependencies`
 
-8. (Visual Studio) Go to C/C++ -> Preprocessor. Add `GLEW_STATIC` to `Preprocessor Definitions`
+8. (Visual Studio) Go to Linker -> Input. Add `opengl32.lib` to `Additional Dependencies`
+
+9. (Visual Studio) Go to C/C++ -> Preprocessor. Add `GLEW_STATIC` to `Preprocessor Definitions`
 
 ### GLFW
 
@@ -129,3 +131,11 @@ _Note : this guide is primarily targeted at setting up a Windows development env
 6. (Visual Studio) Add `$(ProjectDir)Engine\boost_1_69_0` to `Include Directories`
 
 7. (Visual Studio) Add `$(ProjectDir)Engine\boost_1_69_0\stage\lib` to `Library Directories`
+
+### Models
+
+1. Go to our Google Drive and download `box.obj` and it to the `Engine\Assets` folder.
+
+### ASSIMP and FMOD
+
+If you are getting errors saying that ASSIMP or FMOD are are missing, copy `assimp-vc140-mt.dll` and/or `fmod.dll` from `Engine\libaries` to the same folder same your executable.
