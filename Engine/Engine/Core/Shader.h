@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
+#include "Logger.h"
 
 using namespace std;
 

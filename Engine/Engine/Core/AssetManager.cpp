@@ -27,8 +27,8 @@ AssetManager::AssetManager()
  */
 boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
 {
-	if(this->meshes.find(id) != this->meshes.end())
-		return this->meshes.find(id)->second;
+	if(this->meshes.find(this->meshShortNames.find(id)->second) != this->meshes.end())
+		return this->meshes.find(this->meshShortNames.find(id)->second)->second;
 
 	return nullptr;
 }
@@ -55,8 +55,8 @@ boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
  */
 boost::shared_ptr<Shader> AssetManager::GetShader(std::string id) const
 {
-	 if(this->shaders.find(id) != this->shaders.end())
-		return this->shaders.find(id)->second;
+	 if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
+		return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
 
 	return nullptr;
 }
@@ -84,7 +84,8 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 				if(i > 0)
 					modName += std::to_string(i);
 
-				meshes[name] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
+				meshShortNames[name] = path;
+				meshes[path] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
 			}
 		}
 	}
@@ -101,8 +102,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 
 			if(strcmp(ext, ".hdr") == 0)
 			{
-				float* data;
-				//float* data = nullptr;
+				float* data = nullptr;
 				FileLoader::LoadTextureHDR(path, data, &width, &height, &channels);
 
 				//TODO: Create a new texture with the data
@@ -112,8 +112,7 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 
 			else
 			{
-				unsigned char* data;
-				//unsigned char* data = nullptr;
+				unsigned char* data = nullptr;
 				FileLoader::LoadTexture(path, data, &width, &height, &channels);
 				//TODO: Create a new texture with the data
 
@@ -152,17 +151,161 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 		else if(strcmp(ext, ".comp") == 0)
 			type = GL_COMPUTE_SHADER;
 
-		shaders[name] = boost::shared_ptr<Shader>(new Shader(txt, type));
+		shaderShortNames[name] = path;
+		shaders[path] = boost::shared_ptr<Shader>(new Shader(txt, type));
 		FileLoader::DeleteText(txt);
 	}
+
+	else if(strcmp(ext, ".mesh") == 0)
+	{
+		char* txt = nullptr;
+		FileLoader::LoadText(path, txt);
+		//TODO: Other mesh stuff
+
+		bool isInds = false;
+		std::stringstream ss(txt);
+		std::string tmp;
+		boost::container::vector<Vertex> verts;
+		boost::container::vector<u32> inds;
+
+		while(ss >> tmp)
+		{
+			if(isdigit(tmp[0]))
+			{
+				if(isInds)
+				{
+					inds.push_back(atoi(tmp.c_str()));
+				}
+
+				else
+				{
+					Vertex v;
+					ss >> v.pos.x >> v.pos.y >> v.pos.z;
+					ss >> v.uv.x >> v.uv.y;
+					ss >> v.norm.x >> v.norm.y >> v.norm.z;
+					ss >> v.tan.x >> v.tan.y >> v.tan.z;
+					ss >> v.bitan.x >> v.bitan.y >> v.bitan.z;
+
+					verts.push_back(v);
+				}
+			}
+
+			else if(tmp[0] == 'i')
+			{
+				isInds = true;
+			}
+		}
+
+		FileLoader::DeleteText(txt);
+	}
+}
+
+void AssetManager::SaveAssets()
+{
+	for(auto it = meshes.begin(); it != meshes.end(); it++)
+	{
+		boost::filesystem::path path(it->first);
+
+		if(strcmp(path.extension().c_str(), ".mesh") != 0)
+			path.replace_extension(boost::filesystem::path(".mesh"));
+
+		if(!boost::filesystem::exists(path))
+		{
+			std::string fileContents = "";
+
+			for(u32 i = 0; i < it->second->GetVertexCount(); i++)
+			{
+				fileContents += to_string(it->second->GetVertices()[i].pos.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].pos.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].pos.z);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].uv.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].uv.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].norm.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].norm.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].norm.z);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].tan.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].tan.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].tan.z);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].bitan.x);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].bitan.y);
+				fileContents += " ";
+				fileContents += to_string(it->second->GetVertices()[i].bitan.z);
+				fileContents += " ";
+			}
+
+			fileContents += "i ";
+
+			for(u32 i = 0; i < it->second->GetIndexCount(); i++)
+			{
+				fileContents += to_string(it->second->GetIndices()[i]);
+				fileContents += " ";
+			}
+
+			SaveAssetToFile(path.parent_path().c_str(), path.filename().c_str(), fileContents.c_str());
+		}
+	}
+}
+
+void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const char* content)
+{
+	boost::filesystem::path path(dir);
+
+	if(!boost::filesystem::exists(path))
+	{
+		if(boost::filesystem::create_directory(path))
+		{
+			std::string msg = "Directory '";
+			msg.append(path.c_str());
+			msg.append("' created Successfully");
+			Logger::Log(Logger::MSG, msg.c_str());
+		}
+
+		else
+		{
+			std::string msg = "Failed to created directory '";
+			msg.append(path.c_str());
+			msg.append("'!");
+			Logger::Log(Logger::ERROR, msg.c_str());
+			return;
+		}
+	}
+
+	if(boost::filesystem::is_directory(path))
+	{
+		ofstream file;
+		file.open(path.append(filename).c_str());
+		file << content;
+		file.close();
+	}
+}
+
+void AssetManager::SetAssetDir(std::string dir)
+{
+	assetDir = boost::filesystem::path(dir);
 }
 
 /*! \brief Function to actually load the files
  */
 void AssetManager::LoadDir(const boost::filesystem::path &path)
 {
-	if(!boost::filesystem::exists(path)) {
-		//printf("Directory not found");
+	if(!boost::filesystem::exists(path))
+	{
+		std::string msg = "Directory '";
+		msg.append(path.c_str());
+		msg.append("' not found!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
 
@@ -178,7 +321,11 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 			}
 		}
 	}
+}
 
+void AssetManager::LoadAssetsFromAssetDir()
+{
+	LoadDir(assetDir);
 }
 
 /*! \brief Asset loader destructor

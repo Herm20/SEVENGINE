@@ -84,12 +84,6 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
  */
 boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
 {
-	char* src = nullptr;
-
-	FileLoader::LoadText(path, src);
-	std::stringstream ss(src);
-	FileLoader::DeleteText(src);
-
 	Assimp::Importer import;
 	const aiScene* scene = import.ReadFile(path, aiProcess_CalcTangentSpace |
 												 aiProcess_Triangulate |
@@ -114,10 +108,18 @@ void FileLoader::LoadTexture(const char* path, unsigned char* &data, i32* width,
 {
 	data = stbi_load(path, width, height, channels, 0);
 
+	std::string msg = "'";
+
 	if(data == nullptr) {
-		//TODO: Error here, log something at some point
+		msg.append(path);
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
+
+	msg.append(path);
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
 }
 
 /*! \brief Deletes texture data
@@ -141,10 +143,18 @@ void FileLoader::LoadTextureHDR(const char* path, float* &data, i32* width, i32*
 {
 	data = stbi_loadf(path, width, height, channels, 0);
 
+	std::string msg = "'";
+
 	if(data == nullptr) {
-		//TODO: Error here, log something at some point
+		msg.append(path);
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
+
+	msg.append(path);
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
 }
 
 /*! \brief Deletes texture data
@@ -168,23 +178,28 @@ void FileLoader::LoadText(const char* path, char* &data)
 
 	file.open(path, std::ios::in);
 
+	std::string msg = "'";
+
 	if(!file.is_open()) {
-		//TODO: Error here, log something at some point
 		file.clear();
-		std::string err = "failed to open file: ";
-		err += std::string(path);
-		throw std::runtime_error(err);
+		msg.append(path);
+		msg.append("' failed to load!");
+		Logger::Log(Logger::ERROR, msg.c_str());
 		return;
 	}
 
-	file.seekg(0, std::ios::end);
+	file.seekg(0, file.end);
 	size_t size = file.tellg();
-	file.seekg(0, std::ios::beg);
+	file.seekg(0, file.beg);
 
 	data = new char[size + 1];
 	file.read(data, size);
 	data[size] = 0;
 	file.close();
+
+	msg.append(path);
+	msg.append("' loaded successfully");
+	Logger::Log(Logger::MSG, msg.c_str());
 }
 
 /*! \brief Deletes text data

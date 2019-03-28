@@ -38,6 +38,7 @@ public:
 	GLFWwindow* GetWindow();
 	void CreateBasicProgram();
 	void Draw();
+	bool ShouldClose();
 };
 
 #endif

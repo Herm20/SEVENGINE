@@ -130,3 +130,8 @@ void Renderer::CreateTriangle()
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(tri_buffer_data), tri_buffer_data, GL_STATIC_DRAW);
 }
+
+bool Renderer::ShouldClose()
+{
+	return glfwWindowShouldClose(window);
+}

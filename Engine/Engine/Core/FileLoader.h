@@ -13,6 +13,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #endif
 
+#include "Logger.h"
 #include "Types.h"
 #include "MeshData.h"
 

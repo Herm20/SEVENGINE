@@ -24,10 +24,10 @@ public:
 	MeshData(const MeshData &md);
 	void CopyVerticesFromVector(const boost::container::vector<Vertex> &verts);
 	void CopyIndicesFromVector(const boost::container::vector<u32> &inds);
-	inline u32 getVertexCount() { return vCount; }
-	inline u32 getIndexCount() { return iCount; }
-	inline const Vertex* getVertices() { return verts.get(); }
-	inline const u32* getIndices() { return inds.get(); }
+	inline u32 GetVertexCount() { return vCount; }
+	inline u32 GetIndexCount() { return iCount; }
+	inline const Vertex* GetVertices() { return verts.get(); }
+	inline const u32* GetIndices() { return inds.get(); }
 	const MeshData & operator=(const MeshData &md);
 	~MeshData();
 };
