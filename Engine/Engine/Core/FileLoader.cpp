@@ -29,7 +29,9 @@ boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
 	const aiScene* scene = import.ReadFile(path, aiProcess_CalcTangentSpace |
 												 aiProcess_Triangulate |
 												 aiProcess_JoinIdenticalVertices|
-												 aiProcess_SortByPType);
+												 aiProcess_SortByPType |
+												 aiProcess_GenSmoothNormals |
+												 aiProcess_FixInfacingNormals );
 
 
 	boost::container::vector<MeshData> meshes;
@@ -118,7 +120,9 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		boost::container::vector<Vertex> verts;
 		boost::container::vector<u32> inds;
-		bool uvs;
+		bool uvs = false;
+		bool norms = false;
+		bool tansBitans = false;
 
 		//Get all the indices in the submesh
 		for(u32 j = 0; j < mesh->mNumFaces; j++)
@@ -129,22 +133,40 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 		}
 
 		//Check if there are uvs
-		if(mesh->mTextureCoords[0])
+		if(mesh->HasTextureCoords(0))
 			uvs = true;
+		if(mesh->HasNormals())
+			norms = true;
+		if(mesh->HasTangentsAndBitangents())
+			tansBitans = true;
 
 		//Iterate though all the vertices
 		for(u32 j = 0; j < mesh->mNumVertices; j++)
 		{
 			Vertex v;
 			v.pos = glm::vec3(mesh->mVertices[j].x, mesh->mVertices[j].y, mesh->mVertices[j].z);
-			v.norm = glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z);
-			v.tan = glm::vec3(mesh->mTangents[j].x, mesh->mTangents[j].y, mesh->mTangents[j].z);
-			v.bitan = glm::vec3(mesh->mBitangents[j].x, mesh->mBitangents[j].y, mesh->mBitangents[j].z);
 
 			if(uvs)
 				v.uv = glm::vec2(mesh->mTextureCoords[0][j].x, mesh->mTextureCoords[0][j].y);
 			else
-				v.uv = glm::vec2(0.0f, 0.0f);
+				v.uv = glm::vec2();
+
+			if(norms)
+				v.norm = glm::vec3(mesh->mNormals[j].x, mesh->mNormals[j].y, mesh->mNormals[j].z);
+			else
+				v.norm = glm::vec3();
+
+			if(tansBitans)
+			{
+				v.tan = glm::vec3(mesh->mTangents[j].x, mesh->mTangents[j].y, mesh->mTangents[j].z);
+				v.bitan = glm::vec3(mesh->mBitangents[j].x, mesh->mBitangents[j].y, mesh->mBitangents[j].z);
+			}
+
+			else
+			{
+				v.tan = glm::vec3();
+				v.bitan = glm::vec3();
+			}
 
 			verts.push_back(v);
 		}
