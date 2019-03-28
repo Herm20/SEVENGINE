@@ -23,7 +23,7 @@ private:
 
 public:
 	Entity();
-	Entity(Scene* parentScene, u64 sID, u64 tID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
+	Entity(Scene* parentScene, u64 ind, u64 sID, u64 tID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
 	~Entity();
 
 	// Flags the entity for deletion
