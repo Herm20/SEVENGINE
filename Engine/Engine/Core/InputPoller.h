@@ -1,4 +1,4 @@
-#ifndef INPUTPOLLER_H_
+/*#ifndef INPUTPOLLER_H_
 
 #define INPUTPOLLER_H_
 
@@ -29,4 +29,4 @@ private:
 	friend static void cursor_position_callback(GLFWwindow*, double, double);//callback for mouse cursor
 };
 
-#endif // !INPUTPOLLER_H_
+#endif // !INPUTPOLLER_H_*/

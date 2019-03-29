@@ -1,4 +1,4 @@
-#include "InputManager.h"
+/*#include "InputManager.h"
 #include <iostream>
 
 //std::map<const char*, int> InputManager::FightKeyMap;
@@ -163,4 +163,4 @@ void InputManager::ExecuteCombo(const char* combo) // helper function to map the
 InputManager::~InputManager() 
 {
 	delete instance;
-}
+}*/

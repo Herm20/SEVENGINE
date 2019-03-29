@@ -48,7 +48,7 @@ void Scene::DestroyEntity(Entity* entity)
 		SceneRef reference = entity->scene;
 
 		// Actual mechanism for allowing the entity to free any references etc.
-		entity->DestroyInternal();
+		//entity->DestroyInternal();
 
 		// Consider the position of the entity in the array to be an open spot for future spawns
 		entityArrayGaps.push_back(reference.index);
