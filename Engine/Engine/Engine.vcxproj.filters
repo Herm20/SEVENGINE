@@ -51,6 +51,9 @@
     <ClCompile Include="Core\Physics\CollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Core\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -111,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Physics\CollisionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Timer.h">

@@ -15,22 +15,22 @@ private:
 	vec3 sca; // Scale vector
 public:
 	inline Transform() :
-		pos(0.0f),
 		rot(identity<quat>()),
+		pos(0.0f),
 		sca(1.0f)
 	{
 		// Nothing interesting to do here
 	}
 	inline Transform(const Transform& copy) :
-		pos(copy.pos),
 		rot(copy.rot),
+		pos(copy.pos),
 		sca(copy.sca)
 	{
 		// Nothing interesting to do here
 	}
 	inline Transform(vec3 position, quat rotation = identity<quat>(), vec3 scale = vec3(1.0f)) :
-		pos(position),
 		rot(rotation),
+		pos(position),
 		sca(scale)
 	{
 		// Nothing interesting to do here

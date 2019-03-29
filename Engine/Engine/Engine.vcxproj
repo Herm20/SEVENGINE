@@ -36,6 +36,7 @@
     <ClCompile Include="Core\Physics\Collider.cpp" />
     <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
+    <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
   </ItemGroup>
@@ -56,6 +57,7 @@
     <ClInclude Include="Core\Physics\Collider.h" />
     <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
+    <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />

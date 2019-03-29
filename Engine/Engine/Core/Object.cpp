@@ -1,5 +1,41 @@
 #include "Object.h"
 
+#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
+void Object::RequireUpdate()
+{
+	needsUpdated = true;
+	needsInverseUpdated = true;
+	needsRotationUpdated = true;
+
+	// Recursively require updates in all children, as a change in this affects them
+	u64 cc = children.size();
+	for (u64 i = 0; i < cc; ++i)
+	{
+		children[i]->RequireUpdate();
+	}
+}
+#endif
+
+void Object::AddChild(Object* newChild)
+{
+	children.push_back(newChild);
+}
+
+void Object::RemoveChild(Object* child)
+{
+	// Because order doesn't matter, we can zip through and pop it out quickly
+	u64 cc = children.size();
+	for (u64 i = 0; i < cc; ++i)
+	{
+		if (children[i] == child)
+		{
+			children[i] = children[cc - 1];
+			children.pop_back();
+			return;
+		}
+	}
+}
+
 Object::Object() :
 	children(),
 	parent(nullptr),
@@ -38,56 +74,6 @@ Object::Object(const Transform& t, Object* parentObject) :
 Object::~Object()
 {
 	// Nothing interesting to do here
-}
-
-void Object::AddChild(Object* newChild)
-{
-	children.push_back(newChild);
-}
-
-void Object::RemoveChild(Object* child)
-{
-	// Because order doesn't matter, we can zip through and pop it out quickly
-	u64 cc = children.size();
-	for (u64 i = 0; i < cc; ++i)
-	{
-		if (children[i] == child)
-		{
-			children[i] = children[cc - 1];
-			children.pop_back();
-			return;
-		}
-	}
-}
-
-#ifndef CORE_OBJECT_NO_DYNAMIC_UPDATE
-void Object::RequireUpdate()
-{
-	needsUpdated = true;
-	needsInverseUpdated = true;
-	needsRotationUpdated = true;
-
-	// Recursively require updates in all children, as a change in this affects them
-	u64 cc = children.size();
-	for (u64 i = 0; i < cc; ++i)
-	{
-		children[i]->RequireUpdate();
-	}
-}
-#endif
-
-void Object::Destroy()
-{
-	u64 cc = children.size();
-	for (u64 i = 0; i < cc; ++i)
-	{
-		children[i]->Destroy();
-	}
-
-	if (parent != nullptr)
-	{
-		parent->RemoveChild(this);
-	}
 }
 
 void Object::SetParent(Object* newParent, bool keepWorldTransform)

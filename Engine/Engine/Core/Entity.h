@@ -2,26 +2,33 @@
 #define ENTITY_H_
 
 #include "Object.h"
+#include "SceneRef.h"
 #include "MeshData.h"
 
 #include <boost/unordered_set.hpp>
 
+class Scene;
 class Component;
 
 class Entity : public Object
 {
 private:
 	boost::unordered_set<boost::container::string> tags;
-
 	boost::container::vector<Component*> components;
+	SceneRef scene;
 
-	// Scene and component stuff goes here
+	// Actually handles internal entity deletion, called by managing scene
+	void DestroyInternal();
+
+	friend class Scene;
+
 public:
 	Entity();
-	Entity(const Transform& t, Entity* parentEntity = nullptr);
+	Entity(Scene* parentScene, u64 ind, u64 sID, u64 tID, const Transform& t = Transform(), Entity* parentEntity = nullptr);
 	~Entity();
 
-	void Destroy() override;
+	// Flags the entity for deletion
+	void Destroy();
 
 	// <TAGS>
 

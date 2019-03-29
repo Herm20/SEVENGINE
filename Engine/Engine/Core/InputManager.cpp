@@ -1,4 +1,4 @@
-#include "InputManager.h"
+/*#include "InputManager.h"
 #include <iostream>
 
 //std::map<const char*, int> InputManager::FightKeyMap;
