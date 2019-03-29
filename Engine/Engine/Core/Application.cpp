@@ -85,8 +85,8 @@ void Application::Exit()
 	assetMan->SaveAssets();
 	Logger::Log(Logger::LogType::MSG, "Exiting engine");
 	std::string name = Logger::GetFormatedSystemTime();
-	name += "-log.txt";
-	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
+	//name += "-log.txt";
+//	assetMan->SaveAssetToFile("Log", name.string().c_str(), Logger::GetLog());
 	delete assetMan;
 	delete renderer;
 }
@@ -97,6 +97,17 @@ void Application::CamMovement()
 	// FPS Controls
 	int w = renderer->GetWindowWidth();
 	int h = renderer->GetWindowHeight();
+	float sens = .005;
+	double x = 0;
+	double y = 0;
+
+	glfwGetCursorPos(renderer->GetWindow(), &x, &y);
+
+	camera->rotation.y -= sens * (x - w * .5f);
+	camera->rotation.x -= sens * -(y - h * .5f);
+	camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
+
+	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
@@ -119,12 +130,13 @@ void Application::CamMovement()
 	if (inputIsDown[GLFW_KEY_X])
 		camera->velocity += R * glm::vec3(0, -1, 0);
 	
+	float speed = 2.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * 1.0f;
+		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->location += camera->velocity * Time.dt;
+	camera->location += camera->velocity * speed * Time.dt;
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP

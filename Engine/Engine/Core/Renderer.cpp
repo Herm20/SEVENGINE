@@ -19,6 +19,9 @@ Renderer::Renderer(const AssetManager* am)
 	//Make the window's context current
 	glfwMakeContextCurrent(window);
 
+	// Hide cursor
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 	//Initialize GLEW
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK) {
@@ -89,10 +92,14 @@ void Renderer::CreateBasicProgram()
 		delete[] infoLog;
 	}
 
-	testMesh = new Mesh(am->GetMesh("box"));
-	
-	
-
+	obj1 = new Mesh(am->GetMesh("box"), glm::vec3(0, 0, 5));
+	obj2 = new Mesh(am->GetMesh("sphere"), glm::vec3(5, 0, 0));
+	obj3 = new Mesh(am->GetMesh("sword"), glm::vec3(0, 5, 0));
+	obj4 = new Mesh(am->GetMesh("teapot"), glm::vec3(-5, 0, 0));
+	meshes[0] = obj1;
+	meshes[1] = obj2;
+	meshes[2] = obj3;
+	meshes[3] = obj4;
 }
 
 //Iterates through and draws all entities to the screen
@@ -104,13 +111,15 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// Set transform
-	glm::vec3 position = glm::vec3(0, 0, 5);
-	glm::mat4 posMatrix = glm::translate(glm::mat4(), position);
-	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
+	for (int i = 0; i < 4; i++) 
+	{
+		// Set transform
+		glm::mat4 posMatrix = glm::translate(glm::mat4(), meshes[i]->position);
+		glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
 
-	// Draw object
-	testMesh->Render();
+		// Draw object
+		meshes[i]->Render();
+	}
 	glBindVertexArray(0);
 
 	//Swap front and back buffers
