@@ -2,7 +2,7 @@
 #define INPUTMANAGER_H_
 
 #include <GLFW/glfw3.h>
-#include "Timer.h"
+#include "Timer_Sad.h"
 #include <map>
 #include <Vector>
 

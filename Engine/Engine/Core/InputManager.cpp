@@ -12,7 +12,7 @@
 //int InputManager::contextState;
 //int InputManager::moveIndex;
 //std::chrono::duration<float> InputManager::lastMoveTime;
-InputManager* InputManager::instance;
+/*InputManager* InputManager::instance;
 
 InputManager::InputManager()
 {

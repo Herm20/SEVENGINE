@@ -13,7 +13,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	Input::m_keys[key] = action == GLFW_PRESS;// modifies the list of key states
 	if (action == GLFW_PRESS)
 	{
-		InputManager::GetInstance()->ValidateKeyInput(key);
+		//InputManager::GetInstance()->ValidateKeyInput(key);
 	}
 }
 
@@ -23,7 +23,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	Input::m_mouse_buttons[button] = action == GLFW_PRESS;// modifies the list of key states
 	if (action != GLFW_PRESS)
 	{
-		InputManager::GetInstance()->ValidateMouseInput(button);
+		//InputManager::GetInstance()->ValidateMouseInput(button);
 	}
 }
 
@@ -37,7 +37,7 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
 
 Input::Input(GLFWwindow* window) 
 {
-	inputmanager = InputManager::GetInstance();
+	//inputmanager = InputManager::GetInstance();
 	Init(window);
 }
 

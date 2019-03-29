@@ -64,3 +64,7 @@ void Entity::AddTags(boost::unordered_set<boost::container::string> newTags)
 	// TODO : Add logic for interfacing scene - various tag optimizations
 	tags.merge(newTags);
 }
+
+void Entity::SetMesh()
+{
+}

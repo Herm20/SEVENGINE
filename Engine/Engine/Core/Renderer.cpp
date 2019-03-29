@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-Renderer::Renderer()
+Renderer::Renderer(const AssetManager* am)
 {
 	//Initialize the GLFW Library
 	if (!glfwInit())
@@ -19,22 +19,28 @@ Renderer::Renderer()
 	//Make the window's context current
 	glfwMakeContextCurrent(window);
 
+	// Hide cursor
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 	//Initialize GLEW
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK) {
 		return;
 	}
 
-	//Generate our vertex array object
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
-	CreateTriangle();
+	this->am = am;
 }
 
 
 Renderer::~Renderer()
 {
+	glDeleteProgram(mainShaderProgram);
+	mainShaderProgram = 0;
+	vertexShader = 0;
+	fragmentShader = 0;
 	glfwTerminate();
 }
 
@@ -42,6 +48,58 @@ Renderer::~Renderer()
 GLFWwindow * Renderer::GetWindow()
 {
 	return window;
+}
+
+int Renderer::GetWindowHeight()
+{
+	return height;
+}
+
+int Renderer::GetWindowWidth()
+{
+	return width;
+}
+
+void Renderer::CreateBasicProgram()
+{
+	vertexShader = am->GetShader("VertexShader");
+	fragmentShader = am->GetShader("FragmentShader");
+
+	//Creates a graphics pipeline with the necessary shaders for general usage
+	mainShaderProgram = glCreateProgram();
+	glAttachShader(mainShaderProgram, vertexShader->GetID());
+	glAttachShader(mainShaderProgram, fragmentShader->GetID());
+	glLinkProgram(mainShaderProgram);
+
+	//Determines program creation success
+	GLint linked = 0;
+	glGetProgramiv(mainShaderProgram, GL_LINK_STATUS, &linked);
+
+	//Retreives program information upon creation failure
+	if (linked == true)
+	{
+		glUseProgram(mainShaderProgram);
+	}
+
+	else
+	{
+		GLint logLength = 0;
+		glGetProgramiv(mainShaderProgram, GL_INFO_LOG_LENGTH, &logLength);
+		GLchar* infoLog = new GLchar[logLength];
+		glGetProgramInfoLog(mainShaderProgram, logLength, 0, infoLog);
+		Logger::Log(Logger::ERROR, infoLog);
+		glDeleteProgram(mainShaderProgram);
+		delete[] infoLog;
+	}
+
+	obj1 = new Mesh(am->GetMesh("box"), glm::vec3(0, 0, 5));
+	obj2 = new Mesh(am->GetMesh("sphere"), glm::vec3(5, 0, 0));
+	obj3 = new Mesh(am->GetMesh("sword"), glm::vec3(0, 5, 0));
+	obj4 = new Mesh(am->GetMesh("teapot"), glm::vec3(-5, 0, 0));
+	meshes[0] = obj1;
+	meshes[1] = obj2;
+	meshes[2] = obj3;
+	meshes[3] = obj4;
 }
 
 //Iterates through and draws all entities to the screen
@@ -53,20 +111,16 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	//Draw that triangle that we made
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glVertexAttribPointer(
-		0,			//attribute 0. Must match the layout in the shader
-		3,			//size
-		GL_FLOAT,	//type
-		GL_FALSE,	//normalized?
-		0,			//stride
-		(void*)0	//array buffer offset
-	);
+	for (int i = 0; i < 4; i++) 
+	{
+		// Set transform
+		glm::mat4 posMatrix = glm::translate(glm::mat4(), meshes[i]->position);
+		glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-	glDisableVertexAttribArray(0);
+		// Draw object
+		meshes[i]->Render();
+	}
+	glBindVertexArray(0);
 
 	//Swap front and back buffers
 	glfwSwapBuffers(window);
@@ -75,18 +129,7 @@ void Renderer::Draw()
 	glfwPollEvents();
 }
 
-//Exists temporarily to provide proof of concept
-void Renderer::CreateTriangle()
+bool Renderer::ShouldClose()
 {
-	//Triangle vertices
-	static const GLfloat tri_buffer_data[] = {
-		-1.0f, -1.0f, +0.0f,
-		+1.0f, -1.0f, +0.0f,
-		+0.0f, +1.0f, +0.0f,
-	};
-
-	//Generates and Binds a buffer with our triangle data
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tri_buffer_data), tri_buffer_data, GL_STATIC_DRAW);
+	return glfwWindowShouldClose(window);
 }

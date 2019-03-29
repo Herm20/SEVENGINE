@@ -3,6 +3,7 @@
 
 #include "Object.h"
 #include "SceneRef.h"
+#include "MeshData.h"
 
 #include <boost/unordered_set.hpp>
 
@@ -38,6 +39,11 @@ public:
 	void AddTag(boost::container::string tag);
 	void RemoveTag(boost::container::string tag);
 	void AddTags(boost::unordered_set<boost::container::string> newTags);
+
+	// Shared pointer for mesh data
+	boost::shared_ptr<MeshData> mData;
+
+	void SetMesh();
 
 	// </TAGS>
 
