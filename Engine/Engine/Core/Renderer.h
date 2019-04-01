@@ -35,13 +35,13 @@ private:
 	boost::shared_ptr<Shader> vertexShader;
 	boost::shared_ptr<Shader> fragmentShader;
 	const AssetManager* am;
-	Entity* dummyEnt;
 
 	//Temporary proof function
-	void CreateTriangle();
-	Mesh* testMesh;
-	glm::mat4 lookMat;
-	glm::mat4 persMat;
+	Mesh* meshes[5];
+	Mesh* obj1;
+	Mesh* obj2;
+	Mesh* obj3;
+	Mesh* obj4;
 
 public:
 	Renderer(const AssetManager* am);

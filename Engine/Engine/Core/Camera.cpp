@@ -7,6 +7,7 @@ Camera::Camera()
 {
 	location = { 0,0,-5 };
 	rotation = { 0,0,0 };
+	velocity = { 0,0,0 };
 }
 
 
@@ -43,6 +44,7 @@ void Camera::update()
 	// upload the matrix
 	glUniformMatrix4fv(4, 1, GL_FALSE, &lookAtMat[0][0]);
 	glUniformMatrix4fv(5, 1, GL_FALSE, &perspectiveMat[0][0]);
+	glUniformMatrix4fv(8, 1, GL_FALSE, &cameraMatrix[0][0]);
 }
 
 void Camera::movement(GLFWwindow* winPtr, int winHeight, int winWidth)
@@ -60,7 +62,7 @@ void Camera::movement(GLFWwindow* winPtr, int winHeight, int winWidth)
 	rotation.x -= sens * (y - h * .5f);
 	rotation.x = glm::clamp(rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
-	//glfwSetCursorPos(winPtr, w * .5f, h * .5f);
+	glfwSetCursorPos(winPtr, w * .5f, h * .5f);
 
 	// move with W,A,S,D
 	/*glm::mat3 R = (glm::mat3)glm::yawPitchRoll(rotation.y, rotation.x, rotation.z);

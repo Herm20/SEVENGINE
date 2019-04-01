@@ -1,17 +1,38 @@
 #include "Entity.h"
 
+#include "Scene.h"
 #include "Component.h"
+
+void Entity::DestroyInternal()
+{
+	u64 cc = children.size();
+	for (u64 i = 0; i < cc; ++i)
+	{
+		((Entity*)(children[i]))->Destroy();
+	}
+
+	if (parent != nullptr) { parent->RemoveChild(this); }
+
+	// Safety block - maybe remove later for performance?
+	children.clear();
+	parent = nullptr;
+	scene = SceneRef();
+
+	// TODO : Perform component login here
+}
 
 Entity::Entity() :
 	Object(),
-	tags()
+	tags(),
+	scene()
 {
 	// Nothing interesting to do here
 }
 
-Entity::Entity(const Transform& t, Entity* parentEntity) :
+Entity::Entity(Scene* parentScene, u64 ind, u64 sID, u64 tID, const Transform& t, Entity* parentEntity) :
 	Object(t, parentEntity),
-	tags()
+	tags(),
+	scene(parentScene, ind, sID, tID)
 {
 	// Nothing interesting to do here
 }
@@ -23,8 +44,7 @@ Entity::~Entity()
 
 void Entity::Destroy()
 {
-	Object::Destroy();
-	// TODO : Perform any scene and compoenent cleanup here
+	scene.GetScene()->DestroyEntity(this);
 }
 
 void Entity::AddTag(boost::container::string tag)

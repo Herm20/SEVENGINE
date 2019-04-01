@@ -28,6 +28,7 @@
     <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\InputPoller.cpp" />
+    <ClCompile Include="Core\Logger.cpp" />
     <ClCompile Include="Core\Main.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\MeshData.cpp" />
@@ -35,6 +36,7 @@
     <ClCompile Include="Core\Physics\Collider.cpp" />
     <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
+    <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
   </ItemGroup>
@@ -48,12 +50,14 @@
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\InputPoller.h" />
+    <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
     <ClInclude Include="Core\Physics\Collider.h" />
     <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
+    <ClInclude Include="Core\Scene.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />
@@ -69,7 +73,7 @@
     <ProjectGuid>{3AE4E03C-C0B8-46CB-B76C-CDC947B0BAAE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

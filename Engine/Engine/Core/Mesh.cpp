@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <vector>
 
-Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
+Mesh::Mesh(boost::shared_ptr<MeshData> meshData, glm::vec3 _position) {
 
 	vertCount = meshData->GetVertexCount();
 	const Vertex* vertBufData = meshData->GetVertices();
@@ -72,6 +72,7 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) {
 		GL_STATIC_DRAW
 	);
 
+	position = _position;
 }
 
 void Mesh::Render() {

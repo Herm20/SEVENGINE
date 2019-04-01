@@ -19,17 +19,17 @@ Renderer::Renderer(const AssetManager* am)
 	//Make the window's context current
 	glfwMakeContextCurrent(window);
 
+	// Hide cursor
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
 	//Initialize GLEW
 	glewExperimental = true;
 	if (glewInit() != GLEW_OK) {
 		return;
 	}
 
-	//Generate our vertex array object
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
-
-	CreateTriangle();
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
 
 	this->am = am;
 }
@@ -92,18 +92,14 @@ void Renderer::CreateBasicProgram()
 		delete[] infoLog;
 	}
 
-	glm::vec3 eye = glm::vec3(0, 0, 0);
-	glm::vec3 center = eye * glm::vec3(0, 0, 1);
-	glm::vec3 up = glm::vec3(0, 1, 0);
-	lookMat = glm::lookAt(eye, center, up);
-
-	persMat = glm::perspective(3.14159f * 0.4f / 1.0f, 1920.f / 1080.f, 0.01f, 1000.f);
-
-	//glUniformMatrix4fv(4, 1, GL_FALSE, &lookMat[0][0]);
-	//glUniformMatrix4fv(5, 1, GL_FALSE, &persMat[0][0]);
-
-	testMesh = new Mesh(am->GetMesh("box"));
-
+	obj1 = new Mesh(am->GetMesh("box"), glm::vec3(0, 0, 5));
+	obj2 = new Mesh(am->GetMesh("sphere"), glm::vec3(5, 0, 0));
+	obj3 = new Mesh(am->GetMesh("sword"), glm::vec3(0, 5, 0));
+	obj4 = new Mesh(am->GetMesh("teapot"), glm::vec3(-5, 0, 0));
+	meshes[0] = obj1;
+	meshes[1] = obj2;
+	meshes[2] = obj3;
+	meshes[3] = obj4;
 }
 
 //Iterates through and draws all entities to the screen
@@ -115,14 +111,15 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// Set transform
-	glm::vec3 position = glm::vec3(0, 0, 5);
-	glm::mat4 posMatrix = glm::translate(glm::mat4(), position);
-	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
+	for (int i = 0; i < 4; i++) 
+	{
+		// Set transform
+		glm::mat4 posMatrix = glm::translate(glm::mat4(), meshes[i]->position);
+		glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
 
-	// Draw object
-
-	testMesh->Render();
+		// Draw object
+		meshes[i]->Render();
+	}
 	glBindVertexArray(0);
 
 	//Swap front and back buffers
@@ -130,23 +127,6 @@ void Renderer::Draw()
 
 	//Poll for and process events
 	glfwPollEvents();
-}
-
-//Exists temporarily to provide proof of concept
-void Renderer::CreateTriangle()
-{
-	//Triangle vertices
-	static const GLfloat tri_buffer_data[] = {
-		-1.0f, -1.0f, +0.0f,
-		+1.0f, -1.0f, +0.0f,
-		+0.0f, +1.0f, +0.0f,
-	};
-
-	//Generates and Binds a buffer with our triangle data
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(tri_buffer_data), tri_buffer_data, GL_STATIC_DRAW);
-
 }
 
 bool Renderer::ShouldClose()

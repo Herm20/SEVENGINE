@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Logger.h"
 
 namespace Logger
@@ -50,7 +51,7 @@ const char* Logger::GetLog()
 std::string Logger::GetFormatedSystemTime()
 {
 	systemtime = boost::chrono::system_clock::to_time_t(boost::chrono::system_clock::now());
-	timeinfo = std::localtime(&systemtime);
+	timeinfo = std::localtime(&systemtime); // THIS IS NOT THREAD SAFE
 	char timeStr[20];
 	strftime(timeStr, 20, "%F %T", timeinfo);
 	return std::string(timeStr);

@@ -18,10 +18,10 @@ private:
 
 public:
 
-	Mesh(boost::shared_ptr<MeshData> meshData);
+	Mesh(boost::shared_ptr<MeshData> meshData, glm::vec3 _position);
 
 	void Render();
-
+	glm::vec3 position;
 };
 
 #endif // !MESH_H_
