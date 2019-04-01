@@ -20,18 +20,18 @@ class Renderer
 private:
 	//Window related variables
 	GLFWwindow * window;
-	int height = 800;
-	int width = 1280;
+	i32 height = 800;
+	i32 width = 1280;
 
 	//Drawing related variables
-	GLuint vertexArrayID;
-	GLuint vertexBuffer;
+	u32 vertexArrayID;
+	u32 vertexBuffer;
 
-	GLuint indexArrayID;
-	GLuint indexBuffer;
+	u32 indexArrayID;
+	u32 indexBuffer;
 
 	//Shader variables
-	GLuint mainShaderProgram;
+	u32 mainShaderProgram;
 	boost::shared_ptr<Shader> vertexShader;
 	boost::shared_ptr<Shader> fragmentShader;
 	const AssetManager* am;

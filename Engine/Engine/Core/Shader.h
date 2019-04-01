@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <fstream>
+#include <Types.h>
 #include "Logger.h"
 
 using namespace std;
@@ -14,7 +15,7 @@ class Shader
 {
 private:
 	//The shader ID is the main way of referencing the shader object itself
-	GLuint shaderID;
+	u32 shaderID;
 	GLenum shaderType;
 
 	bool Compile(const char* shaderSrc);
@@ -22,8 +23,8 @@ public:
 	Shader(const char* shaderSrc, GLenum shaderType);
 	~Shader();
 
-	GLuint GetID();
-	GLenum GetShaderType();
+	u32 GetID() const;
+	GLenum GetShaderType() const;
 };
 
 #endif

@@ -111,12 +111,8 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i < 4; i++)
 	{
-		// Set transform
-		glm::mat4 posMatrix = glm::translate(glm::mat4(), meshes[i]->position);
-		glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
-
 		// Draw object
 		meshes[i]->Render();
 	}

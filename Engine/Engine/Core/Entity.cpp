@@ -44,7 +44,7 @@ Entity::~Entity()
 
 void Entity::Destroy()
 {
-	scene.GetScene()->DestroyEntity(this);
+//	scene.GetScene()->DestroyEntity(this);
 }
 
 void Entity::AddTag(boost::container::string tag)

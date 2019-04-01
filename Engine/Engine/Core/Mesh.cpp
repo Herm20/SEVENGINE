@@ -77,6 +77,9 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData, glm::vec3 _position) {
 
 void Mesh::Render() {
 	glBindVertexArray(this->vao);
+	// Set transform
+	glm::mat4 posMatrix = glm::translate(glm::mat4(1.0), this->position);
+	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
 	//glDrawArrays(GL_TRIANGLES, 0, this->vertCount);
 }

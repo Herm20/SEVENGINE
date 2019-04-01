@@ -85,8 +85,8 @@ void Application::Exit()
 	assetMan->SaveAssets();
 	Logger::Log(Logger::LogType::MSG, "Exiting engine");
 	std::string name = Logger::GetFormatedSystemTime();
-	//name += "-log.txt";
-//	assetMan->SaveAssetToFile("Log", name.string().c_str(), Logger::GetLog());
+	name += "-log.txt";
+	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;
 	delete renderer;
 }
@@ -114,13 +114,13 @@ void Application::CamMovement()
 
 	if (inputIsDown[GLFW_KEY_A])
 		camera->velocity += R * glm::vec3(1, 0, 0);
-	
+
 	if (inputIsDown[GLFW_KEY_D])
 		camera->velocity += R * glm::vec3(-1, 0, 0);
 
 	if (inputIsDown[GLFW_KEY_W])
 		camera->velocity += R * glm::vec3(0, 0, 1);
-		
+
 	if (inputIsDown[GLFW_KEY_S])
 		camera->velocity += R * glm::vec3(0, 0, -1);
 
@@ -129,7 +129,7 @@ void Application::CamMovement()
 
 	if (inputIsDown[GLFW_KEY_X])
 		camera->velocity += R * glm::vec3(0, -1, 0);
-	
+
 	float speed = 2.0f;
 	if (camera->velocity != glm::vec3())
 	{
