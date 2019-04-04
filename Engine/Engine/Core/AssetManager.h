@@ -21,12 +21,11 @@
 #include <boost/filesystem.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
+//#include <G>
 #include "FileLoader.h"
+#include "Texture.h"
 #include "Shader.h"
 #include "Logger.h"
-
-//Predefinied cause these don't exist yet
-class Texture;
 
 /*! \class AssetManager
  *  \brief Assists in loading assets into the game engine
@@ -40,6 +39,7 @@ private:
 	boost::unordered::unordered_map<std::string, std::string> textureShortNames;
 	boost::unordered::unordered_map<std::string, boost::shared_ptr<Shader>> shaders;
 	boost::unordered::unordered_map<std::string, std::string> shaderShortNames;
+	boost::unordered::unordered_map<std::string, boost::shared_ptr<ShaderProgram>> shaderPrograms;
 	boost::filesystem::path assetDir;
 	void LoadDir(const boost::filesystem::path &path);
 	void LoadAsset(const char* path, const char* ext, std::string name);
@@ -50,6 +50,7 @@ public:
 	boost::shared_ptr<MeshData> GetMesh(std::string id) const;
 	boost::shared_ptr<Texture> GetTexture(std::string id) const;
 	boost::shared_ptr<Shader> GetShader(std::string id) const;
+	boost::shared_ptr<ShaderProgram> GetShaderProgram(std::string id) const;
 	void SaveAssets();
 	void SaveAssetToFile(const char* dir, const char* filename, const char* content);
 
@@ -64,10 +65,7 @@ public:
 	 * \param (char*) path - The path of the file or folder
 	 */
 	inline void LoadDirectory(const char* path) { LoadDir(boost::filesystem::path(path)); }
-
-	/*! \brief Loads all the assets in the specified asset directory
-	 */
-	inline void LoadAssetsFromAssetDir() { LoadDir(assetDir); };
+	void LoadAssetsFromAssetDir();
 	void operator=(const AssetManager&);
 	~AssetManager();
 };

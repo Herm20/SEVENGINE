@@ -38,14 +38,14 @@ Application::~Application()
 void Application::Init()
 {
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
+	renderer = new Renderer();
 	assetMan = new AssetManager();
 	camera = new Camera();
-	renderer = new Renderer(assetMan);
+
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
-
-	//TODO: Change this to dynamically create programs
-	renderer->CreateBasicProgram();
+	renderer->SetAssetManager(assetMan);
+	renderer->CreateMeshes();
 	//masterBG.InitSound();
 	//masterBG.LoadFile("audio/gameMusic.mp3");
 	//masterBG.Play(false);
@@ -130,7 +130,7 @@ void Application::CamMovement()
 	if (inputIsDown[GLFW_KEY_X])
 		camera->velocity += R * glm::vec3(0, -1, 0);
 
-	float speed = 2.0f;
+	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
 		camera->velocity = glm::normalize(camera->velocity) * speed;

@@ -30,28 +30,19 @@ private:
 	u32 indexArrayID;
 	u32 indexBuffer;
 
-	//Shader variables
-	u32 mainShaderProgram;
-	boost::shared_ptr<Shader> vertexShader;
-	boost::shared_ptr<Shader> fragmentShader;
 	const AssetManager* am;
 
-	//Temporary proof function
-	Mesh* meshes[5];
-	Mesh* obj1;
-	Mesh* obj2;
-	Mesh* obj3;
-	Mesh* obj4;
+	Mesh* meshes;
 
 public:
-	Renderer(const AssetManager* am);
+	Renderer();
 	~Renderer();
 	GLFWwindow* GetWindow();
 	int GetWindowHeight();
 	int GetWindowWidth();
-	void CreateBasicProgram();
+	void CreateMeshes();
+	void SetAssetManager(const AssetManager* am);
 	void Draw();
-	bool ShouldClose();
 };
 
 #endif
