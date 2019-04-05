@@ -69,7 +69,7 @@ boost::shared_ptr<MeshData> FileLoader::LoadMeshData(const char* path)
  */
 boost::shared_ptr<MeshData> FileLoader::LoadQuickMeshData(const char* path)
 {
-	FILE* file;
+	/*FILE* file;
 	file = fopen(path, "r");
 
 	int flags = 0;
@@ -102,7 +102,7 @@ boost::shared_ptr<MeshData> FileLoader::LoadQuickMeshData(const char* path)
 		if(!isalpha(tmp))
 		{
 			fsetpos(file, &pos);
-			switch(flags)
+			/*switch(flags)
 			{
 				case 1:
 					fscanf(file, "%d\n", &i);
@@ -148,7 +148,8 @@ boost::shared_ptr<MeshData> FileLoader::LoadQuickMeshData(const char* path)
 	meshData->CopyIndOffsetsFromVector(offsets);
 	meshData->CopyIndAmountsFromVector(amounts);
 
-	return meshData;
+	return meshData;*/
+	return nullptr;
 }
 
 /*! \brief Converts an assimp scene to a series of meshes
