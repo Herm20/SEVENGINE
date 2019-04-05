@@ -71,11 +71,6 @@ void Application::Run()
 		CamMovement();
 		camera->update();
 
-  #if defined _WIN32
-		system("CLS");
-  #elif defined __unix__
-		system("clear");
-  #endif
 		renderer->Draw();
 	}
 }
@@ -97,7 +92,7 @@ void Application::CamMovement()
 	// FPS Controls
 	int w = renderer->GetWindowWidth();
 	int h = renderer->GetWindowHeight();
-	float sens = .005;
+	float sens = .001;
 	double x = 0;
 	double y = 0;
 
@@ -133,7 +128,7 @@ void Application::CamMovement()
 	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed;
+		camera->velocity = glm::normalize(camera->velocity) * speed * Time.dt;
 	}
 
 	camera->location += camera->velocity * speed * Time.dt;
