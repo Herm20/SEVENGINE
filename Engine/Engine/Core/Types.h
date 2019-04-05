@@ -33,9 +33,9 @@ typedef double f64;
 #define I32_MIN INT32_MIN
 #define I64_MIN INT64_MIN
 
-#define U08_MAX 0
-#define U16_MAX 0
-#define U32_MAX 0
-#define U64_MAX 0
+#define U08_MIN 0
+#define U16_MIN 0
+#define U32_MIN 0
+#define U64_MIN 0
 
 #endif
