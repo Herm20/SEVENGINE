@@ -14,3 +14,16 @@ void Timer::update()
 	t += dt;
 	fps = 1 / dt;
 }
+
+void Timer::updateTitleBar(char* _gameName, int winWidth, int winHeight)
+{
+	/*std::ostringstream output;
+	output.precision(6);
+	output << _gameName <<
+		"	Width: " << winWidth <<
+		"	Height: " << winHeight <<
+		"	FPS: " << fps <<
+		"	Delta Time: " << dt;
+
+	//SetWindowText(hWnd, output.str().c_str());*/
+}

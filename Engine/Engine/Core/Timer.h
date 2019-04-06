@@ -1,5 +1,7 @@
 #ifndef TIMER_H_
 #define TIMER_H_
+//#include <Windows.h>
+//#include <sstream>
 #include <ctime>
 
 class Timer
@@ -15,6 +17,7 @@ public:
 	float fps; // Measures 1/dt the amount of updates per second
 
 	void update();
+	void updateTitleBar(char* _gameName, int winWidth, int winHeight);
 };
 #endif // TIMER_H_
 
