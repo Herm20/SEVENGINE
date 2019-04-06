@@ -13,11 +13,17 @@ class AudioManager
 {
 
 private:
-	static FMOD_SYSTEM* audioSystem;
-	static FMOD_SOUND* music;
-	static FMOD_CHANNEL* musicChannel;
-	static FMOD_RESULT result;
+	// Variables for Background Sound System
+	static FMOD_SYSTEM* audioSystemBG;
+	static FMOD_SOUND* bgSound;
+	static FMOD_CHANNEL* bgChannel;
 
+	// Variables for Effect Sound System
+	static FMOD_SYSTEM* audioSystemEffect;
+	static FMOD_SOUND* effectSound;
+	static FMOD_CHANNEL* effectChannel;
+
+	static FMOD_RESULT result;
 	static bool isOn;
 	static bool isPossible;
 	static char * currentSound;
@@ -25,13 +31,10 @@ public:
 	AudioManager();
 	~AudioManager();
 
-	static void InitSound();
-
+	static void InitSoundBG();
 	static void SetVolume(float volume);
-	static void LoadFile(const char* file);
-	static void UnloadFile();
-	static void Play(bool paused = false);
-
+	static void LoadBGFile(const char* file);
+	static void Play();
 	static bool getSound();
 
 	static void setPause(bool pause);
@@ -39,7 +42,11 @@ public:
 
 	static void toggleSound();
 	static void togglePause();
+
+	static void InitSoundEffect();
+	static void LoadEffectFile(const char* file);
+	static void UnloadFile();
+	static void PlayEffect();
 };
 #endif // AUDIOMANAGER_H
-
 

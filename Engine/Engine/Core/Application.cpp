@@ -46,9 +46,13 @@ void Application::Init()
 
 	//TODO: Change this to dynamically create programs
 	renderer->CreateBasicProgram();
-	//masterBG.InitSound();
-	//masterBG.LoadFile("audio/gameMusic.mp3");
-	//masterBG.Play(false);
+	masterBG = new AudioManager();
+	masterBG->InitSoundBG();
+	//masterBG->LoadFile("audio/gameMusic.mp3");
+	//masterBG->Play(false);
+
+	masterEffect = new AudioManager();
+	masterEffect->InitSoundEffect();
 
 	/// SUPER TEMP
 	//Set the click function when loading game
@@ -70,13 +74,33 @@ void Application::Run()
 		Time.update();
 		CamMovement();
 		camera->update();
-
-  #if defined _WIN32
-		system("CLS");
-  #elif defined __unix__
-		system("clear");
-  #endif
 		renderer->Draw();
+
+		// Test for sound effects
+		if (inputIsDown[GLFW_KEY_V])
+		{
+			masterEffect->UnloadFile();
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/kaching.mp3");
+			masterEffect->PlayEffect();
+		}
+		if (inputIsDown[GLFW_KEY_B])
+		{
+			masterEffect->UnloadFile();
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/panic.mp3");
+			masterEffect->PlayEffect();
+		}
+		if (inputIsDown[GLFW_KEY_N])
+		{
+			masterEffect->UnloadFile();
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/spaghet.mp3");
+			masterEffect->PlayEffect();
+		}
+		if (inputIsDown[GLFW_KEY_M])
+		{
+			masterEffect->UnloadFile();
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/wii.mp3");
+			masterEffect->PlayEffect();
+		}
 	}
 }
 

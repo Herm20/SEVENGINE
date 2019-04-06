@@ -3,11 +3,15 @@
 bool AudioManager::isOn = true;
 bool AudioManager::isPossible = true;
 char* AudioManager::currentSound;
-
 FMOD_RESULT AudioManager::result;
-FMOD_SYSTEM* AudioManager::audioSystem;
-FMOD_SOUND* AudioManager::music;
-FMOD_CHANNEL* AudioManager::musicChannel;
+
+FMOD_SYSTEM* AudioManager::audioSystemBG;
+FMOD_SOUND* AudioManager::bgSound;
+FMOD_CHANNEL* AudioManager::bgChannel;
+
+FMOD_SYSTEM* AudioManager::audioSystemEffect;
+FMOD_SOUND* AudioManager::effectSound;
+FMOD_CHANNEL* AudioManager::effectChannel;
 
 AudioManager::AudioManager()
 {
@@ -17,15 +21,13 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
-	/*delete currentSound;
-	delete audioSystem;
-	delete music;
-	delete musicChannel;*/
+
 }
 
-void AudioManager::InitSound()
+/// Background Channel Functions
+void AudioManager::InitSoundBG()
 {
-	result = FMOD_System_Create(&audioSystem);
+	result = FMOD_System_Create(&audioSystemBG);
 
 	if (result != FMOD_OK)
 	{
@@ -35,7 +37,7 @@ void AudioManager::InitSound()
 
 	if (isPossible == true)
 	{
-		result = FMOD_System_Init(audioSystem, 10, FMOD_INIT_NORMAL, 0);
+		result = FMOD_System_Init(audioSystemBG, 10, FMOD_INIT_NORMAL, 0);
 	}
 
 	if (result != FMOD_OK)
@@ -46,26 +48,18 @@ void AudioManager::InitSound()
 
 	if (isPossible == true)
 	{
-		FMOD_Channel_SetVolume(musicChannel, 0.0f);
+		FMOD_Channel_SetVolume(bgChannel, 0.0f);
 	}
 }
 
-void AudioManager::SetVolume(float volume)
-{
-	if (isPossible && isOn && volume >= 0.0f && volume <= 1.0f)
-	{
-		FMOD_Channel_SetVolume(musicChannel, volume);
-	}
-}
-
-void AudioManager::LoadFile(const char * file)
+void AudioManager::LoadBGFile(const char * file)
 {
 	currentSound = (char*)file;
 
 	if (isPossible && isOn == true)
 	{
-		result = FMOD_Sound_Release(music);
-		result = FMOD_System_CreateStream(audioSystem, currentSound, FMOD_DEFAULT, 0, &music);
+		result = FMOD_Sound_Release(bgSound);
+		result = FMOD_System_CreateStream(audioSystemBG, currentSound, FMOD_DEFAULT, 0, &bgSound);
 
 		if (result != FMOD_OK)
 		{
@@ -74,20 +68,20 @@ void AudioManager::LoadFile(const char * file)
 	}
 }
 
-void AudioManager::UnloadFile()
+void AudioManager::SetVolume(float volume)
 {
-	if (isPossible == true)
+	if (isPossible && isOn && volume >= 0.0f && volume <= 1.0f)
 	{
-		result = FMOD_Sound_Release(music);
+		FMOD_Channel_SetVolume(bgChannel, volume);
 	}
 }
 
-void AudioManager::Play(bool paused)
+void AudioManager::Play()
 {
 	if (isPossible && isOn == true)
 	{
-		result = FMOD_System_PlaySound(audioSystem, music, FMOD_DEFAULT, paused, &musicChannel);
-		FMOD_Channel_SetMode(musicChannel,FMOD_LOOP_NORMAL);
+		result = FMOD_System_PlaySound(audioSystemBG, bgSound, FMOD_DEFAULT, false, &bgChannel);
+		FMOD_Channel_SetMode(bgChannel, FMOD_LOOP_NORMAL);
 	}
 }
 
@@ -98,7 +92,7 @@ bool AudioManager::getSound()
 
 void AudioManager::setPause(bool pause)
 {
-	FMOD_Channel_SetPaused(musicChannel, pause);
+	FMOD_Channel_SetPaused(bgChannel, pause);
 }
 
 void AudioManager::setSound(bool sound)
@@ -112,7 +106,7 @@ void AudioManager::toggleSound()
 
 	if (isOn == true)
 	{
-		LoadFile(currentSound);
+		LoadBGFile(currentSound);
 		Play();
 	}
 
@@ -125,9 +119,70 @@ void AudioManager::toggleSound()
 void AudioManager::togglePause()
 {
 	FMOD_BOOL h;
-	FMOD_Channel_GetPaused(musicChannel, &h);
-	FMOD_Channel_SetPaused(musicChannel, !h);
+	FMOD_Channel_GetPaused(bgChannel, &h);
+	FMOD_Channel_SetPaused(bgChannel, !h);
+}
+///
+
+
+/// Effect Channel Functions
+void AudioManager::InitSoundEffect()
+{
+	result = FMOD_System_Create(&audioSystemEffect);
+
+	if (result != FMOD_OK)
+	{
+		isPossible = false;
+		std::cout << "FMOD ERROR " << result << " " << FMOD_ErrorString(result);
+	}
+
+	if (isPossible == true)
+	{
+		result = FMOD_System_Init(audioSystemEffect, 10, FMOD_INIT_NORMAL, 0);
+	}
+
+	if (result != FMOD_OK)
+	{
+		isPossible = false;
+		std::cout << "FMOD ERROR " << result << " " << FMOD_ErrorString(result);
+	}
+
+	if (isPossible == true)
+	{
+		FMOD_Channel_SetVolume(effectChannel, 0.0f);
+	}
 }
 
+void AudioManager::LoadEffectFile(const char * file)
+{
+	currentSound = (char*)file;
 
+	if (isPossible && isOn == true)
+	{
+		result = FMOD_Sound_Release(effectSound);
+		result = FMOD_System_CreateStream(audioSystemEffect, currentSound, FMOD_DEFAULT, 0, &effectSound);
 
+		if (result != FMOD_OK)
+		{
+			isPossible = false;
+		}
+	}
+}
+
+void AudioManager::UnloadFile()
+{
+	if (isPossible == true)
+	{
+		result = FMOD_Sound_Release(effectSound);
+	}
+}
+
+void AudioManager::PlayEffect()
+{
+	if (isPossible && isOn == true)
+	{
+		result = FMOD_System_PlaySound(audioSystemEffect, effectSound, FMOD_DEFAULT, false, &effectChannel);
+		FMOD_Channel_SetMode(effectChannel, FMOD_LOOP_OFF);
+	}
+}
+///
