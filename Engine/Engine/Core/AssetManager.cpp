@@ -39,13 +39,13 @@ boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
  *
  * \return (boost::shared_ptr<Texture>) Pointer to the retrieved texture
  */
-//boost::shared_ptr<Texture> AssetManager::GetTexture(std::string id)
-//{
-//	if(AssetManager::loadedTextures.find(id) != AssetManager::loadedTextures.end())
-//		return AssetManager::loadedTextures[id];
-//
-//	return nullptr;
-//}
+boost::shared_ptr<Texture> AssetManager::GetTexture(std::string id) const
+{
+	if(this->textures.find(this->textureShortNames.find(id)->second) != this->textures.end())
+		return this->textures.find(this->textureShortNames.find(id)->second)->second;
+
+	return nullptr;
+}
 
 /*! \brief Gets the shader with the specified id
  *
@@ -55,8 +55,22 @@ boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
  */
 boost::shared_ptr<Shader> AssetManager::GetShader(std::string id) const
 {
-	 if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
+	if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
 		return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
+
+	return nullptr;
+}
+
+/*! \brief Gets the shader program with the specified id
+ *
+ * \param (std::string) id - The id of the shader program in the map
+ *
+ * \return (boost::shared_ptr<ShaderProgram>) Pointer to the retrieved shader program
+ */
+boost::shared_ptr<ShaderProgram> AssetManager::GetShaderProgram(std::string id) const
+{
+	if(this->shaderPrograms.find(id) != this->shaderPrograms.end())
+		return this->shaderPrograms.find(id)->second;
 
 	return nullptr;
 }
@@ -70,35 +84,26 @@ boost::shared_ptr<Shader> AssetManager::GetShader(std::string id) const
 void AssetManager::LoadAsset(const char* path, const char* ext, std::string name)
 {
 	//Mesh files
-	if(strcmp(ext, ".obj") == 0 || strcmp(ext, ".fbx") == 0 || strcmp(ext, ".dae") == 0)
+	if(strcmp(ext, ".obj") == 0 || strcmp(ext, ".fbx") == 0 || strcmp(ext, ".dae") == 0 || strcmp(ext, ".blend") == 0)
 	{
 		if(this->meshes.find(name) == this->meshes.end())
 		{
 			boost::filesystem::path meshFile(path);
-			meshFile.replace_extension(boost::filesystem::path(".mesh"));
+			//meshFile.replace_extension(boost::filesystem::path(".mesh"));
+   //
+			//if(boost::filesystem::exists(meshFile))
+			//{
+			//	boost::shared_ptr<MeshData> meshData = FileLoader::LoadQuickMeshData(meshFile.string().c_str());
+			//	meshShortNames[name] = path;
+			//	meshes[path] = boost::shared_ptr<MeshData>(meshData);
+			//}
 
-			if(boost::filesystem::exists(meshFile))
-			{
-				MeshData data = FileLoader::LoadQuickMeshData(meshFile.string().c_str());
+			//else
+			//{
+				boost::shared_ptr<MeshData> meshData = FileLoader::LoadMeshData(path);
 				meshShortNames[name] = path;
-				meshes[path] = boost::shared_ptr<MeshData>(new MeshData(data));
-			}
-
-			else
-			{
-				boost::container::vector<MeshData> meshData = FileLoader::LoadMeshData(path);
-
-				for(u32 i = 0; i < meshData.size(); i++)
-				{
-					std::string modName = name;
-
-					if(i > 0)
-						modName += std::to_string(i);
-
-					meshShortNames[name] = path;
-					meshes[path] = boost::shared_ptr<MeshData>(new MeshData(meshData[i]));
-				}
-			}
+				meshes[path] = boost::shared_ptr<MeshData>(meshData);
+			//}
 		}
 	}
 
@@ -117,8 +122,8 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 				float* data = nullptr;
 				FileLoader::LoadTextureHDR(path, data, &width, &height, &channels);
 
-				//TODO: Create a new texture with the data
-
+				textureShortNames[name] = path;
+				textures[path] = boost::shared_ptr<Texture>(new Texture(width, height, channels, GL_TEXTURE_2D, GL_FLOAT, (const void*)data));
 				FileLoader::DeleteTextureHDR(data);
 			}
 
@@ -126,8 +131,8 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
 			{
 				unsigned char* data = nullptr;
 				FileLoader::LoadTexture(path, data, &width, &height, &channels);
-				//TODO: Create a new texture with the data
-
+				textureShortNames[name] = path;
+				textures[path] = boost::shared_ptr<Texture>(new Texture(width, height, channels, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)data));
 				FileLoader::DeleteTexture(data);
 			}
 
@@ -173,60 +178,88 @@ void AssetManager::LoadAsset(const char* path, const char* ext, std::string name
  */
 void AssetManager::SaveAssets()
 {
-	for(auto it = meshes.begin(); it != meshes.end(); it++)
-	{
-		boost::filesystem::path path(it->first);
-
-		if(strcmp(path.extension().string().c_str(), ".mesh") != 0)
-			path.replace_extension(boost::filesystem::path(".mesh"));
-
-		if(!boost::filesystem::exists(path))
-		{
-			std::string fileContents = "";
-
-			for(u32 i = 0; i < it->second->GetVertexCount(); i++)
-			{
-				fileContents += to_string(it->second->GetVertices()[i].pos.x);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].pos.y);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].pos.z);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].uv.x);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].uv.y);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].norm.x);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].norm.y);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].norm.z);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].tan.x);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].tan.y);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].tan.z);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].bitan.x);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].bitan.y);
-				fileContents += " ";
-				fileContents += to_string(it->second->GetVertices()[i].bitan.z);
-				fileContents += " ";
-			}
-
-			fileContents += "i ";
-
-			for(u32 i = 0; i < it->second->GetIndexCount(); i++)
-			{
-				fileContents += to_string(it->second->GetIndices()[i]);
-				fileContents += " ";
-			}
-
-			SaveAssetToFile(path.parent_path().string().c_str(), path.filename().string().c_str(), fileContents.c_str());
-		}
-	}
+	//for(auto it = meshes.begin(); it != meshes.end(); it++)
+	//{
+	//	boost::filesystem::path path(it->first);
+ //
+	//	if(strcmp(path.extension().string().c_str(), ".mesh") != 0)
+	//		path.replace_extension(boost::filesystem::path(".mesh"));
+ //
+	//	if(!boost::filesystem::exists(path))
+	//	{
+	//		std::string fileContents = "";
+	//		boost::shared_ptr<MeshData> data = it->second;
+ //
+	//		fileContents.reserve((data->GetVertexCount() * 8) + (data->GetVertexCount() + data->GetIndexCount() + data->GetIndOffsetCount() + data->GetIndAmountCount() + 7) * 2 + 1);
+ //
+	//		fileContents += to_string(data->GetVertexCount());
+	//		fileContents += " ";
+	//		fileContents += to_string(data->GetIndexCount());
+	//		fileContents += " ";
+	//		fileContents += to_string(data->GetIndOffsetCount());
+	//		fileContents += " ";
+	//		fileContents += to_string(data->GetIndAmountCount());
+	//		fileContents += '\n';
+ //
+	//		for(u32 i = 0; i < data->GetVertexCount(); i++)
+	//		{
+	//			fileContents += to_string(data->GetVertices()[i].pos.x);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].pos.y);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].pos.z);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].uv.x);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].uv.y);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].norm.x);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].norm.y);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].norm.z);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].tan.x);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].tan.y);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].tan.z);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].bitan.x);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].bitan.y);
+	//			fileContents += " ";
+	//			fileContents += to_string(data->GetVertices()[i].bitan.z);
+	//			fileContents += "\n";
+	//		}
+ //
+	//		fileContents += "\ni\n";
+ //
+	//		for(u32 i = 0; i < data->GetIndexCount(); i++)
+	//		{
+	//			fileContents += to_string(data->GetIndices()[i]);
+	//			fileContents += "\n";
+	//		}
+ //
+	//		fileContents += "\no\n";
+ //
+	//		for(u32 i = 0; i < data->GetIndOffsetCount(); i++)
+	//		{
+	//			fileContents += to_string(data->GetIndOffsets()[i]);
+	//			fileContents += "\n";
+	//		}
+ //
+	//		fileContents += "\na\n";
+ //
+	//		for(u32 i = 0; i < data->GetIndAmountCount(); i++)
+	//		{
+	//			fileContents += to_string(data->GetIndAmounts()[i]);
+	//			fileContents += "\n ";
+	//		}
+ //
+	//		SaveAssetToFile(path.parent_path().string().c_str(), path.filename().string().c_str(), fileContents.c_str());
+	//	}
+	//}
 
 	//TODO: Save other assets maybe
 }
@@ -299,6 +332,22 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), it->path().stem().string());
 			}
 		}
+	}
+}
+
+/*! \brief Loads all the assets in the specified asset directory
+ */
+void AssetManager::LoadAssetsFromAssetDir()
+{
+	LoadDir(boost::filesystem::path(assetDir).append("/Shaders"));
+	LoadDir(assetDir);
+	//TODO: Probably make this less awful
+	if(shaderPrograms.find("def") == shaderPrograms.end())
+	{
+		shaderPrograms["def"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["def"]->AttachShader(GetShader("VertexShader").get());
+		shaderPrograms["def"]->AttachShader(GetShader("FragmentShader").get());
+		shaderPrograms["def"]->Link();
 	}
 }
 

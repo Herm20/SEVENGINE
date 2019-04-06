@@ -14,123 +14,178 @@
 
 namespace FileLoader
 {
-	static void ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<MeshData> &meshes);
+	static void ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<Vertex> &verts, boost::container::vector<u32> &inds, boost::container::vector<u32> &offsets, boost::container::vector<u32> &amounts, u32 baseOffset);
 };
 
 /*! \brief Loads a mesh as meshdata
  *
  * \param (const char*) path - Path to the mesh file
  *
- * \return (boost::container::vector<MeshData>) Vector of all loaded MeshData
+ * \return (boost::shared_ptr<MeshData>) The loaded MeshData
  */
-boost::container::vector<MeshData> FileLoader::LoadMeshData(const char* path)
+boost::shared_ptr<MeshData> FileLoader::LoadMeshData(const char* path)
 {
 	Assimp::Importer import;
 	const aiScene* scene = import.ReadFile(path, aiProcess_CalcTangentSpace |
 												 aiProcess_Triangulate |
 												 aiProcess_JoinIdenticalVertices|
 												 aiProcess_SortByPType |
-												 aiProcess_GenSmoothNormals |
+												 aiProcess_GenNormals |
 												 aiProcess_FixInfacingNormals );
 
+	boost::container::vector<Vertex> verts;
+	boost::container::vector<u32> inds;
+	boost::container::vector<u32> offsets;
+	boost::container::vector<u32> amounts;
 
-	boost::container::vector<MeshData> meshes;
-	ProcessAINode(scene->mRootNode, scene, meshes);
+	ProcessAINode(scene->mRootNode, scene, verts, inds, offsets, amounts, 0);
+
+	//Set the mesh data and push it
+	boost::shared_ptr<MeshData> data = boost::shared_ptr<MeshData>(new MeshData());
+	data->CopyVerticesFromVector(verts);
+	data->CopyIndicesFromVector(inds);
+	data->CopyIndOffsetsFromVector(offsets);
+	data->CopyIndAmountsFromVector(amounts);
 
 	std::string msg = "'";
 	msg.append(path);
 
-	if(meshes.size() == 0) {
+	if(data->GetVertexCount() == 0) {
 		msg.append("' failed to load!");
 		Logger::Log(Logger::ERROR, msg.c_str());
-		return meshes;
+		return nullptr;
 	}
 
 	msg.append("' loaded successfully");
 	Logger::Log(Logger::MSG, msg.c_str());
-	return meshes;
+	return data;
 }
 
 /*! \brief Loads meshdata from a .mesh file
  *
  * \param (const char*) path - Path to the mesh file
  *
- * \return (MeshData) The loaded MeshData
+ * \return (boost::shared_ptr<MeshData>) The loaded MeshData
  */
-MeshData FileLoader::LoadQuickMeshData(const char* path)
+boost::shared_ptr<MeshData> FileLoader::LoadQuickMeshData(const char* path)
 {
-	char* txt = nullptr;
-	FileLoader::LoadText(path, txt);
+	/*FILE* file;
+	file = fopen(path, "r");
 
-	bool isInds = false;
-	std::stringstream ss(txt);
-	std::string tmp;
+	int flags = 0;
 	boost::container::vector<Vertex> verts;
 	boost::container::vector<u32> inds;
+	boost::container::vector<u32> offsets;
+	boost::container::vector<u32> amounts;
 
-	while(ss >> tmp)
+	boost::shared_ptr<MeshData> meshData = boost::shared_ptr<MeshData>(new MeshData());
+
+	glm::uvec4 size;
+
+	fscanf(file, "%d %d %d %d\n", &size.x, &size.y, &size.z, &size.w);
+
+	verts.reserve(size.x);
+	inds.reserve(size.y);
+	offsets.reserve(size.z);
+	amounts.reserve(size.w);
+
+	char tmp;
+	Vertex v;
+	u32 i;
+	fpos_t pos;
+
+	while(!feof(file))
 	{
-		if(!isalpha(tmp[0]))
+		fgetpos(file, &pos);
+		fscanf(file, "%c", &tmp);
+
+		if(!isalpha(tmp))
 		{
-			if(isInds)
+			fsetpos(file, &pos);
+			/*switch(flags)
 			{
-				inds.push_back(atoi(tmp.c_str()));
-			}
-
-			else
-			{
-				Vertex v;
-				v.pos.x = atoi(tmp.c_str());
-				ss >> v.pos.y >> v.pos.z;
-				ss >> v.uv.x >> v.uv.y;
-				ss >> v.norm.x >> v.norm.y >> v.norm.z;
-				ss >> v.tan.x >> v.tan.y >> v.tan.z;
-				ss >> v.bitan.x >> v.bitan.y >> v.bitan.z;
-
-				verts.push_back(v);
+				case 1:
+					fscanf(file, "%d\n", &i);
+					inds.push_back(i);
+					break;
+				case 2:
+					fscanf(file, "%d\n", &i);
+					offsets.push_back(i);
+					break;
+				case 3:
+					fscanf(file, "%d\n", &i);
+					amounts.push_back(i);
+					break;
+				default:
+					fscanf(file, "%f %f %f %f %f %f %f %f %f %f %f %f %f %f\n", &v.pos.x, &v.pos.y, &v.pos.z, &v.uv.x, &v.uv.y, &v.norm.x, &v.norm.y, &v.norm.z, &v.tan.x, &v.tan.y, &v.tan.z, &v.bitan.x, &v.bitan.y,& v.bitan.z);
+					verts.push_back(v);
+					break;
 			}
 		}
 
-		else if(tmp[0] == 'i')
+		else if(tmp == 'i')
 		{
-			isInds = true;
+			flags = 1;
+			fscanf(file, "\n");
+		}
+
+		else if(tmp == 'o')
+		{
+			flags = 2;
+			fscanf(file, "\n");
+		}
+
+		else if(tmp == 'a')
+		{
+			flags = 3;
+			fscanf(file, "\n");
 		}
 	}
+	fclose(file);
 
-	FileLoader::DeleteText(txt);
+	meshData->CopyVerticesFromVector(verts);
+	meshData->CopyIndicesFromVector(inds);
+	meshData->CopyIndOffsetsFromVector(offsets);
+	meshData->CopyIndAmountsFromVector(amounts);
 
-	MeshData data;
-	data.CopyVerticesFromVector(verts);
-	data.CopyIndicesFromVector(inds);
-
-	return data;
+	return meshData;*/
+	return nullptr;
 }
 
 /*! \brief Converts an assimp scene to a series of meshes
  *
  * \param (aiNode*) node - The ai node to process
  * \param (const aiScene*) scene - The ai scene to gather info from
- * \param (boost::container::vector<MeshData> &) meshes - Vector to store the mesh data after processing
+ * \param (boost::shared_ptr<Vertex> &) verts - Vector to store the vertex data
+ * \param (boost::shared_ptr<u32> &) inds - Vector to store the index data
+ * \param (boost::shared_ptr<u32> &) offsets - Vector to store the index offset data
+ * \param (boost::shared_ptr<u32> &) amounts - Vector to store the index amount data
+ * \param (u32) baseOffset - The base offset for the index offsets
  */
-void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<MeshData> &meshes)
+void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<Vertex> &verts, boost::container::vector<u32> &inds, boost::container::vector<u32> &offsets, boost::container::vector<u32> &amounts, u32 baseOffset)
 {
 	//Iterate through the submeshes
 	for(u32 i = 0; i < node->mNumMeshes; i++)
 	{
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		boost::container::vector<Vertex> verts;
-		boost::container::vector<u32> inds;
 		bool uvs = false;
 		bool norms = false;
 		bool tansBitans = false;
 
+		offsets.push_back(inds.size());
+
+		u32 indAmount = 0;
 		//Get all the indices in the submesh
 		for(u32 j = 0; j < mesh->mNumFaces; j++)
 		{
 			aiFace face = mesh->mFaces[j];
-			for(u32 k = 0; k < face.mNumIndices; k++)
-				inds.push_back(face.mIndices[k]);
+			indAmount += face.mNumIndices;
+			for(u32 k = 0; k < face.mNumIndices; k++) {
+				inds.push_back(face.mIndices[k] + verts.size());
+			}
 		}
+
+		amounts.push_back(indAmount);
 
 		//Check if there are uvs
 		if(mesh->HasTextureCoords(0))
@@ -170,18 +225,12 @@ void FileLoader::ProcessAINode(aiNode* node, const aiScene* scene, boost::contai
 
 			verts.push_back(v);
 		}
-
-		//Set the mesh data and push it
-		MeshData data;
-		data.CopyVerticesFromVector(verts);
-		data.CopyIndicesFromVector(inds);
-		meshes.push_back(data);
 	}
 
 	//Iterate through all the children
 	for(u32 i = 0; i < node->mNumChildren; i++)
 	{
-		ProcessAINode(node->mChildren[i], scene, meshes);
+		ProcessAINode(node->mChildren[i], scene, verts, inds, offsets, amounts, verts.size());
 	}
 }
 

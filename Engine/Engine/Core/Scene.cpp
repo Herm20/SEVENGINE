@@ -59,7 +59,7 @@ void Scene::DestroyEntity(Entity* entity)
 		entitiesAll.pop_back();
 
 		// Same as before, but only for top-level (parent-less)
-		if (entitiesTop[reference.topID] != U64_MAX)
+		if (entitiesTop[reference.topID] != (void*)U64_MAX)
 		{
 			entitiesTop[reference.topID] = entitiesTop[entitiesTop.size() - 1];
 			entitiesTop[reference.topID]->scene.topID = reference.topID;

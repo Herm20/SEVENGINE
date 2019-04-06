@@ -21,13 +21,13 @@ bool Shader::Compile(const char* shaderSrc)
 	glCompileShader(shaderID);
 
 	//Determines compilation success
-	GLint compilation = 0;
+	i32 compilation = 0;
 	glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compilation);
 
 	//Retrieves compilation information upon failure
 	if (compilation == 0)
 	{
-		GLint logLength = 0;
+		i32 logLength = 0;
 		glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &logLength);
 		GLchar* infoLog = new GLchar[logLength];
 		glGetShaderInfoLog(shaderID, logLength, 0, infoLog);
@@ -39,12 +39,12 @@ bool Shader::Compile(const char* shaderSrc)
 	return true;
 }
 
-GLuint Shader::GetID()
+u32 Shader::GetID() const
 {
 	return shaderID;
 }
 
-GLenum Shader::GetShaderType()
+GLenum Shader::GetShaderType() const
 {
 	return shaderType;
 }

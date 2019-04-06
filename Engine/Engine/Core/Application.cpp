@@ -38,9 +38,10 @@ Application::~Application()
 void Application::Init()
 {
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
+	renderer = new Renderer();
 	assetMan = new AssetManager();
 	camera = new Camera();
-	renderer = new Renderer(assetMan);
+
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
 
@@ -109,8 +110,8 @@ void Application::Exit()
 	assetMan->SaveAssets();
 	Logger::Log(Logger::LogType::MSG, "Exiting engine");
 	std::string name = Logger::GetFormatedSystemTime();
-	//name += "-log.txt";
-//	assetMan->SaveAssetToFile("Log", name.string().c_str(), Logger::GetLog());
+	name += "-log.txt";
+	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;
 	delete renderer;
 }
@@ -121,7 +122,7 @@ void Application::CamMovement()
 	// FPS Controls
 	int w = renderer->GetWindowWidth();
 	int h = renderer->GetWindowHeight();
-	float sens = .005;
+	float sens = .001;
 	double x = 0;
 	double y = 0;
 
@@ -138,13 +139,13 @@ void Application::CamMovement()
 
 	if (inputIsDown[GLFW_KEY_A])
 		camera->velocity += R * glm::vec3(1, 0, 0);
-	
+
 	if (inputIsDown[GLFW_KEY_D])
 		camera->velocity += R * glm::vec3(-1, 0, 0);
 
 	if (inputIsDown[GLFW_KEY_W])
 		camera->velocity += R * glm::vec3(0, 0, 1);
-		
+
 	if (inputIsDown[GLFW_KEY_S])
 		camera->velocity += R * glm::vec3(0, 0, -1);
 
@@ -153,11 +154,11 @@ void Application::CamMovement()
 
 	if (inputIsDown[GLFW_KEY_X])
 		camera->velocity += R * glm::vec3(0, -1, 0);
-	
-	float speed = 2.0f;
+
+	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed;
+		camera->velocity = glm::normalize(camera->velocity) * speed * Time.dt;
 	}
 
 	camera->location += camera->velocity * speed * Time.dt;

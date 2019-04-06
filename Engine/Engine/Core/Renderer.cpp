@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-Renderer::Renderer(const AssetManager* am)
+Renderer::Renderer()
 {
 	//Initialize the GLFW Library
 	if (!glfwInit())
@@ -28,19 +28,20 @@ Renderer::Renderer(const AssetManager* am)
 		return;
 	}
 
-	glCullFace(GL_BACK);
 	glEnable(GL_CULL_FACE);
-
-	this->am = am;
+	glCullFace(GL_BACK);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
 Renderer::~Renderer()
 {
-	glDeleteProgram(mainShaderProgram);
-	mainShaderProgram = 0;
-	vertexShader = 0;
-	fragmentShader = 0;
+	for(u32 i = 0; i < 5; i++)
+	{
+		meshes[i].Destroy();
+	}
+
+	delete [] meshes;
 	glfwTerminate();
 }
 
@@ -60,46 +61,18 @@ int Renderer::GetWindowWidth()
 	return width;
 }
 
-void Renderer::CreateBasicProgram()
+void Renderer::CreateMeshes()
 {
-	vertexShader = am->GetShader("VertexShader");
-	fragmentShader = am->GetShader("FragmentShader");
+	meshes = new Mesh[5];
+	meshes[0] = Mesh(am->GetMesh("box"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(0.0f, 0.0f, 5.0f));
+	meshes[1] = Mesh(am->GetMesh("sphere"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(5.0f, 0.0f, 0.0f));
+	meshes[2] = Mesh(am->GetMesh("sword"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(0.0f, 5.0f, 0.0f));
+	meshes[3] = Mesh(am->GetMesh("teapot"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(-5.0f, 0.0f, 0.0f));
+}
 
-	//Creates a graphics pipeline with the necessary shaders for general usage
-	mainShaderProgram = glCreateProgram();
-	glAttachShader(mainShaderProgram, vertexShader->GetID());
-	glAttachShader(mainShaderProgram, fragmentShader->GetID());
-	glLinkProgram(mainShaderProgram);
-
-	//Determines program creation success
-	GLint linked = 0;
-	glGetProgramiv(mainShaderProgram, GL_LINK_STATUS, &linked);
-
-	//Retreives program information upon creation failure
-	if (linked == true)
-	{
-		glUseProgram(mainShaderProgram);
-	}
-
-	else
-	{
-		GLint logLength = 0;
-		glGetProgramiv(mainShaderProgram, GL_INFO_LOG_LENGTH, &logLength);
-		GLchar* infoLog = new GLchar[logLength];
-		glGetProgramInfoLog(mainShaderProgram, logLength, 0, infoLog);
-		Logger::Log(Logger::ERROR, infoLog);
-		glDeleteProgram(mainShaderProgram);
-		delete[] infoLog;
-	}
-
-	obj1 = new Mesh(am->GetMesh("box"), glm::vec3(0, 0, 5));
-	obj2 = new Mesh(am->GetMesh("sphere"), glm::vec3(5, 0, 0));
-	obj3 = new Mesh(am->GetMesh("sword"), glm::vec3(0, 5, 0));
-	obj4 = new Mesh(am->GetMesh("teapot"), glm::vec3(-5, 0, 0));
-	meshes[0] = obj1;
-	meshes[1] = obj2;
-	meshes[2] = obj3;
-	meshes[3] = obj4;
+void Renderer::SetAssetManager(const AssetManager* am)
+{
+	this->am = am;
 }
 
 //Iterates through and draws all entities to the screen
@@ -109,16 +82,12 @@ void Renderer::Draw()
 	glClearColor(0.392f, 0.584f, 0.929f, 0.0f);
 
 	//Clear those buffers
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 4; i++) 
+	for (int i = 0; i < 4; i++)
 	{
-		// Set transform
-		glm::mat4 posMatrix = glm::translate(glm::mat4(), meshes[i]->position);
-		glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
-
 		// Draw object
-		meshes[i]->Render();
+		meshes[i].Render();
 	}
 	glBindVertexArray(0);
 
@@ -127,9 +96,4 @@ void Renderer::Draw()
 
 	//Poll for and process events
 	glfwPollEvents();
-}
-
-bool Renderer::ShouldClose()
-{
-	return glfwWindowShouldClose(window);
 }

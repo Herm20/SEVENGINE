@@ -10,15 +10,17 @@ layout (location = 5) uniform mat4 proj;
 
 layout (location = 8) uniform mat4 cameraMatrix;
 
-out vec3 posFs;
-out vec2 uvFs;
-out vec3 normFs;
+out VS_OUT
+{
+	vec2 uv;
+	vec3 norm;
+} vsOut;
 
 void main(void)
 {
-	gl_Position = cameraMatrix * vec4(position,1);
+	vec4 worldPos = model * vec4(position, 1.0);
+	gl_Position = cameraMatrix * worldPos;
 
-	uvFs = uv;
-	return;
-
+	vsOut.uv = uv;
+	vsOut.norm = normal;
 }
