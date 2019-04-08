@@ -16,6 +16,12 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{9d88a294-ac3b-4b72-a8af-edccfebd8d92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{0cbbfc6e-54b5-47ee-a8bc-3cdc9a40afd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{c72db8ab-b89a-4c2d-a4dc-54e1bb93379e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp">
@@ -33,16 +39,10 @@
     <ClCompile Include="Core\Object.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Component.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\InputPoller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Physics\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Shader.cpp">
@@ -113,9 +113,6 @@
     <ClInclude Include="Core\InputPoller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Physics\Collider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -157,6 +154,12 @@
     </ClInclude>
     <ClInclude Include="Core\Texture.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Physics\Collider.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Components\MeshRendererComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

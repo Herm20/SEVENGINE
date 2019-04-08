@@ -7,18 +7,10 @@
 
 using namespace glm;
 
-class Collider : Component {
-
-private:
-
+struct Collider : Component {
 	vec3 size;
-
-public:
-
-	vec3 GetScale() const;
-	vec3 GetPosition() const;
-	quat GetRotation() const;
-
+	vec3 position;
+	mat3 rotation;
 };
 
 #endif

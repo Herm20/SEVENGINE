@@ -32,7 +32,7 @@ private:
 
 	const AssetManager* am;
 
-	Mesh* meshes;
+	Entity* entities;
 
 public:
 	Renderer();

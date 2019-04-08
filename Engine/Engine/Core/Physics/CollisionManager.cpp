@@ -1,8 +1,8 @@
 #include "CollisionManager.h"
 
-inline vec3 e(const Collider& coll) { return coll.GetScale(); }
-inline vec3 c(const Collider& coll) { return coll.GetPosition(); }
-inline mat3 u(const Collider& coll) { return (mat3)coll.GetRotation(); };
+inline vec3 e(const Collider& coll) { return coll.size; }
+inline vec3 c(const Collider& coll) { return coll.position; }
+inline mat3 u(const Collider& coll) { return (mat3)coll.rotation; };
 
 bool CollisionManager::TestAxis(vec3 L, vec3 cA, vec3 cB, vec3 rA, vec3 rB) {
 	return abs( dot(L, (cA - cB)) ) > abs( dot(L, rA) ) + abs( dot(L, rB) );

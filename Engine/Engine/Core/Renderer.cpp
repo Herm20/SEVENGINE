@@ -1,5 +1,7 @@
 #include "Renderer.h"
 
+#include "Components/MeshRendererComponent.h"
+
 Renderer::Renderer()
 {
 	//Initialize the GLFW Library
@@ -38,10 +40,10 @@ Renderer::~Renderer()
 {
 	for(u32 i = 0; i < 5; i++)
 	{
-		meshes[i].Destroy();
+		entities[i].Destroy();
 	}
 
-	delete [] meshes;
+	delete [] entities;
 	glfwTerminate();
 }
 
@@ -63,11 +65,26 @@ int Renderer::GetWindowWidth()
 
 void Renderer::CreateMeshes()
 {
-	meshes = new Mesh[5];
+	/*meshes = new Mesh[5];
 	meshes[0] = Mesh(am->GetMesh("box"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(0.0f, 0.0f, 5.0f));
 	meshes[1] = Mesh(am->GetMesh("sphere"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(5.0f, 0.0f, 0.0f));
 	meshes[2] = Mesh(am->GetMesh("sword"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(0.0f, 5.0f, 0.0f));
-	meshes[3] = Mesh(am->GetMesh("teapot"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(-5.0f, 0.0f, 0.0f));
+	meshes[3] = Mesh(am->GetMesh("teapot"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(-5.0f, 0.0f, 0.0f));*/
+	entities = new Entity[2];
+
+	MeshRendererComponent* mr1 = new MeshRendererComponent();
+	mr1->mesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("box")));
+	mr1->shaderProgram = am->GetShaderProgram("def");
+	mr1->texture = am->GetTexture("test");
+	entities[0].AddComponent<MeshRendererComponent>(mr1);
+
+	MeshRendererComponent* mr2 = new MeshRendererComponent();
+	mr2->mesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("sword")));
+	mr2->shaderProgram = am->GetShaderProgram("def");
+	mr2->texture = am->GetTexture("test");
+	entities[1].SetPosition(glm::vec3(3, 0, 0));
+	entities[1].AddComponent<MeshRendererComponent>(mr2);
+
 }
 
 void Renderer::SetAssetManager(const AssetManager* am)
@@ -84,10 +101,15 @@ void Renderer::Draw()
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		// Draw object
-		meshes[i].Render();
+		MeshRendererComponent* meshRenderer = entities[i].GetComponent<MeshRendererComponent>();
+		if (!meshRenderer) continue;
+		meshRenderer->mesh->Render(
+			entities[i].GetWorldPosition(), 
+			meshRenderer->shaderProgram, 
+			meshRenderer->texture);
 	}
 	glBindVertexArray(0);
 

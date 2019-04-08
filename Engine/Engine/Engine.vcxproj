@@ -23,7 +23,6 @@
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
-    <ClCompile Include="Core\Component.cpp" />
     <ClCompile Include="Core\Entity.cpp" />
     <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
@@ -33,7 +32,6 @@
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
-    <ClCompile Include="Core\Physics\Collider.cpp" />
     <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Scene.cpp" />
@@ -48,6 +46,7 @@
     <ClInclude Include="Core\AudioManager.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\Component.h" />
+    <ClInclude Include="Core\Components\MeshRendererComponent.h" />
     <ClInclude Include="Core\Entity.h" />
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
@@ -77,7 +76,7 @@
     <ProjectGuid>{3AE4E03C-C0B8-46CB-B76C-CDC947B0BAAE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
