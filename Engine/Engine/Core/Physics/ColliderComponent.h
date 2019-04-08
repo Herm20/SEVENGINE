@@ -1,5 +1,5 @@
-#ifndef COLLIDER_H_
-#define COLLIDER_H_
+#ifndef COLLIDER_COMPONENT_H_
+#define COLLIDER_COMPONENT_H_
 
 #include "../Component.h"
 
@@ -7,7 +7,7 @@
 
 using namespace glm;
 
-struct Collider : Component {
+struct ColliderComponent : Component {
 	vec3 size;
 	vec3 position;
 	mat3 rotation;

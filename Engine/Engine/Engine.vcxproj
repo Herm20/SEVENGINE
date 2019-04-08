@@ -55,7 +55,7 @@
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
-    <ClInclude Include="Core\Physics\Collider.h" />
+    <ClInclude Include="Core\Physics\ColliderComponent.h" />
     <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Scene.h" />

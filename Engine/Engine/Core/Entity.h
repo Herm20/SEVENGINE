@@ -48,7 +48,11 @@ public:
 
 	//inline std::map<std::type_index, std::shared_ptr<Component>> GetComponents() const { return components; }
 	template <typename T>
-	void AddComponent(T* c) { components[&typeid(*c)] = c; }
+	T* AddComponent() {
+		T* newComponent = new T();
+		components[&typeid(*newComponent)] = newComponent;
+		return newComponent;
+	}
 
 	template <typename T>
 	T* GetComponent() {

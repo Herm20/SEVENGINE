@@ -31,6 +31,7 @@ private:
 	u32 indexBuffer;
 
 	const AssetManager* am;
+	boost::shared_ptr<Mesh> boxMesh;
 
 	Entity* entities;
 

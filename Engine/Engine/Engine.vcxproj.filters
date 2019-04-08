@@ -155,10 +155,10 @@
     <ClInclude Include="Core\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Physics\Collider.h">
+    <ClInclude Include="Core\Components\MeshRendererComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Components\MeshRendererComponent.h">
+    <ClInclude Include="Core\Physics\ColliderComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
