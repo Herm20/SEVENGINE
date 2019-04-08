@@ -21,7 +21,8 @@ public:
 	// Printing fps
 	static Timer Time;
 
-	AudioManager masterBG;
+	AudioManager* masterBG;
+	AudioManager* masterEffect;
 
 	// Initialize core engine systems and resources
 	void Init();
