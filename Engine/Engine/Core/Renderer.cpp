@@ -107,7 +107,8 @@ void Renderer::Draw()
 			meshRenderer->mesh->Render(
 				entities[i].GetWorldPosition(),
 				meshRenderer->shaderProgram,
-				meshRenderer->texture);
+				meshRenderer->texture
+			);
 		}
 
 		ColliderComponent* coll = entities[i].GetComponent<ColliderComponent>();
@@ -115,7 +116,8 @@ void Renderer::Draw()
 			boxMesh->Render(
 				entities[i].GetWorldPosition(),
 				meshRenderer->shaderProgram,
-				meshRenderer->texture
+				meshRenderer->texture,
+				true
 			);
 		}
 

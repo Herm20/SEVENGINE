@@ -22,7 +22,7 @@ public:
 	Mesh(boost::shared_ptr<MeshData> meshData);
 	Mesh(const Mesh &m);
 	const Mesh & operator=(const Mesh &m);
-	void Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture);
+	void Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture, bool wireframe = false);
 	void Destroy();
 	~Mesh();
 

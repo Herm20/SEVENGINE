@@ -100,7 +100,7 @@ const Mesh & Mesh::operator=(const Mesh &m)
 	return *this;
 }
 
-void Mesh::Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture) {
+void Mesh::Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture, bool wireframe) {
 	glm::mat4 posMatrix = glm::translate(glm::mat4(1.0), position);
 	shaderProgram->Use();
 	glBindVertexArray(this->vao);
@@ -108,6 +108,7 @@ void Mesh::Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderPro
 	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
 	texture->bind(0);
 	glUniform1i(glGetUniformLocation(shaderProgram->GetProgram(), "tex"), 0);
+	glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
 	for (u32 i = 0; i < this->subMeshData->GetIndAmountCount(); i++) {
 		glDrawElements(
 			GL_TRIANGLES, 
