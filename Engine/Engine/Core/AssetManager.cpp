@@ -27,8 +27,16 @@ AssetManager::AssetManager()
  */
 boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
 {
-	if(this->meshes.find(this->meshShortNames.find(id)->second) != this->meshes.end())
-		return this->meshes.find(this->meshShortNames.find(id)->second)->second;
+	if(this->meshShortNames.find(id) != this->meshShortNames.end())
+	{
+		if(this->meshes.find(this->meshShortNames.find(id)->second) != this->meshes.end())
+			return this->meshes.find(this->meshShortNames.find(id)->second)->second;
+	}
+
+	std::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
@@ -41,8 +49,16 @@ boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
  */
 boost::shared_ptr<Texture> AssetManager::GetTexture(std::string id) const
 {
-	if(this->textures.find(this->textureShortNames.find(id)->second) != this->textures.end())
-		return this->textures.find(this->textureShortNames.find(id)->second)->second;
+	if(this->textureShortNames.find(id) != this->textureShortNames.end())
+	{
+		if(this->textures.find(this->textureShortNames.find(id)->second) != this->textures.end())
+			return this->textures.find(this->textureShortNames.find(id)->second)->second;
+	}
+
+	std::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
@@ -55,8 +71,16 @@ boost::shared_ptr<Texture> AssetManager::GetTexture(std::string id) const
  */
 boost::shared_ptr<Shader> AssetManager::GetShader(std::string id) const
 {
-	if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
-		return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
+	if(this->shaderShortNames.find(id) != this->shaderShortNames.end())
+	{
+		if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
+			return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
+	}
+
+	std::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
@@ -71,6 +95,11 @@ boost::shared_ptr<ShaderProgram> AssetManager::GetShaderProgram(std::string id) 
 {
 	if(this->shaderPrograms.find(id) != this->shaderPrograms.end())
 		return this->shaderPrograms.find(id)->second;
+
+	std::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
