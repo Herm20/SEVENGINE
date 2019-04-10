@@ -20,10 +20,10 @@ void Logger::Log(LogType type, const char* msg)
 	switch(type)
 	{
 		case LogType::ERROR:
-			logTxt += "  :  ERR  :  ";
+			logTxt += "  : ERR :  ";
 			break;
 		case LogType::WARNING:
-			logTxt += "  :  WRN  :  ";
+			logTxt += "  : WRN :  ";
 			break;
 		case LogType::MSG:
 		default:
