@@ -3,7 +3,7 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <string>
+#include <boost/container/string.hpp>
 #include "Types.h"
 #include "Shader.h"
 #include "Logger.h"

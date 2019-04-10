@@ -47,7 +47,7 @@ boost::shared_ptr<MeshData> FileLoader::LoadMeshData(const char* path)
 	data->CopyIndOffsetsFromVector(offsets);
 	data->CopyIndAmountsFromVector(amounts);
 
-	std::string msg = "'";
+	boost::container::string msg = "'";
 	msg.append(path);
 
 	if(data->GetVertexCount() == 0) {
@@ -246,7 +246,7 @@ void FileLoader::LoadTexture(const char* path, unsigned char* &data, i32* width,
 {
 	data = stbi_load(path, width, height, channels, 0);
 
-	std::string msg = "'";
+	boost::container::string msg = "'";
 	msg.append(path);
 
 	if(data == nullptr) {
@@ -280,7 +280,7 @@ void FileLoader::LoadTextureHDR(const char* path, float* &data, i32* width, i32*
 {
 	data = stbi_loadf(path, width, height, channels, 0);
 
-	std::string msg = "'";
+	boost::container::string msg = "'";
 	msg.append(path);
 
 	if(data == nullptr) {
@@ -314,7 +314,7 @@ void FileLoader::LoadText(const char* path, char* &data)
 
 	file.open(path, std::ios::binary);
 
-	std::string msg = "'";
+	boost::container::string msg = "'";
 	msg.append(path);
 
 	if(!file.is_open()) {

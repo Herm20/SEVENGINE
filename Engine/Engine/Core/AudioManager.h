@@ -5,7 +5,7 @@
 #include <fmodinc/fmod_errors.h>
 #include <fmodinc/fmod.h>
 #include <iostream>
-#include <string>
+#include <boost/container/string.hpp>
 
 using namespace FMOD;
 

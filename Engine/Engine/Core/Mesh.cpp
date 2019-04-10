@@ -17,6 +17,7 @@ Mesh::Mesh()
  * \param (glm::vec3) position - The position of the mesh
  */
 Mesh::Mesh(boost::shared_ptr<MeshData> meshData, boost::shared_ptr<ShaderProgram> sp, boost::shared_ptr<Texture> t, glm::vec3 position) :
+	subMeshData(nullptr),
 	shaderProgram(boost::shared_ptr<ShaderProgram>(sp)),
 	tex(boost::shared_ptr<Texture>(t)),
 	position(position)
