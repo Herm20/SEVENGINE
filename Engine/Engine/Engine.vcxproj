@@ -23,7 +23,6 @@
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
-    <ClCompile Include="Core\Entity.cpp" />
     <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\InputPoller.cpp" />
@@ -45,9 +44,13 @@
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
     <ClInclude Include="Core\Camera.h" />
-    <ClInclude Include="Core\Component.h" />
     <ClInclude Include="Core\Components\MeshRendererComponent.h" />
-    <ClInclude Include="Core\Entity.h" />
+    <ClInclude Include="Core\ECS\Component.h" />
+    <ClInclude Include="Core\ECS\ComponentStore.h" />
+    <ClInclude Include="Core\ECS\ComponentType.h" />
+    <ClInclude Include="Core\ECS\Entity.h" />
+    <ClInclude Include="Core\ECS\Manager.h" />
+    <ClInclude Include="Core\ECS\System.h" />
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\InputPoller.h" />

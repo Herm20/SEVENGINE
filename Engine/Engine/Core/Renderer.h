@@ -8,7 +8,6 @@
 #include <fstream>
 #include "AssetManager.h"
 #include "Shader.h"
-#include "Entity.h"
 #include "Mesh.h"
 #include "Logger.h"
 

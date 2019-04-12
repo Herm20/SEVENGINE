@@ -4,11 +4,13 @@
 #include "Object.h"
 #include "SceneRef.h"
 #include "MeshData.h"
-#include "Component.h"
+#include "ECS/Component.h"
 
 #include <boost/unordered_set.hpp>
 #include <unordered_map>
 #include <memory>
+
+using namespace ecs;
 
 class Scene;
 
@@ -68,5 +70,6 @@ public:
 
 	// Scene and component stuff goes here
 };
+
 
 #endif

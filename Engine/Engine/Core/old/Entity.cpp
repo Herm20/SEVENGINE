@@ -1,7 +1,9 @@
 #include "Entity.h"
 
 #include "Scene.h"
-#include "Component.h"
+#include "ECS/Component.h"
+
+using namespace ecs;
 
 void Entity::DestroyInternal()
 {
