@@ -41,10 +41,10 @@ Renderer::~Renderer()
 {
 	for(u32 i = 0; i < 5; i++)
 	{
-		entities[i].Destroy();
+		//entities[i].Destroy();
 	}
 
-	delete [] entities;
+	//delete [] entities;
 	glfwTerminate();
 }
 
@@ -69,7 +69,7 @@ void Renderer::CreateMeshes()
 	
 	boxMesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("box")));
 
-	entities = new Entity[2];
+	/*entities = new Entity[2];
 
 	MeshRendererComponent* mr1 = entities[0].AddComponent<MeshRendererComponent>();
 	mr1->mesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("box")));
@@ -81,7 +81,7 @@ void Renderer::CreateMeshes()
 	mr2->shaderProgram = am->GetShaderProgram("def");
 	mr2->texture = am->GetTexture("test");
 	entities[1].SetPosition(glm::vec3(3, 0, 0));
-	entities[1].AddComponent<ColliderComponent>();
+	entities[1].AddComponent<ColliderComponent>();*/
 
 }
 
@@ -102,7 +102,7 @@ void Renderer::Draw()
 	for (int i = 0; i < 2; i++)
 	{
 		// Draw object
-		MeshRendererComponent* meshRenderer = entities[i].GetComponent<MeshRendererComponent>();
+		/*MeshRendererComponent* meshRenderer = entities[i].GetComponent<MeshRendererComponent>();
 		if (meshRenderer) {
 			meshRenderer->mesh->Render(
 				entities[i].GetWorldPosition(),
@@ -119,7 +119,7 @@ void Renderer::Draw()
 				meshRenderer->texture,
 				true
 			);
-		}
+		}*/
 
 	}
 	glBindVertexArray(0);

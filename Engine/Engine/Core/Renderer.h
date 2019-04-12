@@ -32,8 +32,6 @@ private:
 	const AssetManager* am;
 	boost::shared_ptr<Mesh> boxMesh;
 
-	Entity* entities;
-
 public:
 	Renderer();
 	~Renderer();

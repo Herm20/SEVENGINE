@@ -27,7 +27,7 @@ namespace ecs {
 		}
 
 		inline bool remove(Entity entity) {
-			return (o < mStore.erase(entity));
+			return (0 < mStore.erase(entity));
 		}
 
 		inline bool has(Entity entity) const {
@@ -44,7 +44,7 @@ namespace ecs {
 			return component;
 		}
 
-		inline const std::unorder_map<Entity, C>& getComponents() {
+		inline const std::unordered_map<Entity, C>& getComponents() {
 			return mStore;
 		}
 
