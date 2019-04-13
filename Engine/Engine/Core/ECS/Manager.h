@@ -23,15 +23,15 @@ namespace ecs {
 		template<typename C>
 		inline bool createComponentStore() {
 			static_assert(std::is_base_of<Component, C>::value, "C must derived from the Component struct");
-			static_assert(C::_mtype != _invalidComponentType, "C must define a valid non-zero type");
-			return componentStores.insert(std::make_pair(C::_mtype, IComponentStore::Ptr(new ComponentStore<C>()))).second;
+			static_assert(C::_mType != _invalidComponentType, "C must define a valid non-zero type");
+			return componentStores.insert(std::make_pair(C::_mType, IComponentStore::Ptr(new ComponentStore<C>()))).second;
 		}
 
 		template<typename C>
 		inline ComponentStore<C>& getComponentStore() {
 			static_assert(std::is_base_of<Component, C>::value, "C must derived from the Component struct");
-			static_assert(C::_mtype != _invalidComponentType, "C must define a valid non-zero _mType");
-			auto iComponentStore = componentStores.find(C::_mtype);
+			static_assert(C::_mType != _invalidComponentType, "C must define a valid non-zero _mType");
+			auto iComponentStore = componentStores.find(C::_mType);
 			if (componentStores.end() == iComponentStore) {
 				throw std::runtime_error("The ComponentStore does not exist");
 			}
@@ -49,12 +49,12 @@ namespace ecs {
 		template<typename C>
 		inline bool addComponent(const Entity _entity, C&& _component) {
 			static_assert(std::is_base_of<Component, C>::value, "C must derived from the Component struct");
-			static_assert(C::_mtype != _invalidComponentType, "C must define a valid non-zero type");
+			static_assert(C::_mType != _invalidComponentType, "C must define a valid non-zero type");
 			auto entity = entities.find(_entity);
 			if (entities.end() == entity) {
 				throw std::runtime_error("The Entity does not exist");
 			}
-			(*entity).second.insert(C::_mtype);
+			(*entity).second.insert(C::_mType);
 			return getComponentStore<C>().add(_entity, std::move(_component));
 		}
 

@@ -12,6 +12,7 @@
 #include "Logger.h"
 
 #include "ECS/System.h"
+#include "Camera.h"
 
 using namespace glm;
 using namespace std;
@@ -31,8 +32,7 @@ private:
 	u32 indexArrayID;
 	u32 indexBuffer;
 
-	const AssetManager* am;
-	boost::shared_ptr<Mesh> boxMesh;
+	Camera* camera;
 
 public:
 
@@ -42,9 +42,6 @@ public:
 	GLFWwindow* GetWindow();
 	int GetWindowHeight();
 	int GetWindowWidth();
-	void CreateMeshes();
-	void SetAssetManager(const AssetManager* am);
-	void Draw();
 
 	virtual void startFrame(float dt) override;
 	virtual void updateEntity(float dt , ecs::Entity entity) override;

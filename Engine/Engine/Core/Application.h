@@ -24,7 +24,8 @@ public:
 	// Printing fps
 	static Timer Time;
 
-	ecs::Entity testEntity;
+	ecs::Entity e1;
+	ecs::Entity e2;
 
 	AudioManager masterBG;
 
@@ -41,6 +42,7 @@ public:
 	void Load();
 
 	/// SUPER TEMP
+	void InitKeyCallbacks();
 	void CamMovement();
 	/// SUPER TEMP
 };

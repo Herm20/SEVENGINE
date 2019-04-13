@@ -81,7 +81,7 @@ namespace ecs{
 
 		// End Frame
 		for (auto system = systems.begin(); system != systems.end(); system++) {
-			(*system)->startFrame(_dt);
+			(*system)->endFrame(_dt);
 		}
 
 		return updatedEntitiesCount;

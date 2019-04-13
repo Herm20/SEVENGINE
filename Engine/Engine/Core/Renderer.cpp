@@ -10,7 +10,8 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 {
 
 	ecs::ComponentTypeSet requiredComponents;
-	requiredComponents.insert(ecs::MeshRendererComponent::_mtype);
+	requiredComponents.insert(ecs::MeshRendererComponent::_mType);
+	requiredComponents.insert(ecs::TransformComponent::_mType);
 	setRequiredComponents(std::move(requiredComponents));
 
 	//Initialize the GLFW Library
@@ -47,11 +48,6 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 
 Renderer::~Renderer()
 {
-	for(u32 i = 0; i < 5; i++)
-	{
-		//entities[i].Destroy();
-	}
-
 	//delete [] entities;
 	glfwTerminate();
 }
@@ -72,32 +68,6 @@ int Renderer::GetWindowWidth()
 	return width;
 }
 
-void Renderer::CreateMeshes()
-{
-	
-	boxMesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("box")));
-
-	/*entities = new Entity[2];
-
-	MeshRendererComponent* mr1 = entities[0].AddComponent<MeshRendererComponent>();
-	mr1->mesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("box")));
-	mr1->shaderProgram = am->GetShaderProgram("def");
-	mr1->texture = am->GetTexture("test");
-
-	MeshRendererComponent* mr2 = entities[1].AddComponent<MeshRendererComponent>();
-	mr2->mesh = boost::shared_ptr<Mesh>(new Mesh(am->GetMesh("sword")));
-	mr2->shaderProgram = am->GetShaderProgram("def");
-	mr2->texture = am->GetTexture("test");
-	entities[1].SetPosition(glm::vec3(3, 0, 0));
-	entities[1].AddComponent<ColliderComponent>();*/
-
-}
-
-void Renderer::SetAssetManager(const AssetManager* am)
-{
-	this->am = am;
-}
-
 void Renderer::startFrame(float dt) {
 
 	//Wipe the screen with that sweet sweet cornflower blue
@@ -110,9 +80,10 @@ void Renderer::startFrame(float dt) {
 
 void Renderer::updateEntity(float dt, ecs::Entity entity) {
 	
-	ecs::MeshRendererComponent meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 	meshRenderer.mesh->Render(
-		glm::vec3(0, 0, 0),
+		transform.position,
 		meshRenderer.shaderProgram,
 		meshRenderer.texture
 	);
@@ -121,45 +92,9 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 
 void Renderer::endFrame(float dt) {
 
-}
-
-//Iterates through and draws all entities to the screen
-void Renderer::Draw()
-{
-	//Wipe the screen with that sweet sweet cornflower blue
-	glClearColor(0.392f, 0.584f, 0.929f, 0.0f);
-
-	//Clear those buffers
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	for (int i = 0; i < 2; i++)
-	{
-		// Draw object
-		/*MeshRendererComponent* meshRenderer = entities[i].GetComponent<MeshRendererComponent>();
-		if (meshRenderer) {
-			meshRenderer->mesh->Render(
-				entities[i].GetWorldPosition(),
-				meshRenderer->shaderProgram,
-				meshRenderer->texture
-			);
-		}
-
-		ColliderComponent* coll = entities[i].GetComponent<ColliderComponent>();
-		if (coll && meshRenderer) {
-			boxMesh->Render(
-				entities[i].GetWorldPosition(),
-				meshRenderer->shaderProgram,
-				meshRenderer->texture,
-				true
-			);
-		}*/
-
-	}
 	glBindVertexArray(0);
 
 	//Swap front and back buffers
 	glfwSwapBuffers(window);
 
-	//Poll for and process events
-	glfwPollEvents();
 }
