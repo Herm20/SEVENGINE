@@ -48,9 +48,15 @@ void Application::Init()
 
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
-	//masterBG.InitSound();
-	//masterBG.LoadFile("audio/gameMusic.mp3");
-	//masterBG.Play(false);
+
+	masterBG = new AudioManager();
+	masterBG->InitSoundBG();
+	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
+	masterBG->Play();
+	masterBG->SetVolume(0.02f);
+
+	masterEffect = new AudioManager();
+	masterEffect->InitSoundEffect();
 
 	/// SUPER TEMP
 	//Set the click function when loading game
@@ -111,7 +117,7 @@ void Application::Exit()
 {
 	assetMan->SaveAssets();
 	Logger::Log(Logger::LogType::MSG, "Exiting engine");
-	std::string name = Logger::GetFormatedSystemTime();
+	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;

@@ -13,11 +13,11 @@
 #ifndef ASSETLOADER_H
 #define ASSETLOADER_H
 
-#include <string>
 #include <fstream>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <boost/container/string.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
@@ -33,32 +33,32 @@
 class AssetManager
 {
 private:
-	boost::unordered::unordered_map<std::string, boost::shared_ptr<MeshData>> meshes;
-	boost::unordered::unordered_map<std::string, std::string> meshShortNames;
-	boost::unordered::unordered_map<std::string, boost::shared_ptr<Texture>> textures;
-	boost::unordered::unordered_map<std::string, std::string> textureShortNames;
-	boost::unordered::unordered_map<std::string, boost::shared_ptr<Shader>> shaders;
-	boost::unordered::unordered_map<std::string, std::string> shaderShortNames;
-	boost::unordered::unordered_map<std::string, boost::shared_ptr<ShaderProgram>> shaderPrograms;
+	boost::unordered::unordered_map<boost::container::string, boost::shared_ptr<MeshData>> meshes;
+	boost::unordered::unordered_map<boost::container::string, boost::container::string> meshShortNames;
+	boost::unordered::unordered_map<boost::container::string, boost::shared_ptr<Texture>> textures;
+	boost::unordered::unordered_map<boost::container::string, boost::container::string> textureShortNames;
+	boost::unordered::unordered_map<boost::container::string, boost::shared_ptr<Shader>> shaders;
+	boost::unordered::unordered_map<boost::container::string, boost::container::string> shaderShortNames;
+	boost::unordered::unordered_map<boost::container::string, boost::shared_ptr<ShaderProgram>> shaderPrograms;
 	boost::filesystem::path assetDir;
 	void LoadDir(const boost::filesystem::path &path);
-	void LoadAsset(const char* path, const char* ext, std::string name);
+	void LoadAsset(const char* path, const char* ext, boost::container::string name);
 
 public:
 	AssetManager();
 	AssetManager(const AssetManager&);
-	boost::shared_ptr<MeshData> GetMesh(std::string id) const;
-	boost::shared_ptr<Texture> GetTexture(std::string id) const;
-	boost::shared_ptr<Shader> GetShader(std::string id) const;
-	boost::shared_ptr<ShaderProgram> GetShaderProgram(std::string id) const;
+	boost::shared_ptr<MeshData> GetMesh(boost::container::string id) const;
+	boost::shared_ptr<Texture> GetTexture(boost::container::string id) const;
+	boost::shared_ptr<Shader> GetShader(boost::container::string id) const;
+	boost::shared_ptr<ShaderProgram> GetShaderProgram(boost::container::string id) const;
 	void SaveAssets();
 	void SaveAssetToFile(const char* dir, const char* filename, const char* content);
 
 	/*! \brief Sets the asset directory to used
 	 *
-	 * \param (std::string) dir - The directory to use for assets
+	 * \param (boost::container::string) dir - The directory to use for assets
 	 */
-	inline void SetAssetDir(std::string dir) { assetDir = boost::filesystem::path(dir); };
+	inline void SetAssetDir(boost::container::string dir) { assetDir = boost::filesystem::path(dir.c_str()); };
 
 	/*! \brief Loads the specified file / folder
 	 *

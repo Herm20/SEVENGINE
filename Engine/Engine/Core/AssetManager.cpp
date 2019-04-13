@@ -21,56 +21,85 @@ AssetManager::AssetManager()
 
 /*! \brief Gets the mesh with the specified id
  *
- * \param (std::string) id - The id of the mesh in the map
+ * \param (boost::container::string) id - The id of the mesh in the map
  *
  * \return (boost::shared_ptr<MeshData>) Pointer to the retrieved mesh
  */
-boost::shared_ptr<MeshData> AssetManager::GetMesh(std::string id) const
+boost::shared_ptr<MeshData> AssetManager::GetMesh(boost::container::string id) const
 {
-	if(this->meshes.find(this->meshShortNames.find(id)->second) != this->meshes.end())
-		return this->meshes.find(this->meshShortNames.find(id)->second)->second;
+	if(this->meshShortNames.find(id) != this->meshShortNames.end())
+	{
+		if(this->meshes.find(this->meshShortNames.find(id)->second) != this->meshes.end())
+			return this->meshes.find(this->meshShortNames.find(id)->second)->second;
+	}
+
+	boost::container::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
 
 /*! \brief Gets the texture with the specified id
  *
- * \param (std::string) id - The id of the texture in the map
+ * \param (boost::container::string) id - The id of the texture in the map
  *
  * \return (boost::shared_ptr<Texture>) Pointer to the retrieved texture
  */
-boost::shared_ptr<Texture> AssetManager::GetTexture(std::string id) const
+boost::shared_ptr<Texture> AssetManager::GetTexture(boost::container::string id) const
 {
-	if(this->textures.find(this->textureShortNames.find(id)->second) != this->textures.end())
-		return this->textures.find(this->textureShortNames.find(id)->second)->second;
+	if(this->textureShortNames.find(id) != this->textureShortNames.end())
+	{
+		if(this->textures.find(this->textureShortNames.find(id)->second) != this->textures.end())
+			return this->textures.find(this->textureShortNames.find(id)->second)->second;
+	}
+
+	boost::container::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
 
 /*! \brief Gets the shader with the specified id
  *
- * \param (std::string) id - The id of the shader in the map
+ * \param (boost::container::string) id - The id of the shader in the map
  *
  * \return (boost::shared_ptr<Shader>) Pointer to the retrieved shader
  */
-boost::shared_ptr<Shader> AssetManager::GetShader(std::string id) const
+boost::shared_ptr<Shader> AssetManager::GetShader(boost::container::string id) const
 {
-	if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
-		return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
+	if(this->shaderShortNames.find(id) != this->shaderShortNames.end())
+	{
+		if(this->shaders.find(this->shaderShortNames.find(id)->second) != this->shaders.end())
+			return this->shaders.find(this->shaderShortNames.find(id)->second)->second;
+	}
+
+	boost::container::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
 
 /*! \brief Gets the shader program with the specified id
  *
- * \param (std::string) id - The id of the shader program in the map
+ * \param (boost::container::string) id - The id of the shader program in the map
  *
  * \return (boost::shared_ptr<ShaderProgram>) Pointer to the retrieved shader program
  */
-boost::shared_ptr<ShaderProgram> AssetManager::GetShaderProgram(std::string id) const
+boost::shared_ptr<ShaderProgram> AssetManager::GetShaderProgram(boost::container::string id) const
 {
 	if(this->shaderPrograms.find(id) != this->shaderPrograms.end())
 		return this->shaderPrograms.find(id)->second;
+
+	boost::container::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
 
 	return nullptr;
 }
@@ -79,9 +108,9 @@ boost::shared_ptr<ShaderProgram> AssetManager::GetShaderProgram(std::string id) 
  *
  * \param (const char*) path - The path of the file
  * \param (const char*) ext - The extension of the loaded file
- * \param (std::string) name - The name that will be used to store it in the map
+ * \param (boost::container::string) name - The name that will be used to store it in the map
  */
-void AssetManager::LoadAsset(const char* path, const char* ext, std::string name)
+void AssetManager::LoadAsset(const char* path, const char* ext, boost::container::string name)
 {
 	//Mesh files
 	if(strcmp(ext, ".obj") == 0 || strcmp(ext, ".fbx") == 0 || strcmp(ext, ".dae") == 0 || strcmp(ext, ".blend") == 0)
@@ -187,7 +216,7 @@ void AssetManager::SaveAssets()
  //
 	//	if(!boost::filesystem::exists(path))
 	//	{
-	//		std::string fileContents = "";
+	//		boost::container::string fileContents = "";
 	//		boost::shared_ptr<MeshData> data = it->second;
  //
 	//		fileContents.reserve((data->GetVertexCount() * 8) + (data->GetVertexCount() + data->GetIndexCount() + data->GetIndOffsetCount() + data->GetIndAmountCount() + 7) * 2 + 1);
@@ -278,7 +307,7 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 	{
 		if(boost::filesystem::create_directory(path))
 		{
-			std::string msg = "Directory '";
+			boost::container::string msg = "Directory '";
 			msg.append(path.string().c_str());
 			msg.append("' created Successfully");
 			Logger::Log(Logger::MSG, msg.c_str());
@@ -286,7 +315,7 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 
 		else
 		{
-			std::string msg = "Failed to created directory '";
+			boost::container::string msg = "Failed to created directory '";
 			msg.append(path.string().c_str());
 			msg.append("'!");
 			Logger::Log(Logger::ERROR, msg.c_str());
@@ -301,8 +330,8 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 		file << content;
 		file.close();
 
-		std::string out = "'";
-		out += path.string();
+		boost::container::string out = "'";
+		out += path.string().c_str();
 		out += "' written successfully";
 		Logger::Log(Logger::MSG, out.c_str());
 	}
@@ -314,7 +343,7 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 {
 	if(!boost::filesystem::exists(path))
 	{
-		std::string msg = "Directory '";
+		boost::container::string msg = "Directory '";
 		msg.append(path.string().c_str());
 		msg.append("' not found!");
 		Logger::Log(Logger::ERROR, msg.c_str());
@@ -329,7 +358,21 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 		{
 			if(it->path().has_extension() && it->path().has_filename())
 			{
-				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), it->path().stem().string());
+#ifdef _WIN64
+				// TODO : Don't do this here please
+				// PS : This should not work - yes it should
+				boost::container::wstring wstr(it->path().stem().c_str());
+				boost::container::string nstr;
+
+				for (u64 i = 0; i < wstr.size(); ++i)
+				{
+					nstr += wstr[i];
+				}
+
+				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), nstr);
+#else
+				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), it->path().stem().c_str());
+#endif
 			}
 		}
 	}

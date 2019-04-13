@@ -27,7 +27,8 @@ public:
 	ecs::Entity e1;
 	ecs::Entity e2;
 
-	AudioManager masterBG;
+	AudioManager* masterBG;
+	AudioManager* masterEffect;
 
 	// Initialize core engine systems and resources
 	void Init();

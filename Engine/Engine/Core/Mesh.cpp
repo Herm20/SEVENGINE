@@ -18,7 +18,6 @@ Mesh::Mesh()
  */
 Mesh::Mesh(boost::shared_ptr<MeshData> meshData) :
 	subMeshData(boost::shared_ptr<MeshData>(meshData))
-
 {
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
@@ -28,7 +27,6 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) :
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	// Store data in buffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * subMeshData->GetVertexCount(), subMeshData->GetVertices(), GL_STATIC_DRAW);
 
 	// Describe buffer layout
@@ -69,6 +67,7 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) :
 	// TODO: Add in tangents and bitangents
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(u32) * subMeshData->GetIndexCount(), subMeshData->GetIndices(), GL_STATIC_DRAW);
 }
 
