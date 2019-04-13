@@ -1,9 +1,16 @@
 #ifndef AUDIOMANAGER_H
 #define AUDIOMANAGER_H
 
+#ifndef FMODEX
 #include <fmodinc/fmod.hpp>
 #include <fmodinc/fmod_errors.h>
 #include <fmodinc/fmod.h>
+#else
+#include <fmodex/fmod.hpp>
+#include <fmodex/fmod_errors.h>
+#include <fmodex/fmod.h>
+#endif
+
 #include <iostream>
 #include <string>
 
