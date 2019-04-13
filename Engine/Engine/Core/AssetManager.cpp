@@ -331,7 +331,7 @@ void AssetManager::SaveAssetToFile(const char* dir, const char* filename, const 
 		file.close();
 
 		boost::container::string out = "'";
-		out += path.c_str();
+		out += path.string().c_str();
 		out += "' written successfully";
 		Logger::Log(Logger::MSG, out.c_str());
 	}
@@ -358,7 +358,21 @@ void AssetManager::LoadDir(const boost::filesystem::path &path)
 		{
 			if(it->path().has_extension() && it->path().has_filename())
 			{
-				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), boost::container::string(it->path().stem().c_str()));
+#ifdef _WIN64
+				// TODO : Don't do this here please
+				// PS : This should not work - yes it should
+				boost::container::wstring wstr(it->path().stem().c_str());
+				boost::container::string nstr;
+
+				for (u64 i = 0; i < wstr.size(); ++i)
+				{
+					nstr += wstr[i];
+				}
+
+				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), nstr);
+#else
+				LoadAsset(it->path().string().c_str(), it->path().extension().string().c_str(), it->path().stem().c_str());
+#endif
 			}
 		}
 	}
