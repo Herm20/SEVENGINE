@@ -2,10 +2,10 @@
 
 JobManager::JobManager() :
 	jobs(),
-	threads(new boost::thread[1]),
-	count(1)
+	threads(new boost::thread[boost::thread::hardware_concurrency()]),
+	count(boost::thread::hardware_concurrency())
 {
-	// Setup the thread(s)
+	InitThreads();
 }
 
 JobManager::JobManager(u64 threadPoolSize) :
@@ -13,7 +13,7 @@ JobManager::JobManager(u64 threadPoolSize) :
 	threads(new boost::thread[threadPoolSize]),
 	count(threadPoolSize)
 {
-	// Setup the thread(s)
+	InitThreads();
 }
 
 JobManager::~JobManager()
