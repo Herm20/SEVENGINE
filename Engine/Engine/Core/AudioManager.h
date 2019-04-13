@@ -12,7 +12,7 @@
 #endif
 
 #include <iostream>
-#include <string>
+#include <boost/container/string.hpp>
 
 using namespace FMOD;
 

@@ -3,7 +3,7 @@
 
 namespace Logger
 {
-	static std::string logTxt;
+	static boost::container::string logTxt;
 	static struct tm* timeinfo;
 	static std::time_t systemtime;
 }
@@ -20,10 +20,10 @@ void Logger::Log(LogType type, const char* msg)
 	switch(type)
 	{
 		case LogType::ERROR:
-			logTxt += "  :  ERR  :  ";
+			logTxt += "  : ERR :  ";
 			break;
 		case LogType::WARNING:
-			logTxt += "  :  WRN  :  ";
+			logTxt += "  : WRN :  ";
 			break;
 		case LogType::MSG:
 		default:
@@ -46,13 +46,13 @@ const char* Logger::GetLog()
 
 /*! \brief Gets the date and time formatted in iso 8601
  *
- * \return (std::string) The formatted time
+ * \return (boost::container::string) The formatted time
  */
-std::string Logger::GetFormatedSystemTime()
+boost::container::string Logger::GetFormatedSystemTime()
 {
 	systemtime = boost::chrono::system_clock::to_time_t(boost::chrono::system_clock::now());
 	timeinfo = std::localtime(&systemtime); // THIS IS NOT THREAD SAFE
 	char timeStr[20];
 	strftime(timeStr, 20, "%F %T", timeinfo);
-	return std::string(timeStr);
+	return boost::container::string(timeStr);
 }

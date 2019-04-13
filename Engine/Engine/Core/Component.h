@@ -1,7 +1,7 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
-#include <string>
+#include <boost/container/string.hpp>
 #include "Types.h"
 #include "Entity.h"
 

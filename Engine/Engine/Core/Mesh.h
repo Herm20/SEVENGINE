@@ -4,7 +4,6 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
 #include "MeshData.h"
 #include "ShaderProgram.h"
 #include "Texture.h"
@@ -23,6 +22,7 @@ public:
 	Mesh();
 	Mesh(boost::shared_ptr<MeshData> meshData, boost::shared_ptr<ShaderProgram> sp, boost::shared_ptr<Texture> t, glm::vec3 position);
 	Mesh(const Mesh &m);
+	void SetMeshData(boost::shared_ptr<MeshData> meshData);
 	void Render();
 	const Mesh & operator=(const Mesh &m);
 	void Destroy();

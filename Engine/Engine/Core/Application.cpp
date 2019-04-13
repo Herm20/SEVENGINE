@@ -109,7 +109,7 @@ void Application::Exit()
 {
 	assetMan->SaveAssets();
 	Logger::Log(Logger::LogType::MSG, "Exiting engine");
-	std::string name = Logger::GetFormatedSystemTime();
+	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;

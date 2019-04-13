@@ -4,7 +4,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <string>
+#include <boost/container/string.hpp>
 #include <fstream>
 #include "AssetManager.h"
 #include "Shader.h"
