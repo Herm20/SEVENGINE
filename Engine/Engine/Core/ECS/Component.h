@@ -1,3 +1,14 @@
+/**
+ * @file    Component.h
+ * @ingroup ecs
+ * @brief   A ecs::Component keep the data for one aspect of an ecs::Entity.
+ *
+ * Copyright (c) 2014 Sebastien Rombauts (sebastien.rombauts@gmail.com)
+ *
+ * Distributed under the MIT License (MIT) (See accompanying file LICENSE.txt
+ * or copy at http://opensource.org/licenses/MIT)
+ */
+
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 

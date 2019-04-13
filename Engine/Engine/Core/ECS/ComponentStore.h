@@ -1,3 +1,14 @@
+/**
+ * @file    ComponentStore.h
+ * @ingroup ecs
+ * @brief   A ecs::ComponentStore keep the data of a certain type of ecs::Component for all concerned Entities.
+ *
+ * Copyright (c) 2014 Sebastien Rombauts (sebastien.rombauts@gmail.com)
+ *
+ * Distributed under the MIT License (MIT) (See accompanying file LICENSE.txt
+ * or copy at http://opensource.org/licenses/MIT)
+ */
+
 #ifndef ECS_COMPONENT_STORE_H
 #define ECS_COMPONENT_STORE_H
 
