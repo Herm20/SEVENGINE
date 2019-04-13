@@ -23,15 +23,19 @@ namespace ecs {
 		template<typename C>
 		inline bool createComponentStore() {
 			static_assert(std::is_base_of<Component, C>::value, "C must derived from the Component struct");
-			static_assert(C::_mType != _invalidComponentType, "C must define a valid non-zero _mType");
-			return componentStores.insert(std::make_pair(C::type, IComponentStore::Ptr(new ComponentStore<C>()))).second;
+			static_assert(C::_mtype != _invalidComponentType, "C must define a valid non-zero type");
+			return componentStores.insert(std::make_pair(C::_mtype, IComponentStore::Ptr(new ComponentStore<C>()))).second;
 		}
 
 		template<typename C>
 		inline ComponentStore<C>& getComponentStore() {
 			static_assert(std::is_base_of<Component, C>::value, "C must derived from the Component struct");
-			static_assert(C::_mType != _invalidComponentType, "C must define a valid non-zero _mType");
-			auto iComponentStore = componentStores.find(C::type);
+			static_assert(C::_mtype != _invalidComponentType, "C must define a valid non-zero _mType");
+			auto iComponentStore = componentStores.find(C::_mtype);
+			if (componentStores.end() == iComponentStore) {
+				throw std::runtime_error("The ComponentStore does not exist");
+			}
+			return reinterpret_cast<ComponentStore<C>&>(*(iComponentStore->second));
 		}
 
 		void addSystem(const System::Ptr& _systemPtr);
@@ -45,12 +49,12 @@ namespace ecs {
 		template<typename C>
 		inline bool addComponent(const Entity _entity, C&& _component) {
 			static_assert(std::is_base_of<Component, C>::value, "C must derived from the Component struct");
-			static_assert(C::_mType != _invalidComponentType, "C must define a valid non-zero _mType");
+			static_assert(C::_mtype != _invalidComponentType, "C must define a valid non-zero type");
 			auto entity = entities.find(_entity);
 			if (entities.end() == entity) {
 				throw std::runtime_error("The Entity does not exist");
 			}
-			(*entity).second.insert(C::type);
+			(*entity).second.insert(C::_mtype);
 			return getComponentStore<C>().add(_entity, std::move(_component));
 		}
 

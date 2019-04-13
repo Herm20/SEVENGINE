@@ -2,9 +2,17 @@
 
 #include "Components/MeshRendererComponent.h"
 #include "Physics/ColliderComponent.h"
+#include "ECS/Manager.h"
 
-Renderer::Renderer()
+#include <iostream>
+
+Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 {
+
+	ecs::ComponentTypeSet requiredComponents;
+	requiredComponents.insert(ecs::MeshRendererComponent::_mtype);
+	setRequiredComponents(std::move(requiredComponents));
+
 	//Initialize the GLFW Library
 	if (!glfwInit())
 	{
@@ -88,6 +96,31 @@ void Renderer::CreateMeshes()
 void Renderer::SetAssetManager(const AssetManager* am)
 {
 	this->am = am;
+}
+
+void Renderer::startFrame(float dt) {
+
+	//Wipe the screen with that sweet sweet cornflower blue
+	glClearColor(0.392f, 0.584f, 0.929f, 0.0f);
+
+	//Clear those buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+}
+
+void Renderer::updateEntity(float dt, ecs::Entity entity) {
+	
+	ecs::MeshRendererComponent meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
+	meshRenderer.mesh->Render(
+		glm::vec3(0, 0, 0),
+		meshRenderer.shaderProgram,
+		meshRenderer.texture
+	);
+
+}
+
+void Renderer::endFrame(float dt) {
+
 }
 
 //Iterates through and draws all entities to the screen

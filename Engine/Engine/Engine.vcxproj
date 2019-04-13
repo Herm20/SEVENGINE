@@ -45,7 +45,6 @@
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
     <ClInclude Include="Core\Camera.h" />
-    <ClInclude Include="Core\Components\MeshRendererComponent.h" />
     <ClInclude Include="Core\ECS\Component.h" />
     <ClInclude Include="Core\ECS\ComponentStore.h" />
     <ClInclude Include="Core\ECS\ComponentType.h" />

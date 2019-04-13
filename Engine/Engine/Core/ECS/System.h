@@ -37,7 +37,9 @@ namespace ecs {
 		}
 
 		size_t updateEntities(float dt);
+		virtual void startFrame(float dt) = 0;
 		virtual void updateEntity(float dt, Entity entity) = 0;
+		virtual void endFrame(float dt) = 0;
 
 	protected:
 

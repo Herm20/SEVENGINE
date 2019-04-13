@@ -11,10 +11,12 @@
 #include "Mesh.h"
 #include "Logger.h"
 
+#include "ECS/System.h"
+
 using namespace glm;
 using namespace std;
 
-class Renderer
+class Renderer : public ecs::System
 {
 private:
 	//Window related variables
@@ -33,14 +35,21 @@ private:
 	boost::shared_ptr<Mesh> boxMesh;
 
 public:
-	Renderer();
+
+	explicit Renderer(ecs::Manager& manager);
 	~Renderer();
+
 	GLFWwindow* GetWindow();
 	int GetWindowHeight();
 	int GetWindowWidth();
 	void CreateMeshes();
 	void SetAssetManager(const AssetManager* am);
 	void Draw();
+
+	virtual void startFrame(float dt) override;
+	virtual void updateEntity(float dt , ecs::Entity entity) override;
+	virtual void endFrame(float dt) override;
+
 };
 
 #endif

@@ -16,9 +16,6 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{9d88a294-ac3b-4b72-a8af-edccfebd8d92}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Components">
-      <UniqueIdentifier>{0cbbfc6e-54b5-47ee-a8bc-3cdc9a40afd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Components">
       <UniqueIdentifier>{c72db8ab-b89a-4c2d-a4dc-54e1bb93379e}</UniqueIdentifier>
     </Filter>
@@ -28,15 +25,21 @@
     <Filter Include="Source Files\ECS">
       <UniqueIdentifier>{b3987fc6-0d2d-4da2-92dc-1fd818ad638f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ECS\Systems">
+      <UniqueIdentifier>{e4803157-23f1-4c4a-936a-e08afa41ea5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Systems">
+      <UniqueIdentifier>{b7df6820-0008-4faa-b845-80689e934fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Components">
+      <UniqueIdentifier>{0cbbfc6e-54b5-47ee-a8bc-3cdc9a40afd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Object.cpp">
@@ -90,6 +93,9 @@
     <ClCompile Include="Core\ECS\Manager.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Renderer.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -99,9 +105,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Object.h">
@@ -152,11 +155,8 @@
     <ClInclude Include="Core\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Components\MeshRendererComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Physics\ColliderComponent.h">
-      <Filter>Header Files\Components</Filter>
+      <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="Core\ECS\Component.h">
       <Filter>Header Files\ECS</Filter>
@@ -175,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="Core\ECS\Entity.h">
       <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Renderer.h">
+      <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

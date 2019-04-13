@@ -50,7 +50,7 @@ namespace ecs {
 
 	private:
 		std::unordered_map<Entity, C> mStore;
-		static const ComponentType type = C::type;
+		static const ComponentType _mtype = C::_mtype;
 	};
 
 }

@@ -1,5 +1,7 @@
 #include "Application.h"
 
+#include "ECS/System.h"
+
 #include <boost/chrono/chrono.hpp>
 #include <boost/thread/thread.hpp>
 
@@ -38,7 +40,7 @@ Application::~Application()
 void Application::Init()
 {
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
-	renderer = new Renderer();
+	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
 	camera = new Camera();
 
@@ -56,6 +58,19 @@ void Application::Init()
 	// Set the keypress function when loading game
 	glfwSetMouseButtonCallback(renderer->GetWindow(), mouseClick);
 	///
+
+	manager.createComponentStore<ecs::MeshRendererComponent>();
+
+	manager.addSystem(ecs::System::Ptr(renderer));
+
+	testEntity = manager.createEntity();
+	manager.addComponent(testEntity, ecs::MeshRendererComponent());
+	manager.registerEntity(testEntity);
+	ecs::MeshRendererComponent testMeshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(testEntity);
+	testMeshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
+	testMeshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
+	testMeshRenderer.texture = assetMan->GetTexture("test");
+
 }
 
 void Application::Load()
@@ -71,6 +86,7 @@ void Application::Run()
 		CamMovement();
 		camera->update();
 
+		manager.updateEntities(Time.dt);
 		renderer->Draw();
 	}
 }

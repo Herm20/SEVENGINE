@@ -1,7 +1,7 @@
 #include "Manager.h"
 
 #include <algorithm>
-
+#include <iostream>
 namespace ecs{
 
 	Manager::Manager() :
@@ -66,11 +66,22 @@ namespace ecs{
 	}
 
 	size_t Manager::updateEntities(float _dt) {
-
+		
 		size_t updatedEntitiesCount = 0;
 
+		// Start Frame
+		for (auto system = systems.begin(); system != systems.end(); system++) {
+			(*system)->startFrame(_dt);
+		}
+
+		// Update Entities
 		for (auto system = systems.begin(); system != systems.end(); system++) {
 			updatedEntitiesCount += (*system)->updateEntities(_dt);
+		}
+
+		// End Frame
+		for (auto system = systems.begin(); system != systems.end(); system++) {
+			(*system)->startFrame(_dt);
 		}
 
 		return updatedEntitiesCount;
