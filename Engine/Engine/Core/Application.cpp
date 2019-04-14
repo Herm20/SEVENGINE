@@ -1,9 +1,13 @@
 #include "Application.h"
 
+#include "ECS/System.h"
+
 #include <boost/chrono/chrono.hpp>
 #include <boost/thread/thread.hpp>
 
 Timer Application::Time;
+
+//const ecs::ComponentType ecs::MeshRendererComponent::_mType = 1;
 
 namespace
 {
@@ -38,14 +42,13 @@ Application::~Application()
 void Application::Init()
 {
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
-	renderer = new Renderer();
+	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
 	camera = new Camera();
 
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
-	renderer->SetAssetManager(assetMan);
-	renderer->CreateMeshes();
+
 	masterBG = new AudioManager();
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
@@ -61,6 +64,34 @@ void Application::Init()
 	// Set the keypress function when loading game
 	glfwSetMouseButtonCallback(renderer->GetWindow(), mouseClick);
 	///
+
+	manager.createComponentStore<ecs::MeshRendererComponent>();
+	manager.createComponentStore<ecs::TransformComponent>();
+
+	manager.addSystem(ecs::System::Ptr(renderer));
+
+	e1 = manager.createEntity();
+	manager.addComponent(e1, ecs::MeshRendererComponent());
+	manager.addComponent(e1, ecs::TransformComponent());
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(e1);
+	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
+	meshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
+	meshRenderer.texture = assetMan->GetTexture("test");
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(e1);
+	transform.position = glm::vec3(0, 0, 0);
+	manager.registerEntity(e1);
+
+	e2 = manager.createEntity();
+	manager.addComponent(e2, ecs::MeshRendererComponent());
+	manager.addComponent(e2, ecs::TransformComponent());
+	ecs::MeshRendererComponent& meshRenderer2 = manager.getComponentStore<ecs::MeshRendererComponent>().get(e2);
+	meshRenderer2.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
+	meshRenderer2.shaderProgram = assetMan->GetShaderProgram("def");
+	meshRenderer2.texture = assetMan->GetTexture("test");
+	ecs::TransformComponent& transform2 = manager.getComponentStore<ecs::TransformComponent>().get(e2);
+	transform2.position = glm::vec3(2, 0, 0);
+	manager.registerEntity(e2);
+
 }
 
 void Application::Load()
@@ -75,33 +106,10 @@ void Application::Run()
 		Time.update();
 		CamMovement();
 		camera->update();
-		renderer->Draw();
 
-		// Test for sound effects
-		if (inputIsDown[GLFW_KEY_V])
-		{
-			masterEffect->UnloadFile();
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/kaching.mp3");
-			masterEffect->PlayEffect();
-		}
-		if (inputIsDown[GLFW_KEY_B])
-		{
-			masterEffect->UnloadFile();
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/panic.mp3");
-			masterEffect->PlayEffect();
-		}
-		if (inputIsDown[GLFW_KEY_N])
-		{
-			masterEffect->UnloadFile();
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/spaghet.mp3");
-			masterEffect->PlayEffect();
-		}
-		if (inputIsDown[GLFW_KEY_M])
-		{
-			masterEffect->UnloadFile();
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/wii.mp3");
-			masterEffect->PlayEffect();
-		}
+		manager.updateEntities(Time.dt);
+
+		glfwPollEvents();
 	}
 }
 
@@ -113,10 +121,14 @@ void Application::Exit()
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;
-	delete renderer;
 }
 
 /// SUPER TEMP
+
+void Application::InitKeyCallbacks() {
+
+}
+
 void Application::CamMovement()
 {
 	// FPS Controls
