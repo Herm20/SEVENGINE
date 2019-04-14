@@ -1,7 +1,9 @@
 #include "Entity.h"
 
 #include "Scene.h"
-#include "Component.h"
+#include "ECS/Component.h"
+
+using namespace ecs;
 
 void Entity::DestroyInternal()
 {
@@ -63,8 +65,4 @@ void Entity::AddTags(boost::unordered_set<boost::container::string> newTags)
 {
 	// TODO : Add logic for interfacing scene - various tag optimizations
 	tags.merge(newTags);
-}
-
-void Entity::SetMesh()
-{
 }

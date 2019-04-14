@@ -4,18 +4,20 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <string>
+#include <boost/container/string.hpp>
 #include <fstream>
 #include "AssetManager.h"
 #include "Shader.h"
-#include "Entity.h"
 #include "Mesh.h"
 #include "Logger.h"
+
+#include "ECS/System.h"
+#include "Camera.h"
 
 using namespace glm;
 using namespace std;
 
-class Renderer
+class Renderer : public ecs::System
 {
 private:
 	//Window related variables
@@ -30,19 +32,21 @@ private:
 	u32 indexArrayID;
 	u32 indexBuffer;
 
-	const AssetManager* am;
-
-	Mesh* meshes;
+	Camera* camera;
 
 public:
-	Renderer();
+
+	explicit Renderer(ecs::Manager& manager);
 	~Renderer();
+
 	GLFWwindow* GetWindow();
 	int GetWindowHeight();
 	int GetWindowWidth();
-	void CreateMeshes();
-	void SetAssetManager(const AssetManager* am);
-	void Draw();
+
+	virtual void startFrame(float dt) override;
+	virtual void updateEntity(float dt , ecs::Entity entity) override;
+	virtual void endFrame(float dt) override;
+
 };
 
 #endif

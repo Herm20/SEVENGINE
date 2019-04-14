@@ -80,7 +80,11 @@ void AudioManager::Play()
 {
 	if (isPossible && isOn == true)
 	{
+#ifndef FMODEX
 		result = FMOD_System_PlaySound(audioSystemBG, bgSound, FMOD_DEFAULT, false, &bgChannel);
+#else
+		result = FMOD_System_PlaySound(audioSystemBG, FMOD_CHANNELINDEX::FMOD_CHANNEL_FREE, bgSound, false, &bgChannel);
+#endif
 		FMOD_Channel_SetMode(bgChannel, FMOD_LOOP_NORMAL);
 	}
 }
@@ -181,7 +185,11 @@ void AudioManager::PlayEffect()
 {
 	if (isPossible && isOn == true)
 	{
+#ifndef FMODEX
 		result = FMOD_System_PlaySound(audioSystemEffect, effectSound, FMOD_DEFAULT, false, &effectChannel);
+#else
+		result = FMOD_System_PlaySound(audioSystemEffect, FMOD_CHANNELINDEX::FMOD_CHANNEL_FREE, effectSound, false, &effectChannel);
+#endif
 		FMOD_Channel_SetMode(effectChannel, FMOD_LOOP_OFF);
 	}
 }

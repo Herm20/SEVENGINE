@@ -16,12 +16,8 @@ Mesh::Mesh()
  * \param (boost::shared_ptr<Texture>) t - The texture for the mesh to use
  * \param (glm::vec3) position - The position of the mesh
  */
-Mesh::Mesh(boost::shared_ptr<MeshData> meshData, boost::shared_ptr<ShaderProgram> sp, boost::shared_ptr<Texture> t, glm::vec3 position) :
-	subMeshData(boost::shared_ptr<MeshData>(meshData)),
-	shaderProgram(boost::shared_ptr<ShaderProgram>(sp)),
-	tex(boost::shared_ptr<Texture>(t)),
-	position(position)
-
+Mesh::Mesh(boost::shared_ptr<MeshData> meshData) :
+	subMeshData(boost::shared_ptr<MeshData>(meshData))
 {
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
@@ -31,7 +27,6 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData, boost::shared_ptr<ShaderProgram
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	// Store data in buffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * subMeshData->GetVertexCount(), subMeshData->GetVertices(), GL_STATIC_DRAW);
 
 	// Describe buffer layout
@@ -72,6 +67,7 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData, boost::shared_ptr<ShaderProgram
 	// TODO: Add in tangents and bitangents
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(u32) * subMeshData->GetIndexCount(), subMeshData->GetIndices(), GL_STATIC_DRAW);
 }
 
@@ -82,31 +78,9 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData, boost::shared_ptr<ShaderProgram
 Mesh::Mesh(const Mesh &m)
 {
 	this->subMeshData = boost::shared_ptr<MeshData>(m.subMeshData);
-	this->shaderProgram = boost::shared_ptr<ShaderProgram>(m.shaderProgram);
-	this->tex = boost::shared_ptr<Texture>(m.tex);
-	this->position = m.position;
 	this->vao = m.vao;
 	this->vbo = m.vbo;
 	this->ibo = m.ibo;
-}
-
-/*! \brief Renders a mesh
- */
-void Mesh::Render()
-{
-	glm::mat4 posMatrix = glm::translate(glm::mat4(1.0), this->position);
-	this->shaderProgram->Use();
-	glBindVertexArray(this->vao);
-	// TODO: Move this out of here
-	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
-	this->tex->bind(0);
-	glUniform1i(glGetUniformLocation(this->shaderProgram->GetProgram(), "tex"), 0);
-
-	for(u32 i = 0; i < this->subMeshData->GetIndAmountCount(); i++)
-	{
-		glDrawElements(GL_TRIANGLES, this->subMeshData->GetIndAmounts()[i], GL_UNSIGNED_INT, (const void*)(this->subMeshData->GetIndOffsets()[i] * sizeof(u32)));
-	}
-	this->tex->unbind(0);
 }
 
 /*! \brief Mesh copy-assignment operator
@@ -118,14 +92,30 @@ void Mesh::Render()
 const Mesh & Mesh::operator=(const Mesh &m)
 {
 	this->subMeshData = boost::shared_ptr<MeshData>(m.subMeshData);
-	this->shaderProgram = boost::shared_ptr<ShaderProgram>(m.shaderProgram);
-	this->tex = boost::shared_ptr<Texture>(m.tex);
-	this->position = m.position;
 	this->vao = m.vao;
 	this->vbo = m.vbo;
 	this->ibo = m.ibo;
 
 	return *this;
+}
+
+void Mesh::Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture, bool wireframe) {
+	glm::mat4 posMatrix = glm::translate(glm::mat4(1.0), position);
+	shaderProgram->Use();
+	glBindVertexArray(this->vao);
+	// TODO: Move this out of here
+	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
+	texture->bind(0);
+	glUniform1i(glGetUniformLocation(shaderProgram->GetProgram(), "tex"), 0);
+	glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
+	for (u32 i = 0; i < this->subMeshData->GetIndAmountCount(); i++) {
+		glDrawElements(
+			GL_TRIANGLES, 
+			this->subMeshData->GetIndAmounts()[i], 
+			GL_UNSIGNED_INT, 
+			(const void*)(this->subMeshData->GetIndOffsets()[i] * sizeof(u32)));
+	}
+	texture->unbind(0);
 }
 
 /*! \brief Cleans up a mesh
