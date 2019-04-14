@@ -8,6 +8,7 @@
 #include "AssetManager.h"
 #include "Camera.h"
 #include "Logger.h"
+#include "ECS/Manager.h"
 
 class Application
 {
@@ -15,11 +16,16 @@ public:
 	Application();
 	~Application();
 
+	ecs::Manager manager;
+
 	Renderer* renderer;
 	AssetManager* assetMan;
 	Camera* camera;
 	// Printing fps
 	static Timer Time;
+
+	ecs::Entity e1;
+	ecs::Entity e2;
 
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
@@ -37,6 +43,7 @@ public:
 	void Load();
 
 	/// SUPER TEMP
+	void InitKeyCallbacks();
 	void CamMovement();
 	/// SUPER TEMP
 };
