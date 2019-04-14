@@ -7,7 +7,6 @@ using std::multimap;
 using std::list;
 using std::pair;
 
-//#include "Event.h"
 #include "Listener.h"
 
 class EventSystem

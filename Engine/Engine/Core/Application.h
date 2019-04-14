@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Logger.h"
 
+
 class Application
 {
 public:
