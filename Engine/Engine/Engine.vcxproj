@@ -41,6 +41,7 @@
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
+    <ClCompile Include="EventSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
@@ -67,6 +68,9 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\Vertex.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventSystem.h" />
+    <ClInclude Include="Listener.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FragmentShader.frag" />
