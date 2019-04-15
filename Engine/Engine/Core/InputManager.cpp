@@ -1,4 +1,4 @@
-/*#include "InputManager.h"
+#include "InputManager.h"
 #include <iostream>
 
 //std::map<const char*, int> InputManager::FightKeyMap;
@@ -12,7 +12,7 @@
 //int InputManager::contextState;
 //int InputManager::moveIndex;
 //std::chrono::duration<float> InputManager::lastMoveTime;
-/*InputManager* InputManager::instance;
+InputManager* InputManager::instance;
 
 InputManager::InputManager()
 {
@@ -79,11 +79,12 @@ void InputManager::ValidateKeyInput(int x)
 			cout << it->first << endl;
 			if (moveIndex == 0) 
 			{
-				CheckForCombo(it->first, timer->GetCurrentTime());
+
+				//CheckForCombo(it->first, timer->GetCurrentTime());
 			}
 			else 
 			{
-				ContinueCombo(it->first, timer->GetCurrentTime());
+				//ContinueCombo(it->first, timer->GetCurrentTime());
 			}
 		}
 	}
@@ -163,4 +164,4 @@ void InputManager::ExecuteCombo(const char* combo) // helper function to map the
 InputManager::~InputManager() 
 {
 	delete instance;
-}*/
+}

@@ -10,6 +10,9 @@
 #include "Logger.h"
 #include "ECS/Manager.h"
 
+// Systems
+#include "Systems/PlayerControllerSystem.h"
+
 class Application
 {
 public:
@@ -24,7 +27,7 @@ public:
 	// Printing fps
 	static Timer Time;
 
-	ecs::Entity e1;
+	ecs::Entity player1;
 	ecs::Entity e2;
 
 	AudioManager* masterBG;

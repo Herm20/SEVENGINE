@@ -1,0 +1,21 @@
+#ifndef PLAYER_CONTROLLER_SYSTEM_H
+#define PLAYER_CONTROLLER_SYSTEM_H
+
+#include "../ECS/System.h"
+
+class PlayerControllerSystem : public ecs::System {
+
+private:
+
+public:
+
+	explicit PlayerControllerSystem(ecs::Manager& manager);
+
+	virtual void startFrame(float dt) override;
+	virtual void updateEntity(float dt, ecs::Entity entity) override;
+	virtual void endFrame(float dt) override;
+
+};
+
+#endif
+

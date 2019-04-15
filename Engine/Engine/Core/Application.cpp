@@ -67,30 +67,27 @@ void Application::Init()
 
 	manager.createComponentStore<ecs::MeshRendererComponent>();
 	manager.createComponentStore<ecs::TransformComponent>();
+	manager.createComponentStore<ecs::KeyboardInputComponent>();
+	manager.createComponentStore<ecs::PlayerStateInfoComponent>();
+	manager.createComponentStore<ecs::RigidBodyComponent>();
 
 	manager.addSystem(ecs::System::Ptr(renderer));
+	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
 
-	e1 = manager.createEntity();
-	manager.addComponent(e1, ecs::MeshRendererComponent());
-	manager.addComponent(e1, ecs::TransformComponent());
-	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(e1);
+	// Dummy Player Entity
+	player1 = manager.createEntity();
+	manager.addComponent(player1, ecs::MeshRendererComponent());
+	manager.addComponent(player1, ecs::TransformComponent());
+	manager.addComponent(player1, ecs::KeyboardInputComponent());
+	manager.addComponent(player1, ecs::PlayerStateInfoComponent());
+	manager.addComponent(player1, ecs::RigidBodyComponent());
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player1);
 	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
 	meshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
 	meshRenderer.texture = assetMan->GetTexture("test");
-	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(e1);
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
 	transform.position = glm::vec3(0, 0, 0);
-	manager.registerEntity(e1);
-
-	e2 = manager.createEntity();
-	manager.addComponent(e2, ecs::MeshRendererComponent());
-	manager.addComponent(e2, ecs::TransformComponent());
-	ecs::MeshRendererComponent& meshRenderer2 = manager.getComponentStore<ecs::MeshRendererComponent>().get(e2);
-	meshRenderer2.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
-	meshRenderer2.shaderProgram = assetMan->GetShaderProgram("def");
-	meshRenderer2.texture = assetMan->GetTexture("test");
-	ecs::TransformComponent& transform2 = manager.getComponentStore<ecs::TransformComponent>().get(e2);
-	transform2.position = glm::vec3(2, 0, 0);
-	manager.registerEntity(e2);
+	manager.registerEntity(player1);
 
 }
 
@@ -101,6 +98,13 @@ void Application::Load()
 
 void Application::Run()
 {
+
+	// Init mouse to center of screen
+	int w = renderer->GetWindowWidth();
+	int h = renderer->GetWindowHeight();
+	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+
+	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
 	{
 		Time.update();

@@ -38,6 +38,21 @@ namespace ecs {
 		boost::shared_ptr<ShaderProgram> shaderProgram;
 	};
 
+	struct KeyboardInputComponent : public Component {
+		static const ecs::ComponentType _mType = 3;
+		// keyboard mapping
+	};
+
+	struct RigidBodyComponent : public Component {
+		static const ecs::ComponentType _mType = 4;
+		glm::vec3 velocity = glm::vec3();
+	};
+
+	struct PlayerStateInfoComponent : public Component {
+		static const ecs::ComponentType _mType = 5;
+		bool isJumping = false;
+	};
+
 }
 
 #endif

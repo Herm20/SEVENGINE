@@ -1,4 +1,4 @@
-/*#include "InputPoller.h"
+#include "InputPoller.h"
 #include "InputManager.h"
 bool Input::m_keys[Max_keys];
 bool Input::m_mouse_buttons[Max_Buttons];
@@ -58,4 +58,4 @@ void Input::Init(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
-}*/
+}
