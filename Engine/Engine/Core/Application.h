@@ -9,7 +9,8 @@
 #include "Camera.h"
 #include "Logger.h"
 #include "ECS/Manager.h"
-
+#include "EventSystem.h"
+#include "Dummy.h"
 
 class Application
 {
@@ -47,6 +48,11 @@ public:
 	void InitKeyCallbacks();
 	void CamMovement();
 	/// SUPER TEMP
+
+	// Testing Event System
+	Dummy* d1;
+	Dummy* d2;
+	Dummy* d3;
 };
 
 #endif

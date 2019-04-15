@@ -92,11 +92,23 @@ void Application::Init()
 	transform2.position = glm::vec3(2, 0, 0);
 	manager.registerEntity(e2);
 
+	d1 = new Dummy(1);
+	d2 = new Dummy(2);
+	d3 = new Dummy(3);
+
+	// Register all 
+	EventSystem::Instance()->RegisterClient("Dummy Callback", d1);
+	EventSystem::Instance()->RegisterClient("Dummy Callback", d2);
+	EventSystem::Instance()->RegisterClient("Dummy Callback", d3);
+
+	// Register Individual
+	EventSystem::Instance()->RegisterClient("Callback 1", d1);
+	EventSystem::Instance()->RegisterClient("Callback 2", d2);
+	EventSystem::Instance()->RegisterClient("Callback 3", d3);
 }
 
 void Application::Load()
 {
-
 }
 
 void Application::Run()
@@ -108,6 +120,37 @@ void Application::Run()
 		camera->update();
 
 		manager.updateEntities(Time.dt);
+
+		/// Testing Events
+		if (inputIsDown[GLFW_KEY_G])
+		{
+			EventSystem::Instance()->SendEvent("Dummy Callback", (void*)1);
+		}
+			
+
+		if (inputIsDown[GLFW_KEY_H])
+		{
+			EventSystem::Instance()->SendEvent("Callback 1", (void*)2);
+		}
+			
+
+		if (inputIsDown[GLFW_KEY_J])
+		{
+			EventSystem::Instance()->SendEvent("Callback 2", (void*)3);
+		}
+			
+
+		if (inputIsDown[GLFW_KEY_K])
+		{
+			EventSystem::Instance()->SendEvent("Callback 3", (void*)4);
+		}
+
+		if (inputIsDown[GLFW_KEY_L])
+		{
+			system("CLS");
+		}
+		EventSystem::Instance()->ProcessEvents();
+		///
 
 		glfwPollEvents();
 	}
@@ -121,6 +164,9 @@ void Application::Exit()
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete assetMan;
+	delete d1;
+	delete d2;
+	delete d3;
 }
 
 /// SUPER TEMP
@@ -138,13 +184,13 @@ void Application::CamMovement()
 	double x = 0;
 	double y = 0;
 
-	glfwGetCursorPos(renderer->GetWindow(), &x, &y);
+	//glfwGetCursorPos(renderer->GetWindow(), &x, &y);
 
 	camera->rotation.y -= sens * (x - w * .5f);
 	camera->rotation.x -= sens * -(y - h * .5f);
 	camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
-	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+	//glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
