@@ -51,6 +51,7 @@ namespace ecs {
 	struct PlayerStateInfoComponent : public Component {
 		static const ecs::ComponentType _mType = 5;
 		bool isJumping = false;
+		float wiggleTest = 0;
 	};
 
 }

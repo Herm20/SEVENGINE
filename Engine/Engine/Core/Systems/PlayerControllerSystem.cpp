@@ -20,8 +20,11 @@ void PlayerControllerSystem::startFrame(float dt) {
 
 void PlayerControllerSystem::updateEntity(float dt, ecs::Entity entity) {
 
+	ecs::PlayerStateInfoComponent& playerState = manager.getComponentStore<ecs::PlayerStateInfoComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
-	transform.position.x += 1.0f * dt;
+	
+	playerState.wiggleTest += dt;
+	transform.position.x = sin(playerState.wiggleTest);
 
 	// Get input component
 	// Check if button is pressed
