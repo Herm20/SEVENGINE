@@ -40,6 +40,7 @@ void Application::Init()
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 	renderer = new Renderer();
 	assetMan = new AssetManager();
+	eventMan = new EventManager();
 	camera = new Camera();
 
 	assetMan->SetAssetDir("Assets");
@@ -70,12 +71,17 @@ void Application::Load()
 
 void Application::Run()
 {
+	Event test([](void){
+		printf("This is a test\n");
+	} );
+	eventMan->QueueEvent(test);
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
 	{
 		Time.update();
 		CamMovement();
 		camera->update();
 		renderer->Draw();
+		EventManager::ExecuteNext();
 
 		// Test for sound effects
 		if (inputIsDown[GLFW_KEY_V])
@@ -112,6 +118,7 @@ void Application::Exit()
 	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
+	delete eventMan;
 	delete assetMan;
 	delete renderer;
 }
@@ -138,7 +145,9 @@ void Application::CamMovement()
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
 
 	if (inputIsDown[GLFW_KEY_A])
+	{
 		camera->velocity += R * glm::vec3(1, 0, 0);
+	}
 
 	if (inputIsDown[GLFW_KEY_D])
 		camera->velocity += R * glm::vec3(-1, 0, 0);

@@ -8,6 +8,7 @@
 #include "AssetManager.h"
 #include "Camera.h"
 #include "Logger.h"
+#include "EventManager.h"
 
 class Application
 {
@@ -17,6 +18,7 @@ public:
 
 	Renderer* renderer;
 	AssetManager* assetMan;
+	EventManager* eventMan;
 	Camera* camera;
 	// Printing fps
 	static Timer Time;
