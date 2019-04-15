@@ -4,8 +4,6 @@
 #include "Physics/ColliderComponent.h"
 #include "ECS/Manager.h"
 
-#include <iostream>
-
 Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 {
 

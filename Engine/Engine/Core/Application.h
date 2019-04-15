@@ -12,6 +12,7 @@
 
 // Systems
 #include "Systems/PlayerControllerSystem.h"
+#include "Systems/RigidBodySystem.h"
 
 class Application
 {

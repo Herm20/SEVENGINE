@@ -71,8 +71,10 @@ void Application::Init()
 	manager.createComponentStore<ecs::PlayerStateInfoComponent>();
 	manager.createComponentStore<ecs::RigidBodyComponent>();
 
-	manager.addSystem(ecs::System::Ptr(renderer));
+	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
+	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
+	manager.addSystem(ecs::System::Ptr(renderer));
 
 	// Dummy Player Entity
 	player1 = manager.createEntity();
