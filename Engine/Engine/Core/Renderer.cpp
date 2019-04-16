@@ -1,7 +1,19 @@
 #include "Renderer.h"
 
-Renderer::Renderer()
+#include "Components/MeshRendererComponent.h"
+#include "Physics/ColliderComponent.h"
+#include "ECS/Manager.h"
+
+#include <iostream>
+
+Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 {
+
+	ecs::ComponentTypeSet requiredComponents;
+	requiredComponents.insert(ecs::MeshRendererComponent::_mType);
+	requiredComponents.insert(ecs::TransformComponent::_mType);
+	setRequiredComponents(std::move(requiredComponents));
+
 	//Initialize the GLFW Library
 	if (!glfwInit())
 	{
@@ -36,12 +48,7 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-	for(u32 i = 0; i < 5; i++)
-	{
-		meshes[i].Destroy();
-	}
-
-	delete [] meshes;
+	//delete [] entities;
 	glfwTerminate();
 }
 
@@ -61,39 +68,32 @@ int Renderer::GetWindowWidth()
 	return width;
 }
 
-void Renderer::CreateMeshes()
-{
-	meshes = new Mesh[5];
-	meshes[0] = Mesh(am->GetMesh("box"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(0.0f, 0.0f, 5.0f));
-	meshes[1] = Mesh(am->GetMesh("sphere"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(5.0f, 0.0f, 0.0f));
-	meshes[2] = Mesh(am->GetMesh("sword"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(0.0f, 5.0f, 0.0f));
-	meshes[3] = Mesh(am->GetMesh("teapot"), am->GetShaderProgram("def"), am->GetTexture("test"), glm::vec3(-5.0f, 0.0f, 0.0f));
-}
+void Renderer::startFrame(float dt) {
 
-void Renderer::SetAssetManager(const AssetManager* am)
-{
-	this->am = am;
-}
-
-//Iterates through and draws all entities to the screen
-void Renderer::Draw()
-{
 	//Wipe the screen with that sweet sweet cornflower blue
 	glClearColor(0.392f, 0.584f, 0.929f, 0.0f);
 
 	//Clear those buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for (int i = 0; i < 4; i++)
-	{
-		// Draw object
-		meshes[i].Render();
-	}
+}
+
+void Renderer::updateEntity(float dt, ecs::Entity entity) {
+
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
+	meshRenderer.mesh->Render(
+		transform.position,
+		meshRenderer.shaderProgram,
+		meshRenderer.texture
+	);
+}
+
+void Renderer::endFrame(float dt) {
+
 	glBindVertexArray(0);
 
 	//Swap front and back buffers
 	glfwSwapBuffers(window);
 
-	//Poll for and process events
-	glfwPollEvents();
 }

@@ -4,17 +4,21 @@
 #include "Object.h"
 #include "SceneRef.h"
 #include "MeshData.h"
+#include "ECS/Component.h"
 
 #include <boost/unordered_set.hpp>
+#include <unordered_map>
+#include <memory>
+
+using namespace ecs;
 
 class Scene;
-class Component;
 
 class Entity : public Object
 {
 private:
 	boost::unordered_set<boost::container::string> tags;
-	boost::container::vector<Component*> components;
+	std::unordered_map<const std::type_info*, Component*> components;
 	SceneRef scene;
 
 	// Actually handles internal entity deletion, called by managing scene
@@ -40,21 +44,32 @@ public:
 	void RemoveTag(boost::container::string tag);
 	void AddTags(boost::unordered_set<boost::container::string> newTags);
 
-	// Shared pointer for mesh data
-	boost::shared_ptr<MeshData> mData;
-
-	void SetMesh();
-
 	// </TAGS>
 
 	// <COMPONENTS>
 
-	inline boost::container::vector<Component*> GetComponents() const { return components; }
-	// TODO : Would like to query specific components by type and name
+	//inline std::map<std::type_index, std::shared_ptr<Component>> GetComponents() const { return components; }
+	template <typename T>
+	T* AddComponent() {
+		T* newComponent = new T();
+		components[&typeid(*newComponent)] = newComponent;
+		return newComponent;
+	}
+
+	template <typename T>
+	T* GetComponent() {
+		if (components.count(&typeid(T)) != 0) {
+			return static_cast<T*>(components[&typeid(T)]);
+		}
+		else {
+			return nullptr;
+		}
+	}
 
 	// </COMPONENTS>
 
 	// Scene and component stuff goes here
 };
+
 
 #endif
