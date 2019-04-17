@@ -10,9 +10,10 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 {
 
 	ecs::ComponentTypeSet requiredComponents;
-	requiredComponents.insert(ecs::MeshRendererComponent::_mType);
-	requiredComponents.insert(ecs::TransformComponent::_mType);
-	setRequiredComponents(std::move(requiredComponents));
+	ecs::ComponentType mrcType = ecs::MeshRendererComponent::_mType;
+	ecs::ComponentType tcType = ecs::TransformComponent::_mType;
+	requiredComponents.insert(mrcType);
+	requiredComponents.insert(tcType);
 
 	//Initialize the GLFW Library
 	if (!glfwInit())
