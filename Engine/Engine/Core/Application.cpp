@@ -139,13 +139,13 @@ void Application::CamMovement()
 	double x = 0;
 	double y = 0;
 
-	//glfwGetCursorPos(renderer->GetWindow(), &x, &y);
+	glfwGetCursorPos(renderer->GetWindow(), &x, &y);
 
 	camera->rotation.y -= sens * (x - w * .5f);
 	camera->rotation.x -= sens * -(y - h * .5f);
 	camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
-	//glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
@@ -171,10 +171,10 @@ void Application::CamMovement()
 	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed * Time.dt;
+		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->location += camera->velocity * speed * Time.dt;
+	camera->location += camera->velocity * Time.dt;
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP

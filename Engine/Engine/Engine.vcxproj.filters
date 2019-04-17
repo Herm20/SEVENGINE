@@ -21,8 +21,8 @@
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
-    <ClCompile Include="Core\EventSystem.cpp" />
-    <ClCompile Include="Core\Dummy.cpp" />
+    <ClCompile Include="Core\EventManager.cpp" />
+    <ClCompile Include="Core\Event.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
@@ -53,9 +53,8 @@
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\Vertex.h" />
     <ClInclude Include="Core\Event.h" />
-    <ClInclude Include="Core\EventSystem.h" />
     <ClInclude Include="Core\Listener.h" />
-    <ClInclude Include="Core\Dummy.h" />
+    <ClInclude Include="Core\EventManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FragmentShader.frag" />

@@ -23,10 +23,10 @@
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
-    <ClCompile Include="Core\Dummy.cpp" />
     <ClCompile Include="Core\ECS\Manager.cpp" />
     <ClCompile Include="Core\ECS\System.cpp" />
-    <ClCompile Include="Core\EventSystem.cpp" />
+    <ClCompile Include="Core\Event.cpp" />
+    <ClCompile Include="Core\EventManager.cpp" />
     <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\InputPoller.cpp" />
@@ -47,7 +47,6 @@
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
     <ClInclude Include="Core\Camera.h" />
-    <ClInclude Include="Core\Dummy.h" />
     <ClInclude Include="Core\ECS\Component.h" />
     <ClInclude Include="Core\ECS\ComponentStore.h" />
     <ClInclude Include="Core\ECS\ComponentType.h" />
@@ -55,7 +54,7 @@
     <ClInclude Include="Core\ECS\Manager.h" />
     <ClInclude Include="Core\ECS\System.h" />
     <ClInclude Include="Core\Event.h" />
-    <ClInclude Include="Core\EventSystem.h" />
+    <ClInclude Include="Core\EventManager.h" />
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\InputPoller.h" />
@@ -84,7 +83,7 @@
     <ProjectGuid>{3AE4E03C-C0B8-46CB-B76C-CDC947B0BAAE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
