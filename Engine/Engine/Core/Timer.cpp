@@ -15,10 +15,10 @@ void Timer::update()
 	fps = 1 / dt;
 }
 
-std::chrono::duration<float> currentTime()
-{
-	//using namespace std;
-	//auto time = chrono::high_resolution_clock::now();
-	////std::chrono::duration<float> duration = time - startTime;
-	//return duration;
-}
+//std::chrono::duration<float> currentTime()
+//{
+//	//using namespace std;
+//	//auto time = chrono::high_resolution_clock::now();
+//	////std::chrono::duration<float> duration = time - startTime;
+//	//return duration;
+//}

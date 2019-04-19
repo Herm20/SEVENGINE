@@ -29,7 +29,8 @@ void PlayerControllerSystem::updateEntity(float dt, ecs::Entity entity) {
 	ecs::RigidBodyComponent& rigidbody = manager.getComponentStore<ecs::RigidBodyComponent>().get(entity);
 	
 	playerState.wiggleRate += dt;
-	transform.position.x = sin(playerState.wiggleRate);
+	glm::vec3 holder = transform.transform.GetPosition();
+	holder.x = sin(playerState.wiggleRate);
 
 	// Jump every now and then
 	playerState.jumpTimer += dt;
@@ -45,12 +46,12 @@ void PlayerControllerSystem::updateEntity(float dt, ecs::Entity entity) {
 	}
 
 	// Stop jumping when we hit the ground
-	if (transform.position.y < 0) {
-		transform.position.y = 0;
+	if (holder.y < 0) {
+		holder.y = 0;
 		playerState.isJumping = false;
 		rigidbody.velocity.y = 0;
 	}
-
+	transform.transform.SetPosition(holder);
 	/////////////////////////////////////Input STUFF/////////////////////////////////////
 
 	//make sure GetKeyDown is called before UpdateKeyStates in the update loop otherwise you will never get a true return value
