@@ -19,6 +19,7 @@
 #include "../Mesh.h"
 #include "../Texture.h"
 #include "../ShaderProgram.h"
+#include "../Light.h"
 
 namespace ecs {
 
@@ -36,6 +37,11 @@ namespace ecs {
 		boost::shared_ptr<Mesh> mesh;
 		boost::shared_ptr<Texture> texture;
 		boost::shared_ptr<ShaderProgram> shaderProgram;
+	};
+
+	struct LightComponent : public Component {
+		static const ecs::ComponentType _mType = 4;
+		Light light;
 	};
 }
 
