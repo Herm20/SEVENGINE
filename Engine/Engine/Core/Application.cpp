@@ -54,7 +54,7 @@ void Application::Init()
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
 	masterBG->Play();
-	masterBG->SetVolume(0.02f);
+	masterBG->SetVolume(0.08f);
 
 	masterEffect = new AudioManager();
 	masterEffect->InitSoundEffect();
@@ -113,6 +113,22 @@ void Application::Run()
 		EventManager::ExecuteNext();
 
 		manager.updateEntities(Time.dt);
+
+		if (inputIsDown[GLFW_KEY_B])
+		{
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/wii.mp3");
+			masterEffect->PlayEffect();
+		}
+		if (inputIsDown[GLFW_KEY_N])
+		{
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/panic.mp3");
+			masterEffect->PlayEffect();
+		}
+		if (inputIsDown[GLFW_KEY_M])
+		{
+			masterEffect->LoadEffectFile("Assets/Audio/Effects/spaghet.mp3");
+			masterEffect->PlayEffect();
+		}
 
 		glfwPollEvents();
 	}
