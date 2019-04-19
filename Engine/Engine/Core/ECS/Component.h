@@ -16,6 +16,7 @@
 
 #include <glm/glm.hpp>
 
+#include "../Transform.h"
 #include "../Mesh.h"
 #include "../Texture.h"
 #include "../ShaderProgram.h"
@@ -28,7 +29,7 @@ namespace ecs {
 
 	struct TransformComponent : public Component {
 		static const ecs::ComponentType _mType = 1;
-		glm::vec3 position;
+		Transform transform;
 	};
 
 	struct MeshRendererComponent : public Component {

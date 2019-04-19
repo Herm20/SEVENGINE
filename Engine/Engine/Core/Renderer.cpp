@@ -81,7 +81,7 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 	meshRenderer.mesh->Render(
-		transform.position,
+		transform.transform.GetPosition(),
 		meshRenderer.shaderProgram,
 		meshRenderer.texture
 	);

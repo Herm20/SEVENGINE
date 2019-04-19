@@ -18,7 +18,7 @@ void RigidBodySystem::updateEntity(float dt, ecs::Entity entity) {
 
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 	ecs::RigidBodyComponent& rigidBody = manager.getComponentStore<ecs::RigidBodyComponent>().get(entity);
-	transform.position += rigidBody.velocity * dt;
+	transform.transform.SetPosition(transform.transform.GetPosition() + rigidBody.velocity * dt);
 
 }
 

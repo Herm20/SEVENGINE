@@ -88,7 +88,7 @@ void Application::Init()
 	meshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
 	meshRenderer.texture = assetMan->GetTexture("test");
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
-	transform.position = glm::vec3(0, 0, 0);
+	transform.transform.SetPosition(glm::vec3(0, 0, 0));
 	manager.registerEntity(player1);
 
 }
