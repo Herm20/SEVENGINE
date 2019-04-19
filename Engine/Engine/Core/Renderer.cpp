@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-#include "Components/MeshRendererComponent.h"
 #include "Physics/ColliderComponent.h"
 #include "ECS/Manager.h"
 
