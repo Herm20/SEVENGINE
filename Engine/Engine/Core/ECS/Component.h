@@ -37,7 +37,6 @@ namespace ecs {
 		boost::shared_ptr<Texture> texture;
 		boost::shared_ptr<ShaderProgram> shaderProgram;
 	};
-
 }
 
 #endif

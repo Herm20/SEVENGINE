@@ -44,6 +44,7 @@ void Application::Init()
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
+	eventMan = new EventManager();
 	camera = new Camera();
 
 	assetMan->SetAssetDir("Assets");
@@ -91,7 +92,6 @@ void Application::Init()
 	ecs::TransformComponent& transform2 = manager.getComponentStore<ecs::TransformComponent>().get(e2);
 	transform2.position = glm::vec3(2, 0, 0);
 	manager.registerEntity(e2);
-
 }
 
 void Application::Load()
@@ -101,11 +101,16 @@ void Application::Load()
 
 void Application::Run()
 {
+	Event test([](void){
+		printf("This is a test\n");
+	} );
+	eventMan->QueueEvent(test);
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
 	{
 		Time.update();
 		CamMovement();
 		camera->update();
+		EventManager::ExecuteNext();
 
 		manager.updateEntities(Time.dt);
 
@@ -120,15 +125,11 @@ void Application::Exit()
 	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
+	delete eventMan;
 	delete assetMan;
 }
 
 /// SUPER TEMP
-
-void Application::InitKeyCallbacks() {
-
-}
-
 void Application::CamMovement()
 {
 	// FPS Controls
@@ -170,10 +171,10 @@ void Application::CamMovement()
 	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed * Time.dt;
+		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->location += camera->velocity * speed * Time.dt;
+	camera->location += camera->velocity * Time.dt;
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP
