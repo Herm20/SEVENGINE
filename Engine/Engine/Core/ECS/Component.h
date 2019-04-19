@@ -13,12 +13,11 @@
 #define COMPONENT_H_
 
 #include "ComponentType.h"
-
 #include <glm/glm.hpp>
-
 #include "../Mesh.h"
 #include "../Texture.h"
 #include "../ShaderProgram.h"
+#include <vector>
 
 namespace ecs {
 
@@ -41,6 +40,7 @@ namespace ecs {
 	struct KeyboardInputComponent : public Component {
 		static const ecs::ComponentType _mType = 3;
 		// keyboard mapping
+			
 	};
 
 	struct RigidBodyComponent : public Component {

@@ -1,7 +1,7 @@
 #include "InputPoller.h"
 //#include "InputManager.h"
-bool Input::m_keys[Max_keys];
-bool Input::m_mouse_buttons[Max_Buttons];
+bool Input::m_keys[Max_keys] = {};
+bool Input::m_mouse_buttons[Max_Buttons] = {};
 double Input::mouseX;
 double Input::mouseY;
 
@@ -41,17 +41,7 @@ Input::Input(GLFWwindow* window)
 
 //initializer
 void Input::Init(GLFWwindow* window)
-{
-	for (int i = 0; i < Max_keys; i++)
-	{
-		Input::m_keys[i] = false;
-	}
-
-	for (int i = 0; i < Max_Buttons; i++)
-	{
-		Input::m_mouse_buttons[i] = false;
-	}
-	
+{	
 	//setting up callbacks
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
