@@ -1,5 +1,5 @@
 #include "InputPoller.h"
-#include "InputManager.h"
+//#include "InputManager.h"
 bool Input::m_keys[Max_keys];
 bool Input::m_mouse_buttons[Max_Buttons];
 double Input::mouseX;
@@ -11,20 +11,18 @@ double Input::mouseY;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	Input::m_keys[key] = action == GLFW_PRESS;// modifies the list of key states
-	if (action == GLFW_PRESS)
+	/*if (action == GLFW_PRESS)
 	{
-		//InputManager::GetInstance()->ValidateKeyInput(key);
-	}
+	}*/
 }
 
 //callback for  mouse presses
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	Input::m_mouse_buttons[button] = action == GLFW_PRESS;// modifies the list of key states
-	if (action != GLFW_PRESS)
+	/*if (action != GLFW_PRESS)
 	{
-		//InputManager::GetInstance()->ValidateMouseInput(button);
-	}
+	}*/
 }
 
 //callback for updating mouse cursor position
@@ -54,8 +52,13 @@ void Input::Init(GLFWwindow* window)
 		Input::m_mouse_buttons[i] = false;
 	}
 	
-	//setting up cqallbacks
+	//setting up callbacks
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
+}
+
+bool Input::ReturnStatus(int keyValue)
+{
+	return m_keys[keyValue];
 }

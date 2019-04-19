@@ -2,13 +2,13 @@
 #define INPUTMANAGER_H_
 
 #include <GLFW/glfw3.h>
-#include "Timer_Sad.h"
+//#include "Timer_Sad.h"
 #include <map>
 #include <Vector>
 
 class InputManager 
 {
-	Timer* timer;
+	//Timer* timer;
 	static InputManager* instance;
 	std::map<const char*, int> FightKeyMap; //key map for when we fight
 	std::map<const char*, int> MenuKeyMap; // key map for when we are in main menu
@@ -18,7 +18,7 @@ class InputManager
 	std::vector<std::vector<const char*>> ComboMovesList;// vector for storing a list of moves for a particular combo preceeded by the name of the combo
 	std::vector<std::vector<const char*>> PotentialMovesList;
 	
-	std::chrono::duration<float> lastMoveTime;
+	//std::chrono::duration<float> lastMoveTime;
 	int moveIndex;
 	int contextState;// 2 for now(Menu(Main & Pause) and Fight)
 
@@ -30,8 +30,8 @@ public:
 	
 	void ValidateKeyInput(int);
 	void ValidateMouseInput(int);
-	void CheckForCombo(const char*, std::chrono::duration<float>);
-	void ContinueCombo(const char* x, std::chrono::duration<float> t);
+	//void CheckForCombo(const char*, std::chrono::duration<float>);
+	//void ContinueCombo(const char* x, std::chrono::duration<float> t);
 
 private:
 	InputManager();

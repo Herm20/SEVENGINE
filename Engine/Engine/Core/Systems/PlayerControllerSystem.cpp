@@ -11,6 +11,11 @@ PlayerControllerSystem::PlayerControllerSystem(ecs::Manager& manager) : ecs::Sys
 	requiredComponents.insert(ecs::RigidBodyComponent::_mType);
 	setRequiredComponents(std::move(requiredComponents));
 
+	////////////Input Stuff///////////////////////////////////////
+	for (int i = 0; i < Max_keys; i++)
+	{
+		recentKeyStates[i] = Input::ReturnStatus(i);
+	}
 }
 
 void PlayerControllerSystem::startFrame(float dt) {
@@ -46,8 +51,53 @@ void PlayerControllerSystem::updateEntity(float dt, ecs::Entity entity) {
 		rigidbody.velocity.y = 0;
 	}
 
+	/////////////////////////////////////Input STUFF/////////////////////////////////////
+
+	//make sure GetKeyDown is called before UpdateKeyStates in the update loop otherwise you will never get a true return value
+	if (GetKeyDown(GLFW_KEY_A) )
+	{
+		//do something if A is pressed down
+	}
+
+	if (GetKey(GLFW_KEY_A)) 
+	{
+		//do something if A's state is pressed
+	}
+
+
+	//Updating the RecentKeyStates to their current statuses for use in the next frame
+	UpdateKeyStates();
 }
 
 void PlayerControllerSystem::endFrame(float dt) {
 
+}
+
+//////Input Functions
+void PlayerControllerSystem::UpdateKeyStates() 
+{
+	for (int i = 0; i < Max_keys; i++)
+	{
+		recentKeyStates[i] = Input::ReturnStatus(i);
+	}
+}
+
+bool PlayerControllerSystem::GetKey(int keyValue) 
+{
+	return Input::ReturnStatus(keyValue);
+}
+
+bool PlayerControllerSystem::GetKeyDown(int keyValue)
+{
+	bool keyPressed = false;
+	bool curretState = Input::ReturnStatus(keyValue);
+	if(!recentKeyStates[keyValue]) 
+	{
+		if (recentKeyStates[keyValue] != curretState) 
+		{
+			keyPressed = true;
+		}
+	}
+	//recentKeyStates[keyValue] = curretState;
+	return keyPressed;
 }
