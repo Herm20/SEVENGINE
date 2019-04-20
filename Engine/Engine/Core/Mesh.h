@@ -4,12 +4,12 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "Transform.h"
+#include "Camera.h"
 #include "MeshData.h"
-#include "ShaderProgram.h"
-#include "Texture.h"
+#include "Material.h"
 
 class Mesh {
-
 private:
 	boost::shared_ptr<MeshData> subMeshData;
 	u32 vao;
@@ -21,7 +21,7 @@ public:
 	Mesh(boost::shared_ptr<MeshData> meshData);
 	Mesh(const Mesh &m);
 	const Mesh & operator=(const Mesh &m);
-	void Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture, bool wireframe = false);
+	void Render(const Transform &trans, const Camera* cam, boost::shared_ptr<Material> material, bool wireframe = false);
 	void Destroy();
 	~Mesh();
 

@@ -32,7 +32,7 @@ private:
 	u32 indexArrayID;
 	u32 indexBuffer;
 
-	Camera* camera;
+	const Camera* curCamera;
 
 public:
 
@@ -47,6 +47,7 @@ public:
 	virtual void updateEntity(float dt , ecs::Entity entity) override;
 	virtual void endFrame(float dt) override;
 
+	inline void SetCurrentCamera(const Camera* cam) { this->curCamera = cam; }
 };
 
 #endif

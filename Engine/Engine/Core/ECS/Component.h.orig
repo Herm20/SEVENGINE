@@ -13,13 +13,16 @@
 #define COMPONENT_H_
 
 #include "ComponentType.h"
-
-#include <vector>
 #include <glm/glm.hpp>
 #include "../Transform.h"
 #include "../Mesh.h"
-#include "../Material.h"
+#include "../Texture.h"
+#include "../ShaderProgram.h"
+<<<<<<< HEAD
 #include "../Light.h"
+=======
+#include <vector>
+>>>>>>> eba39e1be25fdf0acbc8af90d5a9f1f7d5ccfe8f
 
 namespace ecs {
 
@@ -35,13 +38,20 @@ namespace ecs {
 	struct MeshRendererComponent : public Component {
 		static const ecs::ComponentType _mType = 2;
 		boost::shared_ptr<Mesh> mesh;
-		boost::shared_ptr<Material> material;
+		boost::shared_ptr<Texture> texture;
+		boost::shared_ptr<ShaderProgram> shaderProgram;
 	};
 
+<<<<<<< HEAD
+	struct LightComponent : public Component {
+		static const ecs::ComponentType _mType = 4;
+		Light light;
+	};
+=======
 	struct KeyboardInputComponent : public Component {
 		static const ecs::ComponentType _mType = 3;
 		// keyboard mapping
-
+			
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -57,10 +67,7 @@ namespace ecs {
 		float jumpTimer = 0.0f;
 	};
 
-	struct LightComponent : public Component {
-		static const ecs::ComponentType _mType = 6;
-		Light light;
-	};
+>>>>>>> eba39e1be25fdf0acbc8af90d5a9f1f7d5ccfe8f
 }
 
 #endif

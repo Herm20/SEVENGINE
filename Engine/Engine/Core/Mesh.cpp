@@ -50,7 +50,7 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) :
 		GL_FLOAT,			// Type of data
 		GL_FALSE,			// Should we normalize data?
 		sizeof(Vertex),		// Stride (bytes per vertex)
-		(void*)sizeof(glm::vec3)	// Offset to this attribute
+		(const void*)offsetof(Vertex, uv)	// Offset to this attribute
 	);
 
 	// Normals
@@ -61,10 +61,30 @@ Mesh::Mesh(boost::shared_ptr<MeshData> meshData) :
 		GL_FLOAT,			// Type of data
 		GL_FALSE,			// Should we normalize data?
 		sizeof(Vertex),		// Stride (bytes per vertex)
-		(void*)(sizeof(glm::vec3) + sizeof(glm::vec2))	// Offset to this attribute
+		(const void*)offsetof(Vertex, norm)	// Offset to this attribute
 	);
 
-	// TODO: Add in tangents and bitangents
+	// Tans
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(
+		3,					// Attribute index
+		3,					// Number of components
+		GL_FLOAT,			// Type of data
+		GL_FALSE,			// Should we normalize data?
+		sizeof(Vertex),		// Stride (bytes per vertex)
+		(const void*)offsetof(Vertex, tan)	// Offset to this attribute
+	);
+
+	// Bitans
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(
+		4,					// Attribute index
+		3,					// Number of components
+		GL_FLOAT,			// Type of data
+		GL_FALSE,			// Should we normalize data?
+		sizeof(Vertex),		// Stride (bytes per vertex)
+		(const void*)offsetof(Vertex, bitan)	// Offset to this attribute
+	);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
@@ -99,23 +119,30 @@ const Mesh & Mesh::operator=(const Mesh &m)
 	return *this;
 }
 
-void Mesh::Render(glm::vec3 position, boost::shared_ptr<ShaderProgram> shaderProgram, boost::shared_ptr<Texture> texture, bool wireframe) {
-	glm::mat4 posMatrix = glm::translate(glm::mat4(1.0), position);
-	shaderProgram->Use();
+void Mesh::Render(const Transform &trans, const Camera* cam, boost::shared_ptr<Material> material, bool wireframe) {
+	material->GetShaderProgram()->Use();
 	glBindVertexArray(this->vao);
-	// TODO: Move this out of here
-	glUniformMatrix4fv(3, 1, GL_FALSE, &posMatrix[0][0]);
-	texture->bind(0);
-	glUniform1i(glGetUniformLocation(shaderProgram->GetProgram(), "tex"), 0);
+	glUniformMatrix4fv(glGetUniformBlockIndex(material->GetShaderProgram()->GetProgram(), "model"), 1, GL_FALSE, &trans.GetMatrix()[0][0]);
+	glUniformMatrix4fv(glGetUniformBlockIndex(material->GetShaderProgram()->GetProgram(), "invTrans"), 1, GL_FALSE, &trans.GetInverseTransposeMatrix()[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "cameraMatrix"), 1, GL_FALSE, &cam->cameraMatrix[0][0]);
+	glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "camPos"), 1, &cam->location[0]);
+	material->GetDiffuseTexture()->bind(0);
+	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "diffuse"), 0);
+	material->GetNormalTexture()->bind(1);
+	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "normal"), 1);
+	material->GetSpecularTexture()->bind(2);
+	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "specular"), 2);
 	glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
 	for (u32 i = 0; i < this->subMeshData->GetIndAmountCount(); i++) {
 		glDrawElements(
-			GL_TRIANGLES, 
-			this->subMeshData->GetIndAmounts()[i], 
-			GL_UNSIGNED_INT, 
+			GL_TRIANGLES,
+			this->subMeshData->GetIndAmounts()[i],
+			GL_UNSIGNED_INT,
 			(const void*)(this->subMeshData->GetIndOffsets()[i] * sizeof(u32)));
 	}
-	texture->unbind(0);
+	material->GetDiffuseTexture()->unbind(0);
+	material->GetNormalTexture()->unbind(1);
+	material->GetSpecularTexture()->unbind(2);
 }
 
 /*! \brief Cleans up a mesh

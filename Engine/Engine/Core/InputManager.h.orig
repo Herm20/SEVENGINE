@@ -17,8 +17,13 @@ class InputManager
 	std::vector<std::map<const char*, int>> MapArray1,MapArray2;// Vector for the above maps
 	std::vector<std::vector<const char*>> ComboMovesList;// vector for storing a list of moves for a particular combo preceeded by the name of the combo
 	std::vector<std::vector<const char*>> PotentialMovesList;
+<<<<<<< HEAD
 
+	std::chrono::duration<float> lastMoveTime;
+=======
+	
 	//std::chrono::duration<float> lastMoveTime;
+>>>>>>> eba39e1be25fdf0acbc8af90d5a9f1f7d5ccfe8f
 	int moveIndex;
 	int contextState;// 2 for now(Menu(Main & Pause) and Fight)
 
