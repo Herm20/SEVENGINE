@@ -50,7 +50,6 @@ public:
 	void Load();
 
 	/// SUPER TEMP
-	void InitKeyCallbacks();
 	void CamMovement();
 	/// SUPER TEMP
 };

@@ -7,27 +7,6 @@
 
 Timer Application::Time;
 
-//const ecs::ComponentType ecs::MeshRendererComponent::_mType = 1;
-
-namespace
-{
-	// The click function can't be a method
-	map<int, bool> inputIsDown;
-	map<int, bool> inputWasDown;
-
-	void mouseClick(GLFWwindow * GLFWindowPtr2, int button, int action
-		, int mobs) {
-
-		inputIsDown[button] = action;
-	}
-
-	void keyCallback(GLFWwindow * window, int key, int scancode, int action
-		, int mods)
-	{
-		inputIsDown[key] = action;
-	}
-}
-
 Application::Application()
 {
 	// Nothing interesting to do here (yet)
@@ -137,10 +116,6 @@ void Application::Exit()
 }
 
 /// SUPER TEMP
-
-void Application::InitKeyCallbacks() {
-
-}
 
 void Application::CamMovement()
 {
