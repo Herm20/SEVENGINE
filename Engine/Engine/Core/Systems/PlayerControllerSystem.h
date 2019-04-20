@@ -3,10 +3,11 @@
 
 #include "../InputPoller.h"
 #include "../ECS/System.h"
+
 class PlayerControllerSystem : public ecs::System {
 
 private:
-	bool recentKeyStates[Max_keys];
+
 
 public:
 
@@ -15,9 +16,6 @@ public:
 	virtual void startFrame(float dt) override;
 	virtual void updateEntity(float dt, ecs::Entity entity) override;
 	virtual void endFrame(float dt) override;
-	void UpdateKeyStates();
-	bool GetKey(int);
-	bool GetKeyDown(int);
 };
 
 #endif

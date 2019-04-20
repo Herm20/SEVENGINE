@@ -32,7 +32,7 @@ private:
 	u32 indexArrayID;
 	u32 indexBuffer;
 
-	const Camera* curCamera;
+	const Camera* curCamera = nullptr;
 
 public:
 

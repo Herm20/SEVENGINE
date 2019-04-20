@@ -12,17 +12,26 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
+<<<<<<< HEAD
 #include "ComponentType.h"
+
+#include <vector>
+=======
+>>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 #include <glm/glm.hpp>
+#include <map>
+#include <string>
+
+#include "ComponentType.h"
 #include "../Transform.h"
 #include "../Mesh.h"
-#include "../Texture.h"
-#include "../ShaderProgram.h"
 <<<<<<< HEAD
+#include "../Material.h"
 #include "../Light.h"
 =======
-#include <vector>
->>>>>>> eba39e1be25fdf0acbc8af90d5a9f1f7d5ccfe8f
+#include "../Texture.h"
+#include "../ShaderProgram.h"
+>>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 
 namespace ecs {
 
@@ -38,20 +47,20 @@ namespace ecs {
 	struct MeshRendererComponent : public Component {
 		static const ecs::ComponentType _mType = 2;
 		boost::shared_ptr<Mesh> mesh;
-		boost::shared_ptr<Texture> texture;
-		boost::shared_ptr<ShaderProgram> shaderProgram;
+		boost::shared_ptr<Material> material;
 	};
 
-<<<<<<< HEAD
-	struct LightComponent : public Component {
-		static const ecs::ComponentType _mType = 4;
-		Light light;
-	};
-=======
 	struct KeyboardInputComponent : public Component {
 		static const ecs::ComponentType _mType = 3;
+<<<<<<< HEAD
 		// keyboard mapping
-			
+
+=======
+		std::map<std::string, int> map;
+		void SetKey(std::string key, int value) {
+			map[key] = value;
+		}
+>>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -62,12 +71,13 @@ namespace ecs {
 	struct PlayerStateInfoComponent : public Component {
 		static const ecs::ComponentType _mType = 5;
 		bool isJumping = false;
-		float wiggleRate = 0.0f;
-		float jumpRate = 5.0f;
-		float jumpTimer = 0.0f;
+		float moveSpeed = 3;
 	};
 
->>>>>>> eba39e1be25fdf0acbc8af90d5a9f1f7d5ccfe8f
+	struct LightComponent : public Component {
+		static const ecs::ComponentType _mType = 6;
+		Light light;
+	};
 }
 
 #endif

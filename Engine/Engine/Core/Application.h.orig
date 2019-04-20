@@ -9,8 +9,11 @@
 #include "Camera.h"
 #include "Logger.h"
 #include "ECS/Manager.h"
+<<<<<<< HEAD
 #include "EventManager.h"
+=======
 #include "InputPoller.h"
+>>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 
 // Systems
 #include "Systems/PlayerControllerSystem.h"
@@ -52,7 +55,6 @@ public:
 	void Load();
 
 	/// SUPER TEMP
-	void InitKeyCallbacks();
 	void CamMovement();
 	/// SUPER TEMP
 };
