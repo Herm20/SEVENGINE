@@ -41,10 +41,13 @@ Application::~Application()
 
 void Application::Init()
 {
+
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
 	camera = new Camera();
+
+	inputPoller.Init(renderer->GetWindow());
 
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
@@ -60,9 +63,9 @@ void Application::Init()
 
 	/// SUPER TEMP
 	//Set the click function when loading game
-	glfwSetKeyCallback(renderer->GetWindow(), keyCallback);
+	//glfwSetKeyCallback(renderer->GetWindow(), keyCallback);
 	// Set the keypress function when loading game
-	glfwSetMouseButtonCallback(renderer->GetWindow(), mouseClick);
+	//glfwSetMouseButtonCallback(renderer->GetWindow(), mouseClick);
 	///
 
 	manager.createComponentStore<ecs::MeshRendererComponent>();
@@ -90,6 +93,10 @@ void Application::Init()
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
 	transform.transform.SetPosition(glm::vec3(0, 0, 0));
 	manager.registerEntity(player1);
+	ecs::KeyboardInputComponent& keyboardInput = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player1);
+	keyboardInput.map["Jump"] = GLFW_KEY_O;
+	keyboardInput.map["MoveLeft"] = GLFW_KEY_LEFT;
+	keyboardInput.map["MoveRight"] = GLFW_KEY_RIGHT;
 
 }
 
@@ -107,7 +114,7 @@ void Application::Run()
 	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 
 	// Game loop
-	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
+	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
 		Time.update();
 		CamMovement();
@@ -155,22 +162,22 @@ void Application::CamMovement()
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
 
-	if (inputIsDown[GLFW_KEY_A])
+	if (Input::GetKey(GLFW_KEY_A))
 		camera->velocity += R * glm::vec3(1, 0, 0);
 
-	if (inputIsDown[GLFW_KEY_D])
+	if (Input::GetKey(GLFW_KEY_D))
 		camera->velocity += R * glm::vec3(-1, 0, 0);
 
-	if (inputIsDown[GLFW_KEY_W])
+	if (Input::GetKey(GLFW_KEY_W))
 		camera->velocity += R * glm::vec3(0, 0, 1);
 
-	if (inputIsDown[GLFW_KEY_S])
+	if (Input::GetKey(GLFW_KEY_S))
 		camera->velocity += R * glm::vec3(0, 0, -1);
 
-	if (inputIsDown[GLFW_KEY_SPACE])
+	if (Input::GetKey(GLFW_KEY_SPACE))
 		camera->velocity += R * glm::vec3(0, 1, 0);
 
-	if (inputIsDown[GLFW_KEY_X])
+	if (Input::GetKey(GLFW_KEY_X))
 		camera->velocity += R * glm::vec3(0, -1, 0);
 
 	float speed = 10.0f;

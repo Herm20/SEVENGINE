@@ -12,8 +12,11 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
-#include "ComponentType.h"
 #include <glm/glm.hpp>
+#include <map>
+#include <string>
+
+#include "ComponentType.h"
 #include "../Transform.h"
 #include "../Mesh.h"
 #include "../Texture.h"
@@ -39,7 +42,10 @@ namespace ecs {
 
 	struct KeyboardInputComponent : public Component {
 		static const ecs::ComponentType _mType = 3;
-		// keyboard mapping
+		std::map<std::string, int> map;
+		void SetKey(std::string key, int value) {
+			map[key] = value;
+		}
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -50,9 +56,7 @@ namespace ecs {
 	struct PlayerStateInfoComponent : public Component {
 		static const ecs::ComponentType _mType = 5;
 		bool isJumping = false;
-		float wiggleRate = 0.0f;
-		float jumpRate = 5.0f;
-		float jumpTimer = 0.0f;
+		float moveSpeed = 3;
 	};
 
 }

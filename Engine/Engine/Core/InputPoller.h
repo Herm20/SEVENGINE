@@ -16,11 +16,10 @@ class Input
 	static double mouseX, mouseY;
 	
 public:
-	Input(GLFWwindow* window);
+	void Init(GLFWwindow* window); // initializer takes a pointer to the window from the renderer class
 	inline double GetX() { return mouseX; }
 	inline double GetY() { return mouseY; }
-	void Init(GLFWwindow* window); // initializer takes a pointer to the window from the renderer class
-	static bool ReturnStatus(int);
+	static inline int GetKey(int key) { return m_keys[key]; }
 
 private:
 	friend static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys

@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Logger.h"
 #include "ECS/Manager.h"
+#include "InputPoller.h"
 
 // Systems
 #include "Systems/PlayerControllerSystem.h"
@@ -21,6 +22,8 @@ public:
 	~Application();
 
 	ecs::Manager manager;
+
+	Input inputPoller;
 
 	Renderer* renderer;
 	AssetManager* assetMan;
