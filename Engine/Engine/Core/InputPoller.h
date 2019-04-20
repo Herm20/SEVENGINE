@@ -22,9 +22,9 @@ public:
 	static inline int GetKey(int key) { return m_keys[key]; }
 
 private:
-	friend static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys
-	friend static void mouse_button_callback(GLFWwindow* , int , int , int);//callback for mousebutton
-	friend static void cursor_position_callback(GLFWwindow*, double, double);//callback for mouse cursor
+	static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys
+	static void mouse_button_callback(GLFWwindow* , int , int , int);//callback for mousebutton
+	static void cursor_position_callback(GLFWwindow*, double, double);//callback for mouse cursor
 };
 
 #endif // !INPUTPOLLER_H_
