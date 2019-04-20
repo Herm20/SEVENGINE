@@ -73,7 +73,7 @@ void Application::Init()
 	transform.transform.SetPosition(glm::vec3(0, 0, 0));
 	manager.registerEntity(player1);
 	ecs::KeyboardInputComponent& keyboardInput = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player1);
-	keyboardInput.map["Jump"] = GLFW_KEY_O;
+	keyboardInput.map["Jump"] = GLFW_KEY_UP;
 	keyboardInput.map["MoveLeft"] = GLFW_KEY_LEFT;
 	keyboardInput.map["MoveRight"] = GLFW_KEY_RIGHT;
 

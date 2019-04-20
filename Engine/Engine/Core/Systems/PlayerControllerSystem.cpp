@@ -36,7 +36,7 @@ void PlayerControllerSystem::updateEntity(float dt, ecs::Entity entity) {
 	}
 	pos += moveDir * playerState.moveSpeed * dt;
 
-	if (Input::GetKey(inputMap.map["Jump"])) {
+	if (Input::GetKey(inputMap.map["Jump"]) && !playerState.isJumping) {
 		rigidbody.velocity.y = 3;
 		playerState.isJumping = true;
 	}
