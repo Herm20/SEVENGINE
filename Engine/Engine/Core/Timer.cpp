@@ -1,25 +1,37 @@
 #include "Timer.h"
 
+float Timer::totalTime = 0;
+float Timer::deltaTime = 0;
+
 Timer::Timer()
 {
 	startTime = std::chrono::high_resolution_clock::now();
 	prev = curr = clock();
-	t = dt = 0;
 }
 
 void Timer::update()
 {
 	prev = curr;
 	curr = clock();
-	dt = (float)(curr - prev) / (float)CLOCKS_PER_SEC;
+	deltaTime = (float)(curr - prev) / (float)CLOCKS_PER_SEC;
 
 	// Testing a bottom cap of the dt
-	if (dt < 0.01f) 
+	if (deltaTime < 0.01f) 
 	{
-		dt = 0.01f;
+		deltaTime = 0.01f;
 	}
 
-	t += dt;
+	totalTime += deltaTime;
+}
+
+float Timer::GetTotalTime()
+{
+	return totalTime;
+}
+
+float Timer::GetDeltaTime()
+{
+	return deltaTime;
 }
 
 std::chrono::duration<float> Timer::currentTime()

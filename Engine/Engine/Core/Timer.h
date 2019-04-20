@@ -7,12 +7,12 @@ class Timer
 private:
 	clock_t curr, prev;
 	std::chrono::high_resolution_clock::time_point startTime;
+	static float totalTime; //! Time in seconds since starting
+	static float deltaTime; //! Time in seconds between 2 most recent updates
 public:
 	Timer();
-
-	float t; //Time in seconds since starting
-	float dt; // Time in seconds between 2 most recent updates
-
+	static float GetTotalTime();
+	static float GetDeltaTime();
 	void update();
 	std::chrono::duration<float> currentTime();
 };
