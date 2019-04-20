@@ -2,6 +2,8 @@
 
 float Timer::totalTime = 0;
 float Timer::deltaTime = 0;
+clock_t Timer::curr;
+clock_t Timer::prev;
 
 Timer::Timer()
 {

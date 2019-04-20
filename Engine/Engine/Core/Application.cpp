@@ -86,7 +86,7 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
-		Time.update();
+		Timer::update();
 		CamMovement();
 		camera->update();
 		EventManager::ExecuteNext();
