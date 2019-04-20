@@ -82,7 +82,8 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 	meshRenderer.mesh->Render(
 		transform.transform,
 		curCamera,
-		meshRenderer.material
+		meshRenderer.material,
+		lights
 	);
 }
 

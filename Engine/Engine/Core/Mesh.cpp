@@ -119,11 +119,11 @@ const Mesh & Mesh::operator=(const Mesh &m)
 	return *this;
 }
 
-void Mesh::Render(const Transform &trans, const Camera* cam, boost::shared_ptr<Material> material, bool wireframe) {
+void Mesh::Render(const Transform &trans, const Camera* cam, boost::shared_ptr<Material> material, const boost::container::vector<Light> &lights, bool wireframe) {
 	material->GetShaderProgram()->Use();
 	glBindVertexArray(this->vao);
-	glUniformMatrix4fv(glGetUniformBlockIndex(material->GetShaderProgram()->GetProgram(), "model"), 1, GL_FALSE, &trans.GetMatrix()[0][0]);
-	glUniformMatrix4fv(glGetUniformBlockIndex(material->GetShaderProgram()->GetProgram(), "invTrans"), 1, GL_FALSE, &trans.GetInverseTransposeMatrix()[0][0]);
+	glUniformMatrix4fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "model"), 1, GL_FALSE, &trans.GetMatrix()[0][0]);
+	glUniformMatrix3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "invTrans"), 1, GL_FALSE, &trans.GetInverseTransposeMatrix()[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "cameraMatrix"), 1, GL_FALSE, &cam->cameraMatrix[0][0]);
 	glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "camPos"), 1, &cam->location[0]);
 	material->GetDiffuseTexture()->bind(0);
@@ -132,6 +132,20 @@ void Mesh::Render(const Transform &trans, const Camera* cam, boost::shared_ptr<M
 	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "normal"), 1);
 	material->GetSpecularTexture()->bind(2);
 	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "specular"), 2);
+
+	boost::container::string str;
+	for(u32 i = 0; i < lights.size(); i++)
+	{
+		str = "lights[";
+		str += boost::lexical_cast<boost::container::string>(i);
+		str += "]";
+		glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".pos").c_str()), 1, &lights[i].pos[0]);
+		glUniform1f(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".radius").c_str()), lights[i].radius);
+		glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".color").c_str()), 1, &lights[i].color[0]);
+		glUniform1f(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".intensity").c_str()), lights[i].intensity);
+		glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".dir").c_str()), 1, &lights[i].dir[0]);
+	}
+
 	glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
 	for (u32 i = 0; i < this->subMeshData->GetIndAmountCount(); i++) {
 		glDrawElements(
