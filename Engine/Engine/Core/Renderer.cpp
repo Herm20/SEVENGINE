@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-#include "Components/MeshRendererComponent.h"
 #include "Physics/ColliderComponent.h"
 #include "ECS/Manager.h"
 
@@ -77,7 +76,7 @@ void Renderer::startFrame(float dt) {
 }
 
 void Renderer::updateEntity(float dt, ecs::Entity entity) {
-	
+
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 	meshRenderer.mesh->Render(
@@ -85,7 +84,6 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 		meshRenderer.shaderProgram,
 		meshRenderer.texture
 	);
-
 }
 
 void Renderer::endFrame(float dt) {

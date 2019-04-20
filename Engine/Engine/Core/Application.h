@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "ECS/Manager.h"
 #include "InputPoller.h"
+#include "EventManager.h"
 
 // Systems
 #include "Systems/PlayerControllerSystem.h"
@@ -27,6 +28,7 @@ public:
 
 	Renderer* renderer;
 	AssetManager* assetMan;
+	EventManager* eventMan;
 	Camera* camera;
 	// Printing fps
 	static Timer Time;

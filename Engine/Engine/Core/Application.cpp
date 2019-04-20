@@ -24,6 +24,7 @@ void Application::Init()
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
+	eventMan = new EventManager();
 	camera = new Camera();
 
 	inputPoller.Init(renderer->GetWindow());
@@ -35,7 +36,7 @@ void Application::Init()
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
 	masterBG->Play();
-	masterBG->SetVolume(0.02f);
+	masterBG->SetVolume(0.08f);
 
 	masterEffect = new AudioManager();
 	masterEffect->InitSoundEffect();
@@ -76,7 +77,7 @@ void Application::Init()
 	keyboardInput.map["Jump"] = GLFW_KEY_UP;
 	keyboardInput.map["MoveLeft"] = GLFW_KEY_LEFT;
 	keyboardInput.map["MoveRight"] = GLFW_KEY_RIGHT;
-
+	manager.registerEntity(player1);
 }
 
 void Application::Load()
@@ -86,7 +87,6 @@ void Application::Load()
 
 void Application::Run()
 {
-
 	// Init mouse to center of screen
 	int w = renderer->GetWindowWidth();
 	int h = renderer->GetWindowHeight();
@@ -95,9 +95,15 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
+		Event test([](void) {
+			printf("This is a test\n");
+		});
+		eventMan->QueueEvent(test);
+
 		Time.update();
 		CamMovement();
 		camera->update();
+		EventManager::ExecuteNext();
 
 		manager.updateEntities(Time.dt);
 
@@ -112,6 +118,7 @@ void Application::Exit()
 	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
+	delete eventMan;
 	delete assetMan;
 }
 
@@ -158,10 +165,10 @@ void Application::CamMovement()
 	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed * Time.dt;
+		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->location += camera->velocity * speed * Time.dt;
+	camera->location += camera->velocity * Time.dt;
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP
