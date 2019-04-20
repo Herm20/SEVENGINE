@@ -30,8 +30,6 @@ public:
 	AssetManager* assetMan;
 	EventManager* eventMan;
 	Camera* camera;
-	// Printing fps
-	static Timer Time;
 
 	ecs::Entity player1;
 	ecs::Entity e2;

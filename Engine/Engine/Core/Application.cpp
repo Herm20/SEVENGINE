@@ -5,8 +5,6 @@
 #include <boost/chrono/chrono.hpp>
 #include <boost/thread/thread.hpp>
 
-Timer Application::Time;
-
 Application::Application()
 {
 	// Nothing interesting to do here (yet)
