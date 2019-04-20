@@ -20,6 +20,7 @@ public:
 	inline double GetX() { return mouseX; }
 	inline double GetY() { return mouseY; }
 	static inline int GetKey(int key) { return m_keys[key]; }
+	static inline int GetMouse(int button) { return m_mouse_buttons[button]; }
 
 private:
 	static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys

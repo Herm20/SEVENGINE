@@ -13,7 +13,7 @@ class Camera
 {
 public:
 	glm::mat4x4 cameraMatrix;
-	glm::vec3 rotation, location, velocity;
+	glm::vec3 rotation, position, velocity;
 	Camera();
 	~Camera();
 	void update();
