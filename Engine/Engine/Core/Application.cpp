@@ -93,7 +93,7 @@ void Application::Run()
 		camera->update();
 		EventManager::ExecuteNext();
 
-		manager.updateEntities(Time.GetDeltaTime());
+		manager.updateEntities(Timer::GetDeltaTime());
 
 		glfwPollEvents();
 	}
@@ -159,7 +159,7 @@ void Application::CamMovement()
 		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->position += camera->velocity * Time.GetDeltaTime();
+	camera->position += camera->velocity * Timer::GetDeltaTime();
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP
