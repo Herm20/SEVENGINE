@@ -12,26 +12,16 @@
 #ifndef COMPONENT_H_
 #define COMPONENT_H_
 
-<<<<<<< HEAD
-#include "ComponentType.h"
-
-#include <vector>
-=======
->>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 #include <glm/glm.hpp>
 #include <map>
 #include <string>
 
 #include "ComponentType.h"
+#include <glm/glm.hpp>
 #include "../Transform.h"
 #include "../Mesh.h"
-<<<<<<< HEAD
 #include "../Material.h"
 #include "../Light.h"
-=======
-#include "../Texture.h"
-#include "../ShaderProgram.h"
->>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 
 namespace ecs {
 
@@ -52,15 +42,10 @@ namespace ecs {
 
 	struct KeyboardInputComponent : public Component {
 		static const ecs::ComponentType _mType = 3;
-<<<<<<< HEAD
-		// keyboard mapping
-
-=======
 		std::map<std::string, int> map;
 		void SetKey(std::string key, int value) {
 			map[key] = value;
 		}
->>>>>>> 799903e31f4f1b62e1dfe580788fd76ba2d809a9
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -74,10 +59,13 @@ namespace ecs {
 		float moveSpeed = 3;
 	};
 
+<<<<<<< HEAD
 	struct LightComponent : public Component {
 		static const ecs::ComponentType _mType = 6;
 		Light light;
 	};
+=======
+>>>>>>> 59b6da9c66cf622ff7f0a0532dc59cfde2f76a49
 }
 
 #endif

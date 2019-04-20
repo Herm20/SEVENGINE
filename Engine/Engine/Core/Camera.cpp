@@ -5,7 +5,7 @@ using namespace glm;
 
 Camera::Camera()
 {
-	location = { 0,0,-5 };
+	position = { 0,0,5 };
 	rotation = { 0,0,0 };
 	velocity = { 0,0,0 };
 }
@@ -20,8 +20,8 @@ void Camera::update()
 	// Look at matrix
 	glm::mat3 rotMat = (glm::mat3)glm::yawPitchRoll(rotation.y, rotation.x, rotation.z);
 
-	glm::vec3 eye = location;
-	glm::vec3 center = eye + rotMat * glm::vec3(0, 0, 1);
+	glm::vec3 eye = position;
+	glm::vec3 center = eye + rotMat * glm::vec3(0, 0, -1);
 	glm::vec3 up = rotMat * glm::vec3(0, 1, 0);
 
 	glm::mat4 lookAtMat = glm::lookAt(eye, center, up);
@@ -58,15 +58,4 @@ void Camera::movement(GLFWwindow* winPtr, int winHeight, int winWidth)
 	rotation.x = glm::clamp(rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
 	glfwSetCursorPos(winPtr, w * .5f, h * .5f);
-
-	// move with W,A,S,D
-	/*glm::mat3 R = (glm::mat3)glm::yawPitchRoll(rotation.y, rotation.x, rotation.z);
-
-	float speed = 1.f;
-	if (velocity != glm::vec3())
-	{
-		velocity = glm::normalize(velocity) * speed;
-	}
-
-	location += velocity;*/
 }

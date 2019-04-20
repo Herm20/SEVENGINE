@@ -20,6 +20,7 @@ Application::~Application()
 
 void Application::Init()
 {
+
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
@@ -41,7 +42,7 @@ void Application::Init()
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
 	masterBG->Play();
-	masterBG->SetVolume(0.02f);
+	masterBG->SetVolume(0.08f);
 
 	masterEffect = new AudioManager();
 	masterEffect->InitSoundEffect();
@@ -108,12 +109,14 @@ void Application::Run()
 
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
+>>>>>>>>> Temporary merge branch 2
 	{
 		Time.update();
 		CamMovement();
 		camera->update();
+		EventManager::ExecuteNext();
 
-		manager.updateEntities(Time.dt);
+		manager.updateEntities(Time.GetDeltaTime());
 
 		glfwPollEvents();
 	}
@@ -126,11 +129,15 @@ void Application::Exit()
 	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
+	delete eventMan;
 	delete assetMan;
 }
 
 /// SUPER TEMP
+<<<<<<<<< Temporary merge branch 1
+=========
 
+>>>>>>>>> Temporary merge branch 2
 void Application::CamMovement()
 {
 	// FPS Controls
@@ -140,28 +147,31 @@ void Application::CamMovement()
 	double x = 0;
 	double y = 0;
 
-	glfwGetCursorPos(renderer->GetWindow(), &x, &y);
+	if (Input::GetMouse(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		glfwGetCursorPos(renderer->GetWindow(), &x, &y);
 
-	camera->rotation.y -= sens * (x - w * .5f);
-	camera->rotation.x -= sens * -(y - h * .5f);
-	camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
+		camera->rotation.y -= sens * (x - w * .5f);
+		camera->rotation.x -= sens * (y - h * .5f);
+		camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
 
-	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+		glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+	}
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
 
 	if (Input::GetKey(GLFW_KEY_A))
-		camera->velocity += R * glm::vec3(1, 0, 0);
-
-	if (Input::GetKey(GLFW_KEY_D))
 		camera->velocity += R * glm::vec3(-1, 0, 0);
 
+	if (Input::GetKey(GLFW_KEY_D))
+		camera->velocity += R * glm::vec3(1, 0, 0);
+
 	if (Input::GetKey(GLFW_KEY_W))
-		camera->velocity += R * glm::vec3(0, 0, 1);
+		camera->velocity += R * glm::vec3(0, 0, -1);
 
 	if (Input::GetKey(GLFW_KEY_S))
-		camera->velocity += R * glm::vec3(0, 0, -1);
+		camera->velocity += R * glm::vec3(0, 0, 1);
 
 	if (Input::GetKey(GLFW_KEY_SPACE))
 		camera->velocity += R * glm::vec3(0, 1, 0);
@@ -172,10 +182,10 @@ void Application::CamMovement()
 	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity);
+		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->location += camera->velocity * speed * Time.dt;
+	camera->position += camera->velocity * Time.GetDeltaTime();
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP
