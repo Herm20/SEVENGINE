@@ -39,7 +39,6 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
-    <ClCompile Include="Core\SpriteSheet.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
   </ItemGroup>
@@ -69,7 +68,6 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
-    <ClInclude Include="Core\SpriteSheet.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />

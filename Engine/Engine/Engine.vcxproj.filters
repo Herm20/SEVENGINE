@@ -58,9 +58,6 @@
     <ClCompile Include="Core\ShaderProgram.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\SpriteSheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\ECS\System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -142,9 +139,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\SpriteSheet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\ECS\System.h">
