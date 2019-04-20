@@ -88,11 +88,6 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
-		Event test([](void) {
-			printf("This is a test\n");
-		});
-		eventMan->QueueEvent(test);
-
 		Time.update();
 		CamMovement();
 		camera->update();

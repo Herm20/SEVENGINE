@@ -12,7 +12,6 @@ public:
 
 	float t; //Time in seconds since starting
 	float dt; // Time in seconds between 2 most recent updates
-	float fps; // Measures 1/dt the amount of updates per second
 
 	void update();
 	std::chrono::duration<float> currentTime();
