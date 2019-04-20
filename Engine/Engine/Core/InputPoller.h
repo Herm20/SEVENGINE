@@ -1,10 +1,8 @@
-/*#ifndef INPUTPOLLER_H_
+#ifndef INPUTPOLLER_H_
 
 #define INPUTPOLLER_H_
-
-#include "InputManager.h"
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <iostream>
 
 
 #define Max_keys 500
@@ -22,6 +20,7 @@ public:
 	inline double GetX() { return mouseX; }
 	inline double GetY() { return mouseY; }
 	void Init(GLFWwindow* window); // initializer takes a pointer to the window from the renderer class
+	static bool ReturnStatus(int);
 
 private:
 	friend static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys
@@ -29,4 +28,4 @@ private:
 	friend static void cursor_position_callback(GLFWwindow*, double, double);//callback for mouse cursor
 };
 
-#endif // !INPUTPOLLER_H_*/
+#endif // !INPUTPOLLER_H_

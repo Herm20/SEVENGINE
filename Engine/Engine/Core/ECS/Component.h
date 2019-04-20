@@ -15,11 +15,11 @@
 #include "ComponentType.h"
 
 #include <glm/glm.hpp>
-
+#include "../Transform.h"
 #include "../Mesh.h"
 #include "../Texture.h"
 #include "../ShaderProgram.h"
-#include "../Light.h"
+#include <vector>
 
 namespace ecs {
 
@@ -29,7 +29,7 @@ namespace ecs {
 
 	struct TransformComponent : public Component {
 		static const ecs::ComponentType _mType = 1;
-		glm::vec3 position;
+		Transform transform;
 	};
 
 	struct MeshRendererComponent : public Component {
@@ -39,10 +39,25 @@ namespace ecs {
 		boost::shared_ptr<ShaderProgram> shaderProgram;
 	};
 
-	struct LightComponent : public Component {
-		static const ecs::ComponentType _mType = 4;
-		Light light;
+	struct KeyboardInputComponent : public Component {
+		static const ecs::ComponentType _mType = 3;
+		// keyboard mapping
+			
 	};
+
+	struct RigidBodyComponent : public Component {
+		static const ecs::ComponentType _mType = 4;
+		glm::vec3 velocity = glm::vec3();
+	};
+
+	struct PlayerStateInfoComponent : public Component {
+		static const ecs::ComponentType _mType = 5;
+		bool isJumping = false;
+		float wiggleRate = 0.0f;
+		float jumpRate = 5.0f;
+		float jumpTimer = 0.0f;
+	};
+
 }
 
 #endif

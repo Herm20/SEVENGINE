@@ -54,7 +54,7 @@ void Application::Init()
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
 	masterBG->Play();
-	masterBG->SetVolume(0.08f);
+	masterBG->SetVolume(0.02f);
 
 	masterEffect = new AudioManager();
 	masterEffect->InitSoundEffect();
@@ -68,30 +68,30 @@ void Application::Init()
 
 	manager.createComponentStore<ecs::MeshRendererComponent>();
 	manager.createComponentStore<ecs::TransformComponent>();
+	manager.createComponentStore<ecs::KeyboardInputComponent>();
+	manager.createComponentStore<ecs::PlayerStateInfoComponent>();
+	manager.createComponentStore<ecs::RigidBodyComponent>();
 
+	// Systems will run in the order they are added
+	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
+	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
 	manager.addSystem(ecs::System::Ptr(renderer));
 
-	e1 = manager.createEntity();
-	manager.addComponent(e1, ecs::MeshRendererComponent());
-	manager.addComponent(e1, ecs::TransformComponent());
-	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(e1);
+	// Dummy Player Entity
+	player1 = manager.createEntity();
+	manager.addComponent(player1, ecs::MeshRendererComponent());
+	manager.addComponent(player1, ecs::TransformComponent());
+	manager.addComponent(player1, ecs::KeyboardInputComponent());
+	manager.addComponent(player1, ecs::PlayerStateInfoComponent());
+	manager.addComponent(player1, ecs::RigidBodyComponent());
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player1);
 	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
 	meshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
 	meshRenderer.texture = assetMan->GetTexture("test");
-	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(e1);
-	transform.position = glm::vec3(0, 0, 0);
-	manager.registerEntity(e1);
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
+	transform.transform.SetPosition(glm::vec3(0, 0, 0));
+	manager.registerEntity(player1);
 
-	e2 = manager.createEntity();
-	manager.addComponent(e2, ecs::MeshRendererComponent());
-	manager.addComponent(e2, ecs::TransformComponent());
-	ecs::MeshRendererComponent& meshRenderer2 = manager.getComponentStore<ecs::MeshRendererComponent>().get(e2);
-	meshRenderer2.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
-	meshRenderer2.shaderProgram = assetMan->GetShaderProgram("def");
-	meshRenderer2.texture = assetMan->GetTexture("test");
-	ecs::TransformComponent& transform2 = manager.getComponentStore<ecs::TransformComponent>().get(e2);
-	transform2.position = glm::vec3(2, 0, 0);
-	manager.registerEntity(e2);
 }
 
 void Application::Load()
@@ -101,34 +101,20 @@ void Application::Load()
 
 void Application::Run()
 {
-	Event test([](void){
-		printf("This is a test\n");
-	} );
-	eventMan->QueueEvent(test);
+
+	// Init mouse to center of screen
+	int w = renderer->GetWindowWidth();
+	int h = renderer->GetWindowHeight();
+	glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
+
+	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !inputIsDown[GLFW_KEY_ESCAPE])
 	{
 		Time.update();
 		CamMovement();
 		camera->update();
-		EventManager::ExecuteNext();
 
 		manager.updateEntities(Time.dt);
-
-		if (inputIsDown[GLFW_KEY_B])
-		{
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/wii.mp3");
-			masterEffect->PlayEffect();
-		}
-		if (inputIsDown[GLFW_KEY_N])
-		{
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/panic.mp3");
-			masterEffect->PlayEffect();
-		}
-		if (inputIsDown[GLFW_KEY_M])
-		{
-			masterEffect->LoadEffectFile("Assets/Audio/Effects/spaghet.mp3");
-			masterEffect->PlayEffect();
-		}
 
 		glfwPollEvents();
 	}
@@ -141,11 +127,15 @@ void Application::Exit()
 	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
-	delete eventMan;
 	delete assetMan;
 }
 
 /// SUPER TEMP
+
+void Application::InitKeyCallbacks() {
+
+}
+
 void Application::CamMovement()
 {
 	// FPS Controls
@@ -187,10 +177,10 @@ void Application::CamMovement()
 	float speed = 10.0f;
 	if (camera->velocity != glm::vec3())
 	{
-		camera->velocity = glm::normalize(camera->velocity) * speed;
+		camera->velocity = glm::normalize(camera->velocity) * speed * Time.dt;
 	}
 
-	camera->location += camera->velocity * Time.dt;
+	camera->location += camera->velocity * speed * Time.dt;
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP

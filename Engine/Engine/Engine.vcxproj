@@ -25,8 +25,6 @@
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\ECS\Manager.cpp" />
     <ClCompile Include="Core\ECS\System.cpp" />
-    <ClCompile Include="Core\Event.cpp" />
-    <ClCompile Include="Core\EventManager.cpp" />
     <ClCompile Include="Core\FileLoader.cpp" />
     <ClCompile Include="Core\InputManager.cpp" />
     <ClCompile Include="Core\InputPoller.cpp" />
@@ -39,9 +37,11 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
-    <ClCompile Include="Core\SpriteSheet.cpp" />
+    <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
+    <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
+    <ClCompile Include="Core\Timer_Sad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
@@ -54,12 +54,9 @@
     <ClInclude Include="Core\ECS\Entity.h" />
     <ClInclude Include="Core\ECS\Manager.h" />
     <ClInclude Include="Core\ECS\System.h" />
-    <ClInclude Include="Core\Event.h" />
-    <ClInclude Include="Core\EventManager.h" />
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputManager.h" />
     <ClInclude Include="Core\InputPoller.h" />
-    <ClInclude Include="Core\Listener.h" />
     <ClInclude Include="Core\Logger.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
@@ -69,9 +66,11 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
-    <ClInclude Include="Core\SpriteSheet.h" />
+    <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />
+    <ClInclude Include="Core\Systems\RigidBodySystem.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Timer.h" />
+    <ClInclude Include="Core\Timer_Sad.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\Vertex.h" />
@@ -85,7 +84,7 @@
     <ProjectGuid>{3AE4E03C-C0B8-46CB-B76C-CDC947B0BAAE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -134,22 +133,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Core;$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)boost_1_69_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Core;$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)boost_1_69_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Core;$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)boost_1_69_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)Core;$(ProjectDir)boost_1_69_0;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)boost_1_69_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

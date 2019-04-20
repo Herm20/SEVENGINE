@@ -11,6 +11,10 @@
 #include "ECS/Manager.h"
 #include "EventManager.h"
 
+// Systems
+#include "Systems/PlayerControllerSystem.h"
+#include "Systems/RigidBodySystem.h"
+
 class Application
 {
 public:
@@ -26,7 +30,7 @@ public:
 	// Printing fps
 	static Timer Time;
 
-	ecs::Entity e1;
+	ecs::Entity player1;
 	ecs::Entity e2;
 
 	AudioManager* masterBG;
