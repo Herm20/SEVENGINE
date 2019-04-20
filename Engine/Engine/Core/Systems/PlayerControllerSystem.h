@@ -3,8 +3,6 @@
 
 #include "InputPoller.h"
 #include "../ECS/System.h"
-#include <map>
-#include <vector>
 
 class PlayerControllerSystem : public ecs::System {
 
