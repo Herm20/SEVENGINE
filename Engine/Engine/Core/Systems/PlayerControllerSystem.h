@@ -3,10 +3,17 @@
 
 #include "InputPoller.h"
 #include "../ECS/System.h"
+#include <map>
+#include <vector>
+
 class PlayerControllerSystem : public ecs::System {
 
 private:
 	bool recentKeyStates[Max_keys];
+	static int count;
+	std::map<const char*, int> keyMap;
+	std::vector<std::vector<int>> defaultList;
+	std::vector<int> assignedKeys;
 
 public:
 
@@ -18,6 +25,8 @@ public:
 	void UpdateKeyStates();
 	bool GetKey(int);
 	bool GetKeyDown(int);
+	void SetDefaults();
+	void CreateMaps();
 };
 
 #endif

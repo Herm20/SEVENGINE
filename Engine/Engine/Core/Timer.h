@@ -15,7 +15,7 @@ public:
 	float fps; // Measures 1/dt the amount of updates per second
 
 	void update();
-	//std::chrono::duration<float> currentTime();
+	std::chrono::duration<float> currentTime();
 };
 #endif // TIMER_H_
 
