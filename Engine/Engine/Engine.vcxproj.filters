@@ -13,9 +13,6 @@
     <ClCompile Include="Core\InputPoller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Physics\CollisionManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -94,12 +91,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\InputPoller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Physics\ColliderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Physics\CollisionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Event.h">

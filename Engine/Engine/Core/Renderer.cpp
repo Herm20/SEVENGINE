@@ -1,6 +1,5 @@
 #include "Renderer.h"
 
-#include "Physics/ColliderComponent.h"
 #include "ECS/Manager.h"
 
 Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)

@@ -59,6 +59,13 @@ namespace ecs {
 		float moveSpeed = 3;
 	};
 
+	struct ColliderComponent : public Component {
+		static const ecs::ComponentType _mType = 6;
+		vec3 size;
+		vec3 position;
+		mat3 rotation;
+	};
+
 }
 
 #endif

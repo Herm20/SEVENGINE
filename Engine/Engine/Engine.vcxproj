@@ -34,7 +34,6 @@
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
-    <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
@@ -65,8 +64,6 @@
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
-    <ClInclude Include="Core\Physics\ColliderComponent.h" />
-    <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />

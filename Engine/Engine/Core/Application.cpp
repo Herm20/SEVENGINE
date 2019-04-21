@@ -33,7 +33,7 @@ void Application::Init()
 	masterBG = new AudioManager();
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
-	masterBG->Play();
+	//masterBG->Play();
 	masterBG->SetVolume(0.08f);
 
 	masterEffect = new AudioManager();
