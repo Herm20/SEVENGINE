@@ -12,6 +12,7 @@ class Input
 {
 	//InputManager* inputmanager;
 	static bool m_keys[Max_keys];
+	static bool lastKeyStates[Max_keys];
 	static bool m_mouse_buttons[Max_Buttons];
 	static double mouseX, mouseY;
 	
@@ -21,6 +22,9 @@ public:
 	inline double GetY() { return mouseY; }
 	static inline int GetKey(int key) { return m_keys[key]; }
 	static inline int GetMouse(int button) { return m_mouse_buttons[button]; }
+	static void UpdateKeyStates();// keeps track of the current keystates to be checked in the next frame
+	static bool GetKeyDown(int);
+	static bool GetKeyUp(int);
 
 private:
 	static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys

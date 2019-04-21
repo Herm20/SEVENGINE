@@ -64,9 +64,6 @@
     <ClCompile Include="Core\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Timer_Sad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\ECS\System.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
@@ -154,9 +151,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Timer_Sad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\ECS\Entity.h">

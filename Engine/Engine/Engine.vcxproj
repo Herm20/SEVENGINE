@@ -43,7 +43,6 @@
     <ClCompile Include="Core\SpriteSheet.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
-    <ClCompile Include="Core\Timer_Sad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h" />
@@ -75,7 +74,6 @@
     <ClInclude Include="Core\SpriteSheet.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Timer.h" />
-    <ClInclude Include="Core\Timer_Sad.h" />
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Types.h" />
     <ClInclude Include="Core\Vertex.h" />
