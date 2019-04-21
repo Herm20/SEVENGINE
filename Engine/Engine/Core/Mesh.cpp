@@ -125,7 +125,7 @@ void Mesh::Render(const Transform &trans, const Camera* cam, boost::shared_ptr<M
 	glUniformMatrix4fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "model"), 1, GL_FALSE, &trans.GetMatrix()[0][0]);
 	glUniformMatrix3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "invTrans"), 1, GL_FALSE, &trans.GetInverseTransposeMatrix()[0][0]);
 	glUniformMatrix4fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "cameraMatrix"), 1, GL_FALSE, &cam->cameraMatrix[0][0]);
-	glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "camPos"), 1, &cam->location[0]);
+	glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "camPos"), 1, &cam->position[0]);
 	material->GetDiffuseTexture()->bind(0);
 	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "diffuse"), 0);
 	material->GetNormalTexture()->bind(1);

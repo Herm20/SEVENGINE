@@ -75,7 +75,7 @@ void Application::Init()
 	manager.addComponent(player1, ecs::PlayerStateInfoComponent());
 	manager.addComponent(player1, ecs::RigidBodyComponent());
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player1);
-	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sphere")));
+	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
 	meshRenderer.material = assetMan->GetMaterial("test");
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
 	transform.transform.SetPosition(glm::vec3(0, 0, 0));
@@ -87,7 +87,7 @@ void Application::Init()
 
 	e2 = manager.createEntity();
 	manager.addComponent(e2, ecs::TransformComponent());
-	manager.getComponentStore<ecs::TransformComponent>().get(e2).transform.SetPosition(glm::vec3(0, 0, -5));
+	manager.getComponentStore<ecs::TransformComponent>().get(e2).transform.SetRotation(glm::angleAxis(180.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	manager.addComponent(e2, ecs::LightComponent());
 	//ecs::LightComponent & light = manager.getComponentStore<ecs::LightComponent>().get(player1);
 	//light.light.color = (glm::vec3(0, 5, -1));
@@ -109,7 +109,6 @@ void Application::Run()
 
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
->>>>>>>>> Temporary merge branch 2
 	{
 		Time.update();
 		CamMovement();
@@ -134,10 +133,6 @@ void Application::Exit()
 }
 
 /// SUPER TEMP
-<<<<<<<<< Temporary merge branch 1
-=========
-
->>>>>>>>> Temporary merge branch 2
 void Application::CamMovement()
 {
 	// FPS Controls

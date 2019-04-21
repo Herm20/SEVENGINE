@@ -39,8 +39,6 @@ namespace ecs {
 		boost::shared_ptr<Mesh> mesh;
 		boost::shared_ptr<Material> material;
 	};
-<<<<<<<<< Temporary merge branch 1
-=========
 
 	struct KeyboardInputComponent : public Component {
 		static const ecs::ComponentType _mType = 3;
