@@ -5,8 +5,6 @@
 #include <boost/chrono/chrono.hpp>
 #include <boost/thread/thread.hpp>
 
-Timer Application::Time;
-
 Application::Application()
 {
 	// Nothing interesting to do here (yet)
@@ -110,12 +108,12 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
-		Time.update();
+		Timer::update();
 		CamMovement();
 		camera->update();
 		EventManager::ExecuteNext();
 
-		manager.updateEntities(Time.GetDeltaTime());
+		manager.updateEntities(Timer::GetDeltaTime());
 
 		glfwPollEvents();
 	}
@@ -180,7 +178,7 @@ void Application::CamMovement()
 		camera->velocity = glm::normalize(camera->velocity) * speed;
 	}
 
-	camera->position += camera->velocity * Time.GetDeltaTime();
+	camera->position += camera->velocity * Timer::GetDeltaTime();
 	camera->velocity = { 0,0,0 };
 }
 /// SUPER TEMP
