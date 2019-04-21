@@ -79,6 +79,12 @@
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\LightSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -182,6 +188,15 @@
     </ClInclude>
     <ClInclude Include="Core\Renderer.h">
       <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Systems\LightSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Material.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
