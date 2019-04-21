@@ -39,8 +39,12 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
+
 }
 
+void Renderer::Init(AssetManager * assetMan) {
+	cubeMesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
+}
 
 Renderer::~Renderer()
 {
@@ -76,6 +80,7 @@ void Renderer::startFrame(float dt) {
 
 void Renderer::updateEntity(float dt, ecs::Entity entity) {
 
+	// Model
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 	meshRenderer.mesh->Render(
@@ -83,6 +88,18 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 		meshRenderer.shaderProgram,
 		meshRenderer.texture
 	);
+
+	// Collider
+	if (manager.getComponentStore<ecs::ColliderComponent>().has(entity)) {
+		ecs::ColliderComponent& collider = manager.getComponentStore<ecs::ColliderComponent>().get(entity);
+		cubeMesh->Render(
+			transform.transform.GetPosition(),
+			meshRenderer.shaderProgram,
+			meshRenderer.texture,
+			true
+		);
+	}
+
 }
 
 void Renderer::endFrame(float dt) {

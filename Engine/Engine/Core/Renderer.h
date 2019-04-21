@@ -20,6 +20,7 @@ using namespace std;
 class Renderer : public ecs::System
 {
 private:
+
 	//Window related variables
 	GLFWwindow * window;
 	i32 height = 800;
@@ -34,10 +35,14 @@ private:
 
 	Camera* camera;
 
+	boost::shared_ptr<Mesh> cubeMesh;
+
 public:
 
 	explicit Renderer(ecs::Manager& manager);
 	~Renderer();
+
+	void Init(AssetManager * assetMan);
 
 	GLFWwindow* GetWindow();
 	int GetWindowHeight();

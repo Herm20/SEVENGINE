@@ -15,6 +15,7 @@
 // Systems
 #include "Systems/PlayerControllerSystem.h"
 #include "Systems/RigidBodySystem.h"
+#include "Systems/CollisionSystem.h"
 
 class Application
 {

@@ -59,9 +59,22 @@ namespace ecs {
 		float moveSpeed = 3;
 	};
 
+	enum ColliderType {
+		Hitbox,
+		Hurtbox,
+		Grabbox
+	};
+
+	enum ColliderShape {
+		Cube,
+		Sphere
+	};
+
 	struct ColliderComponent : public Component {
 		static const ecs::ComponentType _mType = 6;
-		vec3 size;
+		ColliderType type;
+		ColliderShape shape;
+		vec3 size = vec3(1, 1, 1);
 		vec3 position;
 		mat3 rotation;
 	};

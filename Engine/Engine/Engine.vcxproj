@@ -37,6 +37,7 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
     <ClCompile Include="Core\SpriteSheet.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Systems\CollisionSystem.h" />
     <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />
     <ClInclude Include="Core\SpriteSheet.h" />

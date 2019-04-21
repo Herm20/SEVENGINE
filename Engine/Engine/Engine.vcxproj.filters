@@ -76,6 +76,9 @@
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\CollisionSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -172,6 +175,9 @@
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Core\Renderer.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Systems\CollisionSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
