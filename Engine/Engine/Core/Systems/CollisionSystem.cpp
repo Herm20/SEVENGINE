@@ -1,12 +1,13 @@
 #include "CollisionSystem.h"
 
 #include "../ECS/Manager.h"
+#include "../Timer.h"
 
 using namespace glm;
 
 inline vec3 e(const ecs::ColliderComponent& coll) { return coll.size; }
 inline vec3 c(const ecs::ColliderComponent& coll) { return coll.position; }
-inline mat3 u(const ecs::ColliderComponent& coll) { return glm::mat3(1); };
+inline mat3 u(const ecs::ColliderComponent& coll) { return coll.rotation; };
 
 bool TestAxis(vec3 L, vec3 cA, vec3 cB, vec3 rA, vec3 rB) {
 	return abs(dot(L, (cA - cB))) > abs(dot(L, rA)) + abs(dot(L, rB));
@@ -69,6 +70,7 @@ void CollisionSystem::startFrame(float dt) {
 }
 
 #include <iostream>
+int testCount = 0;
 void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 	const std::unordered_map<ecs::Entity, ecs::ColliderComponent> allColliders = manager.getComponentStore<ecs::ColliderComponent>().getComponents();
@@ -77,15 +79,19 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 
 	collider.position = transform.transform.GetPosition();
+	collider.rotation = toMat3(transform.transform.GetRotation());
+	collider.active = true;
 
 	for (auto it = allColliders.begin(); it != allColliders.end(); it++) {
 		
 		if (it->first != entity) {
 
 			ecs::ColliderComponent otherCollider = it->second;
+			if (!otherCollider.active) return;
 			bool colliding = CollidesOBBvOBB(collider, otherCollider);
 			if (colliding) {
-				
+				std::cout << testCount << std::endl;
+				testCount++;
 			}
 
 		}

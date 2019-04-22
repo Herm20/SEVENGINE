@@ -77,6 +77,7 @@ namespace ecs {
 		vec3 size = vec3(1, 1, 1);
 		vec3 position;
 		mat3 rotation;
+		bool active = false;
 	};
 
 }
