@@ -24,11 +24,17 @@ void Application::Init()
 	assetMan = new AssetManager();
 	eventMan = new EventManager();
 	camera = new Camera();
+	lightSystem = new LightSystem(manager);
+	lightSystem->SetLightsVector(&renderer->GetLightVector());
+
+	renderer->SetCurrentCamera(camera);
 
 	inputPoller.Init(renderer->GetWindow());
 
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
+	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 
 	masterBG = new AudioManager();
 	masterBG->InitSoundBG();
@@ -39,15 +45,24 @@ void Application::Init()
 	masterEffect = new AudioManager();
 	masterEffect->InitSoundEffect();
 
+	/// SUPER TEMP
+	//Set the click function when loading game
+	//glfwSetKeyCallback(renderer->GetWindow(), keyCallback);
+	// Set the keypress function when loading game
+	//glfwSetMouseButtonCallback(renderer->GetWindow(), mouseClick);
+	///
+
 	manager.createComponentStore<ecs::MeshRendererComponent>();
 	manager.createComponentStore<ecs::TransformComponent>();
 	manager.createComponentStore<ecs::KeyboardInputComponent>();
 	manager.createComponentStore<ecs::PlayerStateInfoComponent>();
 	manager.createComponentStore<ecs::RigidBodyComponent>();
+	manager.createComponentStore<ecs::LightComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
 	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
+	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 
 	// Dummy Player Entity
@@ -59,8 +74,7 @@ void Application::Init()
 	manager.addComponent(player1, ecs::RigidBodyComponent());
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player1);
 	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
-	meshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
-	meshRenderer.texture = assetMan->GetTexture("test");
+	meshRenderer.material = assetMan->GetMaterial("test");
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
 	transform.transform.SetPosition(glm::vec3(0, 0, 0));
 	manager.registerEntity(player1);
@@ -68,7 +82,14 @@ void Application::Init()
 	keyboardInput.map["Jump"] = GLFW_KEY_UP;
 	keyboardInput.map["MoveLeft"] = GLFW_KEY_LEFT;
 	keyboardInput.map["MoveRight"] = GLFW_KEY_RIGHT;
-	manager.registerEntity(player1);
+
+	e2 = manager.createEntity();
+	manager.addComponent(e2, ecs::TransformComponent());
+	manager.getComponentStore<ecs::TransformComponent>().get(e2).transform.SetRotation(glm::angleAxis(180.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
+	manager.addComponent(e2, ecs::LightComponent());
+	//ecs::LightComponent & light = manager.getComponentStore<ecs::LightComponent>().get(player1);
+	//light.light.color = (glm::vec3(0, 5, -1));
+	manager.registerEntity(e2);
 }
 
 void Application::Load()
@@ -78,6 +99,7 @@ void Application::Load()
 
 void Application::Run()
 {
+
 	// Init mouse to center of screen
 	int w = renderer->GetWindowWidth();
 	int h = renderer->GetWindowHeight();
@@ -109,7 +131,6 @@ void Application::Exit()
 }
 
 /// SUPER TEMP
-
 void Application::CamMovement()
 {
 	// FPS Controls

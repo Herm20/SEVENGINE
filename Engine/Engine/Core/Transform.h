@@ -59,6 +59,7 @@ public:
 	inline vec3 UpVector()      const { return rotate(rot, vec3(0.0f, 1.0f, 0.0f)); }
 
 	inline mat4 GetMatrix() const { return scale(translate(identity<mat4>(), pos) * toMat4(rot), sca); }
+	inline mat3 GetInverseTransposeMatrix() const { return mat3(transpose(inverse((scale(translate(identity<mat4>(), pos) * toMat4(rot), sca))))); }
 
 	// Translate with respect to self
 	inline void TranslateLocal(vec3 v) { pos += rotate(rot, v); }

@@ -14,7 +14,7 @@ class Input
 	static bool m_keys[Max_keys];
 	static bool m_mouse_buttons[Max_Buttons];
 	static double mouseX, mouseY;
-	
+
 public:
 	void Init(GLFWwindow* window); // initializer takes a pointer to the window from the renderer class
 	inline double GetX() { return mouseX; }

@@ -59,10 +59,13 @@ namespace ecs {
 		float moveSpeed = 3;
 	};
 
+<<<<<<< HEAD
 	struct LightComponent : public Component {
 		static const ecs::ComponentType _mType = 6;
 		Light light;
 	};
+=======
+>>>>>>> 59b6da9c66cf622ff7f0a0532dc59cfde2f76a49
 }
 
 #endif
