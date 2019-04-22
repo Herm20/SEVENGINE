@@ -31,6 +31,7 @@
     <ClCompile Include="Core\InputPoller.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
     <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
     <ClCompile Include="Core\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="Core\Systems\LightSystem.cpp" />
     <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
     <ClCompile Include="Core\SpriteSheet.cpp" />
@@ -60,8 +62,10 @@
     <ClInclude Include="Core\EventManager.h" />
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputPoller.h" />
+    <ClInclude Include="Core\Light.h" />
     <ClInclude Include="Core\Listener.h" />
     <ClInclude Include="Core\Logger.h" />
+    <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
@@ -69,6 +73,7 @@
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
     <ClInclude Include="Core\Systems\CollisionSystem.h" />
+    <ClInclude Include="Core\Systems\LightSystem.h" />
     <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />
     <ClInclude Include="Core\SpriteSheet.h" />

@@ -59,31 +59,13 @@ namespace ecs {
 		float moveSpeed = 3;
 	};
 
-	enum ColliderType {
-		Hitbox,
-		Hurtbox,
-		Grabbox
-	};
-
-	enum ColliderShape {
-		Cube,
-		Sphere
-	};
-
-	struct ColliderComponent : public Component {
-		static const ecs::ComponentType _mType = 6;
-		ColliderType type;
-		ColliderShape shape;
-		vec3 size = vec3(1, 1, 1);
-		vec3 position;
-		mat3 rotation;
-		bool active = false;
-	};
-
+<<<<<<< HEAD
 	struct LightComponent : public Component {
-		static const ecs::ComponentType _mType = 7;
+		static const ecs::ComponentType _mType = 6;
 		Light light;
 	};
+=======
+>>>>>>> 59b6da9c66cf622ff7f0a0532dc59cfde2f76a49
 }
 
 #endif

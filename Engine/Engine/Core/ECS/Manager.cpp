@@ -29,7 +29,7 @@ namespace ecs{
 
 	void Manager::addSystem(const System::Ptr& _systemPtr) {
 		if ((!_systemPtr) || (_systemPtr->getRequiredComponents().empty())) {
-			throw std::runtime_error("System shall specify requried Components");
+			throw std::runtime_error("System shall specify required Components");
 		}
 		systems.push_back(_systemPtr);
 	}
@@ -77,7 +77,7 @@ namespace ecs{
 	}
 
 	size_t Manager::updateEntities(float _dt) {
-		
+
 		size_t updatedEntitiesCount = 0;
 
 		// Start Frame

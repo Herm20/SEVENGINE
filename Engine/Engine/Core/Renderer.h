@@ -5,14 +5,14 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <boost/container/string.hpp>
-#include <fstream>
+#include <boost/container/vector.hpp>
 #include "AssetManager.h"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Logger.h"
-
 #include "ECS/System.h"
 #include "Camera.h"
+#include "Light.h"
 
 using namespace glm;
 using namespace std;
@@ -26,19 +26,12 @@ private:
 	i32 height = 800;
 	i32 width = 1280;
 
-	//Drawing related variables
-	u32 vertexArrayID;
-	u32 vertexBuffer;
-
-	u32 indexArrayID;
-	u32 indexBuffer;
-
-	Camera* camera;
+	const Camera* curCamera = nullptr;
+	boost::container::vector<Light> lights;
 
 	boost::shared_ptr<Mesh> cubeMesh;
 
 public:
-
 	explicit Renderer(ecs::Manager& manager);
 	~Renderer();
 
@@ -49,9 +42,11 @@ public:
 	int GetWindowWidth();
 
 	virtual void startFrame(float dt) override;
-	virtual void updateEntity(float dt , ecs::Entity entity) override;
+	virtual void updateEntity(float dt, ecs::Entity entity) override;
 	virtual void endFrame(float dt) override;
 
+	inline void SetCurrentCamera(const Camera* cam) { this->curCamera = cam; }
+	inline boost::container::vector<Light> & GetLightVector() { return this->lights; }
 };
 
 #endif

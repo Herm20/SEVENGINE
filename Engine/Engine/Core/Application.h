@@ -16,6 +16,7 @@
 #include "Systems/PlayerControllerSystem.h"
 #include "Systems/RigidBodySystem.h"
 #include "Systems/CollisionSystem.h"
+#include "Systems/LightSystem.h"
 
 class Application
 {
@@ -31,6 +32,9 @@ public:
 	AssetManager* assetMan;
 	EventManager* eventMan;
 	Camera* camera;
+	LightSystem* lightSystem;
+	// Printing fps
+	static Timer Time;
 
 	ecs::Entity player1;
 	ecs::Entity e2;

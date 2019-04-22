@@ -1,7 +1,7 @@
 #ifndef PLAYER_CONTROLLER_SYSTEM_H
 #define PLAYER_CONTROLLER_SYSTEM_H
 
-#include "InputPoller.h"
+#include "../InputPoller.h"
 #include "../ECS/System.h"
 
 class PlayerControllerSystem : public ecs::System {
