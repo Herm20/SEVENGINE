@@ -105,6 +105,8 @@ void Application::Init()
 	ecs::ScriptComponent& scriptComp = manager.getComponentStore<ecs::ScriptComponent>().get(se);
 	scriptComp.path = boost::container::string("Assets/Scripts/test-object.lua\0");
 	manager.registerEntity(se);
+
+	reloadHeld = false;
 }
 
 void Application::Load()
@@ -127,6 +129,13 @@ void Application::Run()
 		CamMovement();
 		camera->update();
 		EventManager::ExecuteNext();
+
+		if (Input::GetKey(GLFW_KEY_P))
+		{
+			if (!reloadHeld) { scriptSystem->ReloadScripts(); }
+			reloadHeld = true;
+		}
+		else { reloadHeld = false; }
 
 		manager.updateEntities(Timer::GetDeltaTime());
 
@@ -165,6 +174,9 @@ void Application::CamMovement()
 
 		glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 	}
+
+	// ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(se);
+	// transform.transform.RotateGlobal(glm::angleAxis(Timer::GetDeltaTime(), glm::vec3(1, 0, 0)));
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);

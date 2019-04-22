@@ -4,6 +4,7 @@
 #include <cstdio>
 
 #include "../Scripting/Bindings.h"
+#include "../Scripting/Utilities.h"
 
 // PRIVATE
 
@@ -17,12 +18,7 @@ void ScriptSystem::LoadScript(ecs::ScriptComponent& script)
 	    lua_pop(state,1);
 	}
 
-	if (lua_pcall(state, 0, LUA_MULTRET, 0))
-	{
-		printf("Lua run error\n");
-		printf("%s\n", lua_tostring(state, -1));
-		lua_pop(state, 1);
-	}
+	lua_safecall(state, 0, LUA_MULTRET, "SCRIPT LOAD FAILURE :");
 
 	// Attempt to fetch the script table
 	lua_getglobal(state, "scripts");
@@ -95,32 +91,15 @@ void ScriptSystem::Destroy()
 	lua_close(state);
 }
 
-void ScriptSystem::Run()
+void ScriptSystem::ReloadScripts()
 {
-	/*
-	lua_getglobal(state, "luafunc");
-	lua_pushnumber(state, 2);
-	lua_pushnumber(state, 4);
-	lua_pcall(state, 2, 1, 0);
-	printf("Lua Function returned : %f\n", lua_tonumber(state, -1));
-	lua_pop(state, 1);
-	*/
-}
+	ecs::ComponentStore<ecs::ScriptComponent>& scripts = manager.getComponentStore<ecs::ScriptComponent>();
+	std::unordered_map<ecs::Entity, ecs::ScriptComponent> components = scripts.getComponents();
 
-void ScriptSystem::Reload()
-{
-	if (luaL_loadfile(state, "Assets/Scripts/test.lua"))
+	for (auto i : components)
 	{
-		printf("Lua load error\n");
-	    printf("%s\n", lua_tostring(state, -1));
-	    lua_pop(state,1);
-	}
-
-	if (lua_pcall(state, 0, LUA_MULTRET, 0))
-	{
-		printf("Lua run error\n");
-		printf("%s\n", lua_tostring(state, -1));
-		lua_pop(state, 1);
+		ecs::ScriptComponent cs = i.second;
+		LoadScript(cs);
 	}
 }
 
@@ -153,7 +132,7 @@ void ScriptSystem::updateEntity(float dt, ecs::Entity entity)
 		lua_replace(state, -2);
 
 		// Call init with the script table as the only argument
-		lua_pcall(state, 1, 0, 0);
+		lua_safecall(state, 1, 0, "SCRIPT INIT ERROR :");
 
 		// Remove entities from the stack
 		lua_pop(state, 1);
@@ -172,7 +151,7 @@ void ScriptSystem::updateEntity(float dt, ecs::Entity entity)
 	lua_replace(state, -2);
 
 	lua_pushnumber(state, dt);
-	lua_pcall(state, 2, 0, 0);
+	lua_safecall(state, 2, 0);
 }
 
 void ScriptSystem::endFrame(float dt)
