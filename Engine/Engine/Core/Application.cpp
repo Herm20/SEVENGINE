@@ -147,7 +147,7 @@ void Application::Exit()
 {
 	assetMan->SaveAssets();
 	Logger::Log(Logger::LogType::MSG, "Exiting engine");
-	boost::container::string name(Logger::GetFormatedSystemTime());
+	boost::container::string name = Logger::GetFormatedSystemTime();
 	name += "-log.txt";
 	assetMan->SaveAssetToFile("Log", name.c_str(), Logger::GetLog());
 	delete eventMan;
@@ -174,9 +174,6 @@ void Application::CamMovement()
 
 		glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
 	}
-
-	// ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(se);
-	// transform.transform.RotateGlobal(glm::angleAxis(Timer::GetDeltaTime(), glm::vec3(1, 0, 0)));
 
 	// move with W,A,S,D
 	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
