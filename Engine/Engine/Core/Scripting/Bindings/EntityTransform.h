@@ -26,8 +26,17 @@ void ScriptSystem::SetEntityPosition(glm::vec3 newPos)
 
 inline void SCRIPT_BIND_EntityTransform(lua_State* state)
 {
+	// Create the entity library table and put it on the stack
+	lua_newtable(state);
+	lua_setglobal(state, "entity");
+	lua_getglobal(state, "entity");
+
+	// Push the function and add it to the library table
 	lua_pushcfunction(state, SCRIPT_SetEntityPosition);
-	lua_setglobal(state, "setentityposition");
+	lua_setfield(state, -2, "setposition");
+
+	// Pop the library table back off the stack
+	lua_pop(state, 1);
 }
 
 #endif

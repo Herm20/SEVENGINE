@@ -13,6 +13,7 @@
 #define COMPONENT_H_
 
 #include <glm/glm.hpp>
+#include <boost/container/string.hpp>
 #include <map>
 #include <string>
 
@@ -22,6 +23,7 @@
 #include "../Mesh.h"
 #include "../Material.h"
 #include "../Light.h"
+#include "../Types.h"
 
 namespace ecs {
 
@@ -62,6 +64,12 @@ namespace ecs {
 	struct LightComponent : public Component {
 		static const ecs::ComponentType _mType = 6;
 		Light light;
+	};
+
+	struct ScriptComponent : public Component {
+		static const ecs::ComponentType _mType = 7;
+		boost::container::string path;
+		u64 id = U64_MAX;
 	};
 }
 
