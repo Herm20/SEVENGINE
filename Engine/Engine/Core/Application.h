@@ -37,6 +37,7 @@ public:
 
 	ecs::Entity player1;
 	ecs::Entity e2;
+	ecs::Entity stage;
 
 	AudioManager* masterBG;
 	AudioManager* masterEffect;

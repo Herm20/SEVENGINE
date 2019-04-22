@@ -35,6 +35,7 @@ void Application::Init()
 	assetMan->LoadAssetsFromAssetDir();
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("stageTexture", assetMan->GetTexture("Stage_Texture"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 
 	masterBG = new AudioManager();
 	masterBG->InitSoundBG();
@@ -90,6 +91,16 @@ void Application::Init()
 	//ecs::LightComponent & light = manager.getComponentStore<ecs::LightComponent>().get(player1);
 	//light.light.color = (glm::vec3(0, 5, -1));
 	manager.registerEntity(e2);
+
+	stage = manager.createEntity();
+	manager.addComponent(stage, ecs::TransformComponent());
+	manager.addComponent(stage, ecs::MeshRendererComponent());
+	ecs::MeshRendererComponent& stageRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(stage);
+	stageRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("FightingStage")));
+	stageRenderer.material = assetMan->GetMaterial("stageTexture");
+	ecs::TransformComponent& stageTransform = manager.getComponentStore<ecs::TransformComponent>().get(stage);
+	stageTransform.transform.SetPosition(glm::vec3(0, 0, -3));
+	manager.registerEntity(stage);
 }
 
 void Application::Load()
