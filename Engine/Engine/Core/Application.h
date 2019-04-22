@@ -16,6 +16,7 @@
 #include "Systems/PlayerControllerSystem.h"
 #include "Systems/RigidBodySystem.h"
 #include "Systems/LightSystem.h"
+#include "Systems/ScriptSystem.h"
 
 class Application
 {
@@ -32,11 +33,13 @@ public:
 	EventManager* eventMan;
 	Camera* camera;
 	LightSystem* lightSystem;
+	ScriptSystem* scriptSystem;
 	// Printing fps
 	static Timer Time;
 
 	ecs::Entity player1;
 	ecs::Entity e2;
+	ecs::Entity se;
 
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
