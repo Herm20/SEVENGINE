@@ -25,6 +25,8 @@ AssetManager::AssetManager()
 	this->textures["defaultNormal"] = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)normal));
 	this->textureShortNames["defaultSpecular"] = "defaultSpecular";
 	this->textures["defaultSpecular"] = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)diffuse));
+
+	FileLoader::SetLoaderProperties();
 }
 
 /*! \brief Creates a material with the parameters and puts it in the map
