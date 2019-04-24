@@ -29,7 +29,12 @@ private:
 	const Camera* curCamera = nullptr;
 	boost::container::vector<Light> lights;
 
+	// Collider rendering
 	boost::shared_ptr<Mesh> cubeMesh;
+	boost::shared_ptr<Texture> colliderTextureRed;
+	boost::shared_ptr<Texture> colliderTextureGreen;
+	boost::shared_ptr<Material> colliderMatRed;
+	boost::shared_ptr<Material> colliderMatGreen;
 
 public:
 	explicit Renderer(ecs::Manager& manager);

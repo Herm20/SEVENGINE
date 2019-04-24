@@ -36,9 +36,6 @@ public:
 	// Printing fps
 	static Timer Time;
 
-	ecs::Entity player1;
-	ecs::Entity e2;
-
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
 
@@ -55,6 +52,7 @@ public:
 	void Load();
 
 	/// SUPER TEMP
+	void CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey);
 	void CamMovement();
 	/// SUPER TEMP
 };

@@ -78,6 +78,7 @@ namespace ecs {
 		vec3 position;
 		mat3 rotation;
 		bool active = false;
+		bool isColliding = false;
 	};
 
 	struct LightComponent : public Component {

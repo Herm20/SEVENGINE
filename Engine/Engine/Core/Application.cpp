@@ -71,45 +71,22 @@ void Application::Init()
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 
-	// Dummy Player Entity
-	player1 = manager.createEntity();
-	manager.addComponent(player1, ecs::MeshRendererComponent());
-	manager.addComponent(player1, ecs::TransformComponent());
-	manager.addComponent(player1, ecs::KeyboardInputComponent());
-	manager.addComponent(player1, ecs::PlayerStateInfoComponent());
-	manager.addComponent(player1, ecs::RigidBodyComponent());
-	manager.addComponent(player1, ecs::ColliderComponent());
-	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player1);
-	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
+	// Players
+	CreatePlayer(glm::vec3(2, 0, 0), GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP);
+	CreatePlayer(glm::vec3(-2, 0, 0), GLFW_KEY_J, GLFW_KEY_L, GLFW_KEY_I);
+
+	ecs::Entity collidable = manager.createEntity();
+	manager.addComponent(collidable, ecs::MeshRendererComponent());
+	manager.addComponent(collidable, ecs::TransformComponent());
+	manager.addComponent(collidable, ecs::ColliderComponent());
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(collidable);
+	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sphere")));
 	meshRenderer.material = assetMan->GetMaterial("test");
-	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
-	transform.transform.SetPosition(glm::vec3(0, 0, 0));
-	ecs::KeyboardInputComponent& keyboardInput = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player1);
-	keyboardInput.map["Jump"] = GLFW_KEY_UP;
-	keyboardInput.map["MoveLeft"] = GLFW_KEY_LEFT;
-	keyboardInput.map["MoveRight"] = GLFW_KEY_RIGHT;
-	manager.registerEntity(player1);
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(collidable);
+	transform.transform.SetPosition(glm::vec3(0, 2.2, 0));
+	manager.registerEntity(collidable);
 
-	// Dummy Collider Entity
-	ecs::Entity player2 = manager.createEntity();
-	manager.addComponent(player2, ecs::MeshRendererComponent());
-	manager.addComponent(player2, ecs::TransformComponent());
-	manager.addComponent(player2, ecs::KeyboardInputComponent());
-	manager.addComponent(player2, ecs::PlayerStateInfoComponent());
-	manager.addComponent(player2, ecs::RigidBodyComponent());
-	manager.addComponent(player2, ecs::ColliderComponent());
-	ecs::MeshRendererComponent& meshRenderer2 = manager.getComponentStore<ecs::MeshRendererComponent>().get(player2);
-	meshRenderer2.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
-	meshRenderer2.material = assetMan->GetMaterial("test");
-	ecs::TransformComponent& transform2 = manager.getComponentStore<ecs::TransformComponent>().get(player2);
-	transform2.transform.SetPosition(glm::vec3(-3, 0, 0));
-	ecs::KeyboardInputComponent& keyboardInput2 = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player2);
-	keyboardInput2.map["Jump"] = GLFW_KEY_I;
-	keyboardInput2.map["MoveLeft"] = GLFW_KEY_J;
-	keyboardInput2.map["MoveRight"] = GLFW_KEY_L;
-	manager.registerEntity(player2);
-
-	e2 = manager.createEntity();
+	ecs::Entity e2 = manager.createEntity();
 	manager.addComponent(e2, ecs::TransformComponent());
 	manager.getComponentStore<ecs::TransformComponent>().get(e2).transform.SetRotation(glm::angleAxis(180.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
 	manager.addComponent(e2, ecs::LightComponent());
@@ -158,6 +135,28 @@ void Application::Exit()
 }
 
 /// SUPER TEMP
+void Application::CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey) {
+
+	ecs::Entity player = manager.createEntity();
+	manager.addComponent(player, ecs::MeshRendererComponent());
+	manager.addComponent(player, ecs::TransformComponent());
+	manager.addComponent(player, ecs::KeyboardInputComponent());
+	manager.addComponent(player, ecs::PlayerStateInfoComponent());
+	manager.addComponent(player, ecs::RigidBodyComponent());
+	manager.addComponent(player, ecs::ColliderComponent());
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player);
+	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
+	meshRenderer.material = assetMan->GetMaterial("test");
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player);
+	transform.transform.SetPosition(pos);
+	ecs::KeyboardInputComponent& keyboardInput = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player);
+	keyboardInput.map["Jump"] = jumpKey;
+	keyboardInput.map["MoveLeft"] = leftKey;
+	keyboardInput.map["MoveRight"] = rightKey;
+	manager.registerEntity(player);
+
+}
+
 void Application::CamMovement()
 {
 	// FPS Controls

@@ -42,7 +42,19 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 }
 
 void Renderer::Init(AssetManager * assetMan) {
+
 	cubeMesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
+
+	u8 colliderColorRed[3] = { 255, 0, 0 };
+	u8 colliderColorGreen[3] = { 0, 255, 0 };
+	colliderTextureRed = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)colliderColorRed));
+	colliderTextureGreen = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)colliderColorGreen));
+
+	assetMan->CreateMaterial("collider-red", colliderTextureRed, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("collider-green", colliderTextureGreen, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	colliderMatRed = assetMan->GetMaterial("collider-red");
+	colliderMatGreen = assetMan->GetMaterial("collider-green");
+
 }
 
 Renderer::~Renderer()
@@ -93,10 +105,11 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 	// Collider
 	if (manager.getComponentStore<ecs::ColliderComponent>().has(entity)) {
 		ecs::ColliderComponent& collider = manager.getComponentStore<ecs::ColliderComponent>().get(entity);
+		boost::shared_ptr<Material> colliderMat = collider.isColliding ? colliderMatRed : colliderMatGreen;
 		cubeMesh->Render(
 			transform.transform,
 			curCamera,
-			meshRenderer.material,
+			colliderMat,
 			lights,
 			true
 		);

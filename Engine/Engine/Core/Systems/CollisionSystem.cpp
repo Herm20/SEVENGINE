@@ -69,8 +69,6 @@ CollisionSystem::CollisionSystem(ecs::Manager& manager) : ecs::System(manager) {
 void CollisionSystem::startFrame(float dt) {
 }
 
-#include <iostream>
-int testCount = 0;
 void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 	const std::unordered_map<ecs::Entity, ecs::ColliderComponent> allColliders = manager.getComponentStore<ecs::ColliderComponent>().getComponents();
@@ -81,6 +79,7 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 	collider.position = transform.transform.GetPosition();
 	collider.rotation = toMat3(transform.transform.GetRotation());
 	collider.active = true;
+	collider.isColliding = false;
 
 	for (auto it = allColliders.begin(); it != allColliders.end(); it++) {
 		
@@ -90,8 +89,7 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 			if (!otherCollider.active) return;
 			bool colliding = CollidesOBBvOBB(collider, otherCollider);
 			if (colliding) {
-				std::cout << testCount << std::endl;
-				testCount++;
+				collider.isColliding = true;
 			}
 
 		}
