@@ -92,9 +92,7 @@ The OpenGL Extension Wrangler Library is useful for determining the level of Ope
 
 7. (Visual Studio) Go to Linker -> Input. Add `glew32s.lib` to `Additional Dependencies`
 
-8. (Visual Studio) Go to Linker -> Input. Add `opengl32.lib` to `Additional Dependencies`
-
-9. (Visual Studio) Go to C/C++ -> Preprocessor. Add `GLEW_STATIC` to `Preprocessor Definitions`
+8. (Visual Studio) Go to C/C++ -> Preprocessor. Add `GLEW_STATIC` to `Preprocessor Definitions`
 
 ### GLFW
 
@@ -132,10 +130,14 @@ _Note : this guide is primarily targeted at setting up a Windows development env
 
 7. (Visual Studio) Add `$(ProjectDir)Engine\boost_1_69_0\stage\lib` to `Library Directories`
 
-### Models
+### LuaJIT
 
-1. Go to our Google Drive and download `box.obj` and it to the `Engine\Assets` folder.
+_Note : this guide is primarily targeted at setting up a Windows development environment. You can probably just use your package manager on Linux._
 
-### ASSIMP and FMOD
+1. Download and extract the LuaJIT zip file from the Team Drive
 
-If you are getting errors saying that ASSIMP or FMOD are are missing, copy `assimp-vc140-mt.dll` and/or `fmod.dll` from `Engine\libaries` to the same folder same your executable.
+2. Copy the `lua51.lib` and `lua51.dll` files from the `src` directory into your project `libraries` directory and build location
+
+3. Copy the entire `src` directory into your project `includes` directory, and rename it to `luajit-2.0`
+
+4. Add `lua51.lib` to your project's linked library settings

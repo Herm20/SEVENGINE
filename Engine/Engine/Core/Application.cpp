@@ -20,6 +20,8 @@ void Application::Init()
 {
 
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
+	scriptSystem = new ScriptSystem(manager);
+	scriptSystem->Init();
 	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
 	eventMan = new EventManager();
@@ -58,12 +60,14 @@ void Application::Init()
 	manager.createComponentStore<ecs::PlayerStateInfoComponent>();
 	manager.createComponentStore<ecs::RigidBodyComponent>();
 	manager.createComponentStore<ecs::LightComponent>();
+	manager.createComponentStore<ecs::ScriptComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
 	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
+	manager.addSystem(ecs::System::Ptr(scriptSystem));
 
 	// Dummy Player Entity
 	player1 = manager.createEntity();
@@ -90,6 +94,19 @@ void Application::Init()
 	//ecs::LightComponent & light = manager.getComponentStore<ecs::LightComponent>().get(player1);
 	//light.light.color = (glm::vec3(0, 5, -1));
 	manager.registerEntity(e2);
+
+	se = manager.createEntity();
+	manager.addComponent(se, ecs::TransformComponent());
+	manager.addComponent(se, ecs::MeshRendererComponent());
+	manager.addComponent(se, ecs::ScriptComponent());
+	ecs::MeshRendererComponent& seRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(se);
+	seRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
+	seRenderer.material = assetMan->GetMaterial("test");
+	ecs::ScriptComponent& scriptComp = manager.getComponentStore<ecs::ScriptComponent>().get(se);
+	scriptComp.path = boost::container::string("Assets/Scripts/test-object.lua\0");
+	manager.registerEntity(se);
+
+	reloadHeld = false;
 }
 
 void Application::Load()
@@ -112,6 +129,13 @@ void Application::Run()
 		CamMovement();
 		camera->update();
 		EventManager::ExecuteNext();
+
+		if (Input::GetKey(GLFW_KEY_P))
+		{
+			if (!reloadHeld) { scriptSystem->ReloadScripts(); }
+			reloadHeld = true;
+		}
+		else { reloadHeld = false; }
 
 		manager.updateEntities(Timer::GetDeltaTime());
 
