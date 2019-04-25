@@ -1,6 +1,10 @@
 function init(self)
 	print("Hello World")
 	
+	for k,v in pairs(input.keys) do
+		print(k)
+	end
+	
 	self.tt = 0
 	self.rot = 0
 	self.h = 0
@@ -13,14 +17,14 @@ function update(self, dt)
 	if self.longestframe == dt then print("Longest DT - ", dt) end
 	-- print(self.tt, ":", dt)
 	
-	if input.getkey(input.keys["j"]) then
-		self.tt = self.tt + dt * 2
-	elseif input.getkey(input.keys["h"]) then
+	if input.getkey(input.keys["leftshift"]) then
+		dt = dt * 2
+	end
+	
+	if input.getkey(input.keys["kp6"]) then
 		self.tt = self.tt + dt
-	elseif input.getkey(input.keys["g"]) then
+	elseif input.getkey(input.keys["kp4"]) then
 		self.tt = self.tt - dt
-	elseif input.getkey(input.keys["f"]) then
-		self.tt = self.tt - dt * 2
 	end
 	
 	if input.getkey(input.keys["t"]) then
@@ -29,9 +33,9 @@ function update(self, dt)
 		self.rot = self.rot + dt
 	end
 	
-	if input.getkey(input.keys["y"]) then
+	if input.getkey(input.keys["kp8"]) then
 		self.h = self.h + dt
-	elseif input.getkey(input.keys["n"]) then
+	elseif input.getkey(input.keys["kp2"]) then
 		self.h = self.h - dt
 	end
 
