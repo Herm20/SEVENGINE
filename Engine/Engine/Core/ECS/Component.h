@@ -14,6 +14,7 @@
 
 #include <glm/glm.hpp>
 #include <map>
+#include <vector>
 #include <string>
 
 #include "ComponentType.h"
@@ -21,6 +22,7 @@
 #include "../Mesh.h"
 #include "../Texture.h"
 #include "../ShaderProgram.h"
+#include "ComboManager.h"
 
 namespace ecs {
 
@@ -46,6 +48,7 @@ namespace ecs {
 		void SetKey(std::string key, int value) {
 			map[key] = value;
 		}
+		ComboManager* comboManager = new ComboManager(map);
 	};
 
 	struct RigidBodyComponent : public Component {

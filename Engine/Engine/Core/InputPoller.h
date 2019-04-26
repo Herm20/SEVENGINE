@@ -1,6 +1,6 @@
-#ifndef INPUTPOLLER_H_
+#ifndef INPUT_POLLER_H_
 
-#define INPUTPOLLER_H_
+#define INPUT_POLLER_H_
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -32,4 +32,4 @@ private:
 	static void cursor_position_callback(GLFWwindow*, double, double);//callback for mouse cursor
 };
 
-#endif // !INPUTPOLLER_H_
+#endif // !INPUT_POLLER_H_
