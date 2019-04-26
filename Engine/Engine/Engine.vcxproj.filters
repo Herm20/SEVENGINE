@@ -85,6 +85,9 @@
     <ClCompile Include="Core\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\CameraSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="Core\Material.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Systems\CameraSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

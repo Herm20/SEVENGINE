@@ -39,6 +39,7 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\Systems\CameraSystem.cpp" />
     <ClCompile Include="Core\Systems\LightSystem.cpp" />
     <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Systems\CameraSystem.h" />
     <ClInclude Include="Core\Systems\LightSystem.h" />
     <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />
