@@ -8,7 +8,7 @@
 
 // PRIVATE
 
-void ScriptSystem::LoadScript(ecs::ScriptComponent& script)
+void ScriptSystem::LoadScript(ecs::Entity entity, ecs::ScriptComponent& script)
 {
 	const char* cstr = script.path.c_str();
 	if (luaL_loadfile(state, cstr))
@@ -39,6 +39,12 @@ void ScriptSystem::LoadScript(ecs::ScriptComponent& script)
 		// Put the new table on the top of the stack
 		lua_pushnumber(state, script.id);
 		lua_gettable(state, -2);
+
+		// Push IDs into the object
+		lua_pushnumber(state, entity);
+		lua_setfield(state, -2, "entityid");
+		lua_pushnumber(state, script.id);
+		lua_setfield(state, -2, "scriptid");
 	}
 
 	// Reduce the stack to the currently relevant script table
@@ -49,6 +55,8 @@ void ScriptSystem::LoadScript(ecs::ScriptComponent& script)
 	lua_setfield(state, -2, "init");
 	lua_getglobal(state, "update");
 	lua_setfield(state, -2, "update");
+	lua_getglobal(state, "onmessage");
+	lua_setfield(state, -2, "onmessage");
 
 	// Clear the stack
 	lua_pop(state, 1);
@@ -98,8 +106,7 @@ void ScriptSystem::ReloadScripts()
 
 	for (auto i : components)
 	{
-		ecs::ScriptComponent cs = i.second;
-		LoadScript(cs);
+		LoadScript(i.first, i.second);
 	}
 }
 
@@ -117,7 +124,7 @@ void ScriptSystem::updateEntity(float dt, ecs::Entity entity)
 		script.id = nextID;
 		++nextID;
 
-		LoadScript(script);
+		LoadScript(entity, script);
 
 		// Get the script table's init function
 		lua_getglobal(state, "scripts");
@@ -126,15 +133,12 @@ void ScriptSystem::updateEntity(float dt, ecs::Entity entity)
 		lua_getfield(state, -1, "init");
 
 		// Swap the position of the function and the table
-		lua_pushvalue(state, -2);
-		lua_pushvalue(state, -2);
-		lua_replace(state, -4);
-		lua_replace(state, -2);
+		lua_swap(state);
 
 		// Call init with the script table as the only argument
 		lua_safecall(state, 1, 0, "SCRIPT INIT ERROR :");
 
-		// Remove entities from the stack
+		// Remove scripts from the stack
 		lua_pop(state, 1);
 	}
 
@@ -152,11 +156,40 @@ void ScriptSystem::updateEntity(float dt, ecs::Entity entity)
 
 	lua_pushnumber(state, dt);
 	lua_safecall(state, 2, 0);
+
+	lua_pop(state, 1);
 }
 
 void ScriptSystem::endFrame(float dt)
 {
 }
 
+void ScriptSystem::SendMessage(ecs::Entity entity, u64 script_id, const boost::container::string& message, const boost::container::string& data)
+{
+	currentEntity = entity;
+	ecs::ScriptComponent& script = manager.getComponentStore<ecs::ScriptComponent>().get(currentEntity);
 
+	// There's probably a cleaner way to do this, but for now it works
+	boost::container::string dc = boost::container::string("data = ") + data;
+	luaL_dostring(state, dc.c_str());
+
+	// Get the script table's onmessage function
+	lua_getglobal(state, "scripts");
+	lua_pushnumber(state, script_id);
+	lua_gettable(state, -2);
+	lua_getfield(state, -1, "onmessage");
+
+	// Swap the position of the function and the table
+	lua_pushvalue(state, -2);
+	lua_pushvalue(state, -2);
+	lua_replace(state, -4);
+	lua_replace(state, -2);
+
+	lua_pushstring(state, message.c_str());
+	lua_getglobal(state, "data");
+
+	lua_safecall(state, 3, 0);
+
+	lua_pop(state, 2);
+}
 

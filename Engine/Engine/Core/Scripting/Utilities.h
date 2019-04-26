@@ -19,6 +19,14 @@ inline bool lua_safecall(lua_State* state, int arg, int ret, const char* mes = "
 	return true;
 }
 
+inline void lua_swap(lua_State* state)
+{
+	lua_pushvalue(state, -2);
+	lua_pushvalue(state, -2);
+	lua_replace(state, -4);
+	lua_replace(state, -2);
+}
+
 inline glm::vec3 SCRIPT_UTIL_GetVector(lua_State* state, int loc)
 {
 	if (!lua_istable(state, loc)) { return glm::vec3(); }
