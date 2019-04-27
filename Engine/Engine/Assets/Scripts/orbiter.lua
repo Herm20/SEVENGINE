@@ -17,5 +17,5 @@ function update(self, dt)
 end
 
 function onmessage(self, message, data)
-	-- print("Script #" .. tostring(self.scriptid) .. " received message : " .. message)
+	print("Script #" .. tostring(self.scriptid) .. " received message : " .. message)
 end

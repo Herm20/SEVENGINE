@@ -37,10 +37,6 @@ public:
 	// Printing fps
 	static Timer Time;
 
-	ecs::Entity player1;
-	ecs::Entity e2;
-	ecs::Entity se;
-
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
 
