@@ -20,14 +20,14 @@ void Application::Init()
 {
 
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
-	scriptSystem = new ScriptSystem(manager);
-	scriptSystem->Init();
 	renderer = new Renderer(manager);
 	assetMan = new AssetManager();
 	eventMan = new EventManager();
 	camera = new Camera();
 	lightSystem = new LightSystem(manager);
 	lightSystem->SetLightsVector(&renderer->GetLightVector());
+	scriptSystem = new ScriptSystem(manager, assetMan);
+	scriptSystem->Init();
 
 	renderer->SetCurrentCamera(camera);
 

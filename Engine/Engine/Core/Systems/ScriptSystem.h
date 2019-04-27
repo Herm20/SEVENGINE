@@ -9,11 +9,13 @@
 #include <glm/glm.hpp>
 
 class lua_State;
+class AssetManager;
 
 class ScriptSystem : public ecs::System
 {
 private:
 	lua_State* state;
+	AssetManager* assetMan;
 	u64 nextID;
 
 	void LoadScript(ecs::Entity entity, ecs::ScriptComponent& script);
@@ -21,7 +23,7 @@ private:
 public:
 	ecs::Entity currentEntity;
 
-	ScriptSystem(ecs::Manager& manager);
+	ScriptSystem(ecs::Manager& manager, AssetManager* assetManager);
 	~ScriptSystem();
 
 	void Init();
@@ -36,6 +38,9 @@ public:
 
 	// Send a message to a script from outside the scripting system
 	void SendMessage(ecs::Entity entity, u64 script_id, const boost::container::string& message, const boost::container::string& data);
+
+	void SCRIPT_World_SpawnEntity();
+	void SCRIPT_World_DestroyEntity(ecs::Entity entity);
 
 	void SCRIPT_Entity_GetPosition();
 	void SCRIPT_Entity_GetRotation();
