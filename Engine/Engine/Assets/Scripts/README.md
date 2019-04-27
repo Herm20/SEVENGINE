@@ -30,6 +30,14 @@ SEVENGINE adds a small amount of functionality to the core Lua `math` library fo
 
 * `math.eulerangles` - Takes a vector, and returns the quaternion rotation representing the Euler angles rotation
 
+### Input
+
+The SEVENGINE Lua scripting API offers simple access to player input :
+
+* `input.keys` - A simple map; index with the string representing the desired character - maps to key ID (number)
+
+* `input.getkey` - Takes a key ID (number), and returns a boolean representing whether that key is currently down
+
 ### Entity
 
 The SEVENGINE Lua scripting API contains all Entity-interfacing functionality within the `entity` library :
