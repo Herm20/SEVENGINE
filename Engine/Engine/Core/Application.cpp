@@ -106,6 +106,13 @@ void Application::Init()
 	scriptComp.path = boost::container::string("Assets/Scripts/test-object.lua\0");
 	manager.registerEntity(se);
 
+	ecs::Entity se2 = manager.createEntity();
+	manager.addComponent(se2, ecs::TransformComponent());
+	manager.addComponent(se2, ecs::ScriptComponent());
+	ecs::ScriptComponent& scriptComp2 = manager.getComponentStore<ecs::ScriptComponent>().get(se2);
+	scriptComp2.path = boost::container::string("Assets/Scripts/test-object.lua\0");
+	manager.registerEntity(se2);
+
 	reloadHeld = false;
 }
 

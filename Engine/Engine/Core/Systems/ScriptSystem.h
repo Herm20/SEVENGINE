@@ -5,6 +5,7 @@
 #include "../ECS/System.h"
 #include "../ECS/Component.h"
 
+#include <boost/container/string.hpp>
 #include <glm/glm.hpp>
 
 class lua_State;
@@ -14,22 +15,27 @@ class ScriptSystem : public ecs::System
 private:
 	lua_State* state;
 	u64 nextID;
-	ecs::Entity currentEntity;
 
-	void LoadScript(ecs::ScriptComponent& script);
+	void LoadScript(ecs::Entity entity, ecs::ScriptComponent& script);
 
 public:
+	ecs::Entity currentEntity;
+
 	ScriptSystem(ecs::Manager& manager);
 	~ScriptSystem();
 
 	void Init();
 	void Destroy();
 
+	// Hot-reload all active scripts
 	void ReloadScripts();
 
 	virtual void startFrame(float dt) override;
 	virtual void updateEntity(float dt , ecs::Entity entity) override;
 	virtual void endFrame(float dt) override;
+
+	// Send a message to a script from outside the scripting system
+	void SendMessage(ecs::Entity entity, u64 script_id, const boost::container::string& message, const boost::container::string& data);
 
 	void SCRIPT_Entity_GetPosition();
 	void SCRIPT_Entity_GetRotation();

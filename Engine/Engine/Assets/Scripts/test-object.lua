@@ -51,4 +51,17 @@ function update(self, dt)
 	
 	local quat = math.eulerangles({self.rot, self.tt, 0})
 	entity.setrotation(quat)
+		
+	for i, v in ipairs(scripts) do
+		if not (v.scriptid == self.scriptid) then
+			world.sendmessage(v.entityid, v.scriptid, "Hello", self.scriptid)
+		end
+	end
+end
+
+function onmessage(self, message, data)
+	print("I'm script #" .. tostring(self.scriptid))
+	-- print(message, type(data), data, data.val)
+	print("Hello from script #" .. tostring(data))
+	print("--------------------")
 end
