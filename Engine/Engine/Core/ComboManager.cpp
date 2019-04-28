@@ -10,12 +10,11 @@ ComboManager::ComboManager(std::map<std::string, int> keyMap)
 
 	comboCount = 0;
 	m_keyMap = keyMap;
-	timer = new Timer();
 }
 
 ComboManager::~ComboManager() 
 {
-	delete timer;
+
 }
 
 
@@ -48,7 +47,7 @@ void ComboManager::CheckForCombo(int keyValue)//default combofunction to be aces
 
 bool ComboManager::ContinueCombo(std::string move)
 {
-	std::chrono::duration<float> currentTime = timer->currentTime();
+	std::chrono::duration<float> currentTime = Timer::currentTime();
 	if(possibleCombos.size() == 0)return false;
 	
 	if (std::chrono::milliseconds(500) > std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime))

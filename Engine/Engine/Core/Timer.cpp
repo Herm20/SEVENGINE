@@ -1,41 +1,45 @@
 #include "Timer.h"
 
-float Timer::totalTime = 0;
-float Timer::deltaTime = 0;
-clock_t Timer::curr = clock();
-clock_t Timer::prev = clock();
-std::chrono::high_resolution_clock::time_point Timer::startTime = std::chrono::high_resolution_clock::now();
+////High Res clock version//////////////
 
+//static declarations
+TimeDuration Timer::deltaTime;
+TimePoint Timer::curr = SteadyClock::now();
+TimePoint Timer::prev = Timer::curr;
+TimePoint Timer::startTime = Timer::curr;
+float Timer::dt; 
+double Timer::current = glfwGetTime(), Timer::previous;
+float Timer::tt = 0;
 
 void Timer::update()
 {
-	prev = curr;
-	curr = clock();
-	deltaTime = (float)(curr - prev) / (float)CLOCKS_PER_SEC;
+	/*prev = curr;
+	curr = SteadyClock::now();;
+	deltaTime = curr - prev;
+	dt = (float)deltaTime.count();*/
 
-	// Testing a bottom cap of the dt
-	if (deltaTime < 0.01f) 
-	{
-		deltaTime = 0.01f;
-	}
+	previous = current;
+	current = glfwGetTime();
+	dt = (float)(current - previous);
 
-	totalTime += deltaTime;
+	tt += dt;
 }
 
 float Timer::GetTotalTime()
 {
-	return totalTime;
+	return tt;
 }
 
 float Timer::GetDeltaTime()
 {
-	return deltaTime;
+	return dt;
 }
 
-std::chrono::duration<float> Timer::currentTime()
+TimeDuration Timer::currentTime()
 {
 	using namespace std;
-	auto time = chrono::high_resolution_clock::now();
-	std::chrono::duration<float> duration = time - startTime;
+	auto time = HighClock::now();
+	TimeDuration duration = time - startTime;
 	return duration;
 }
+
