@@ -41,13 +41,13 @@ void ComboManager::CheckForCombo(int keyValue)//default combofunction to be aces
 				possibleCombos.push_back(m_comboList[i]);
 			}
 		}
-		lastMoveTime = timer->currentTime();
+		lastMoveTime = timer->GetCurrentTime();
 	}
 }
 
 bool ComboManager::ContinueCombo(std::string move)
 {
-	std::chrono::duration<float> currentTime = Timer::currentTime();
+	std::chrono::duration<float> currentTime = Timer::GetCurrentTime();
 	if(possibleCombos.size() == 0)return false;
 	
 	if (std::chrono::milliseconds(500) > std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime))
