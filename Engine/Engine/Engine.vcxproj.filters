@@ -16,6 +16,9 @@
     <ClCompile Include="Core\Physics\CollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Core\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,6 +79,9 @@
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\CollisionSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
     <ClCompile Include="Core\Systems\LightSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
@@ -100,12 +106,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\InputPoller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Physics\ColliderComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Physics\CollisionManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Event.h">
@@ -187,6 +187,9 @@
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Core\Renderer.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Systems\CollisionSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Core\Systems\LightSystem.h">

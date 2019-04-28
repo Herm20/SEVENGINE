@@ -12,6 +12,7 @@
 // Systems
 #include "Systems/PlayerControllerSystem.h"
 #include "Systems/RigidBodySystem.h"
+#include "Systems/CollisionSystem.h"
 #include "Systems/LightSystem.h"
 #include "Systems/ScriptSystem.h"
 #include "Systems/Camera.h"
@@ -55,6 +56,9 @@ public:
 
 	// Load Assets
 	void Load();
+
+	//Create a player
+	void CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey);
 };
 
 #endif

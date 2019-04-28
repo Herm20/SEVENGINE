@@ -61,13 +61,35 @@ namespace ecs {
 		float moveSpeed = 3;
 	};
 
-	struct LightComponent : public Component {
+	enum ColliderType {
+		Hitbox,
+		Hurtbox,
+		Grabbox
+	};
+
+	enum ColliderShape {
+		Cube,
+		Sphere
+	};
+
+	struct ColliderComponent : public Component {
 		static const ecs::ComponentType _mType = 6;
+		ColliderType type;
+		ColliderShape shape;
+		vec3 size = vec3(1, 1, 1);
+		vec3 position;
+		mat3 rotation;
+		bool active = false;
+		bool isColliding = false;
+	};
+
+	struct LightComponent : public Component {
+		static const ecs::ComponentType _mType = 7;
 		Light light;
 	};
 
 	struct ScriptComponent : public Component {
-		static const ecs::ComponentType _mType = 7;
+		static const ecs::ComponentType _mType = 8;
 		boost::container::string path;
 		u64 id = U64_MAX;
 	};

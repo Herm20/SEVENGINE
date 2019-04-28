@@ -29,10 +29,10 @@ void PlayerControllerSystem::updateEntity(float dt, ecs::Entity entity) {
 	bool right = Input::GetKey(inputMap.map["MoveRight"]);
 	glm::vec3 moveDir(0, 0, 0);
 	if (left && !right) {
-		moveDir = glm::vec3(1, 0, 0);
+		moveDir = glm::vec3(-1, 0, 0);
 	}
 	else if (right && !left) {
-		moveDir = glm::vec3(-1, 0, 0);
+		moveDir = glm::vec3(1, 0, 0);
 	}
 	pos += moveDir * playerState.moveSpeed * dt;
 
