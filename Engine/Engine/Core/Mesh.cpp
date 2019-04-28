@@ -119,7 +119,7 @@ const Mesh & Mesh::operator=(const Mesh &m)
 	return *this;
 }
 
-void Mesh::Render(const Transform &trans, const Camera* cam, boost::shared_ptr<Material> material, const boost::container::vector<Light> &lights, bool wireframe) {
+void Mesh::Render(const Transform &trans, const CameraSystem* cam, boost::shared_ptr<Material> material, const boost::container::vector<Light> &lights, bool wireframe) {
 	material->GetShaderProgram()->Use();
 	glBindVertexArray(this->vao);
 	glUniformMatrix4fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "model"), 1, GL_FALSE, &trans.GetMatrix()[0][0]);

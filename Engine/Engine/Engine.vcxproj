@@ -22,7 +22,6 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
-    <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\ECS\Manager.cpp" />
     <ClCompile Include="Core\ECS\System.cpp" />
     <ClCompile Include="Core\Event.cpp" />
@@ -38,6 +37,7 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\Systems\Camera.cpp" />
     <ClCompile Include="Core\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Core\Systems\LightSystem.cpp" />
     <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
@@ -52,7 +52,6 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
-    <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\ECS\Component.h" />
     <ClInclude Include="Core\ECS\ComponentStore.h" />
     <ClInclude Include="Core\ECS\ComponentType.h" />
@@ -80,6 +79,7 @@
     <ClInclude Include="Core\Scripting\Utilities.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Systems\Camera.h" />
     <ClInclude Include="Core\Systems\CollisionSystem.h" />
     <ClInclude Include="Core\Systems\LightSystem.h" />
     <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />

@@ -13,6 +13,9 @@
     <ClCompile Include="Core\InputPoller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Physics\CollisionManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Core\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,6 +91,9 @@
     <ClCompile Include="Core\Systems\ScriptSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\Camera.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -97,9 +103,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\AudioManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\InputPoller.h">
@@ -253,11 +256,11 @@
     <Filter Include="Source Files\ECS\Systems">
       <UniqueIdentifier>{0f858988-c5bd-49ff-9dde-a8a504977922}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ECS\Systems\Scripting">
-      <UniqueIdentifier>{3fa2bdbf-3e30-41f2-ac9d-154e48ab388a}</UniqueIdentifier>
+    <Filter Include="Header Files\ECS\Scripting">
+      <UniqueIdentifier>{a9f3c41c-0da3-4f45-885f-45a6d2f3db3c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ECS\Systems\Scripting\Bindings">
-      <UniqueIdentifier>{093973b0-b675-4287-8c30-19f9ac71fe82}</UniqueIdentifier>
+    <Filter Include="Header Files\ECS\Scripting\Bindings">
+      <UniqueIdentifier>{1c708431-38d1-4fd5-b973-14590ba01e6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
