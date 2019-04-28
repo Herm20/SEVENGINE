@@ -35,10 +35,10 @@
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
-    <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Core\Systems\LightSystem.cpp" />
     <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
@@ -70,8 +70,6 @@
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
-    <ClInclude Include="Core\Physics\ColliderComponent.h" />
-    <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Scripting\BindingBase.h" />
     <ClInclude Include="Core\Scripting\Bindings.h" />
@@ -82,6 +80,7 @@
     <ClInclude Include="Core\Scripting\Utilities.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Systems\CollisionSystem.h" />
     <ClInclude Include="Core\Systems\LightSystem.h" />
     <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />

@@ -15,6 +15,7 @@
 // Systems
 #include "Systems/PlayerControllerSystem.h"
 #include "Systems/RigidBodySystem.h"
+#include "Systems/CollisionSystem.h"
 #include "Systems/LightSystem.h"
 #include "Systems/ScriptSystem.h"
 
@@ -55,6 +56,7 @@ public:
 	void Load();
 
 	/// SUPER TEMP
+	void CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey);
 	void CamMovement();
 	/// SUPER TEMP
 };
