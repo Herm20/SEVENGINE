@@ -126,12 +126,6 @@ void SCRIPT_World_SpawnEntity_LightComponent(lua_State* state, ecs::LightCompone
 
 		lua_pop(state, 1);
 	}
-
-	printf("HERE\n");
-	printf("%f : %f : %f\n", comp.light.pos.x, comp.light.pos.y, comp.light.pos.z);
-	printf("%f : %f : %f\n", comp.light.dir.x, comp.light.dir.y, comp.light.dir.z);
-	printf("%f : %f : %f\n", comp.light.color.x, comp.light.color.y, comp.light.color.z);
-	printf("%f : %f\n", comp.light.radius, comp.light.intensity);
 }
 
 void SCRIPT_World_SpawnEntity_ScriptComponent(lua_State* state, ecs::ScriptComponent& comp)

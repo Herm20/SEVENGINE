@@ -40,7 +40,7 @@ void main()
 	b = normalize(b - dot(b, n) * n - dot(b, t) * t);
 	mat3 tbn = mat3(t, b, n);
 	vec3 norm = normalize(texture(normal, fsIn.uv).xyz * 2.0 - 1.0);
-	norm = normalize(invTrans * norm);
+	norm = normalize(tbn * norm);
 
 	vec3 v = normalize(camPos - fsIn.pos);
 

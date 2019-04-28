@@ -30,13 +30,8 @@ void LightSystem::updateEntity(float dt, ecs::Entity entity)
 	light.light.pos = transform.transform.GetPosition();
 	light.light.dir = transform.transform.ForwardVector();
 
-	printf("light : %d\n", entity);
-
-	if (rendererLightsVec->size() < 16)
-	{
+	if(rendererLightsVec->size() < 16)
 		rendererLightsVec->push_back(light.light);
-		printf("Adding light ; number lights : %d\n", rendererLightsVec->size());
-	}
 }
 
 void LightSystem::endFrame(float dt)
