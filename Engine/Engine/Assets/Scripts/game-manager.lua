@@ -32,11 +32,18 @@ local orbiterprefab = {
 		scale    = { 1, 1, 1 }
 	},
 	meshrenderer = {
-		mesh = "box",
+		mesh = "sword",
 		material = "test"
 	},
 	script = {
 		path = "Assets/Scripts/orbiter.lua"
+	},
+	collider = {
+		type = "hitbox",
+		shape = "cube",
+		size = { 0.6, 3, 0.3 },
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 })
 	}
 }
 
