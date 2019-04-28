@@ -84,7 +84,7 @@ void Application::Init()
 	meshRenderer.material = assetMan->GetMaterial("test");
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(collidable);
 	transform.transform.SetPosition(glm::vec3(0, 2.2, 0));
-	transform.transform.SetRotation(glm::vec3(0, 0, 1), glm::pi<float>() / 4.f);
+	transform.transform.SetRotation(0, 0, glm::pi<float>() / 4.f);
 	manager.registerEntity(collidable);
 
 	ecs::Entity e2 = manager.createEntity();
