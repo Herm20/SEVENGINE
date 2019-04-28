@@ -73,6 +73,7 @@ void Application::Init()
 	manager.addComponent(gm, ecs::TransformComponent());
 	manager.addComponent(gm, ecs::ScriptComponent());
 	ecs::ScriptComponent& scriptComp2 = manager.getComponentStore<ecs::ScriptComponent>().get(gm);
+
 	scriptComp2.path = boost::container::string("Assets/Scripts/game-manager.lua");
 	manager.registerEntity(gm);
 
