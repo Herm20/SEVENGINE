@@ -198,26 +198,29 @@
     <ClInclude Include="Core\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Scripting\BindingBase.h">
-      <Filter>Header Files\ECS\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings.h">
-      <Filter>Header Files\ECS\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Utilities.h">
-      <Filter>Header Files\ECS\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings\Math.h">
-      <Filter>Header Files\ECS\Scripting\Bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h">
-      <Filter>Header Files\ECS\Scripting\Bindings</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Systems\ScriptSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Systems\Camera.h">
-      <Filter>Header Files\ECS\Systems</Filter>
+    <ClInclude Include="Core\Scripting\BindingBase.h">
+      <Filter>Header Files\ECS\Systems\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings.h">
+      <Filter>Header Files\ECS\Systems\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Utilities.h">
+      <Filter>Header Files\ECS\Systems\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Input.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Math.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\World.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

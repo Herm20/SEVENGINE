@@ -39,9 +39,6 @@ public:
 	ecs::Entity e2;
 	ecs::Entity se;
 
-	// Camera
-	ecs::Entity cameraEntity;
-
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
 

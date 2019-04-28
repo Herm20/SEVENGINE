@@ -19,16 +19,24 @@ inline bool lua_safecall(lua_State* state, int arg, int ret, const char* mes = "
 	return true;
 }
 
+inline void lua_swap(lua_State* state)
+{
+	lua_pushvalue(state, -2);
+	lua_pushvalue(state, -2);
+	lua_replace(state, -4);
+	lua_replace(state, -2);
+}
+
 inline glm::vec3 SCRIPT_UTIL_GetVector(lua_State* state, int loc)
 {
 	if (!lua_istable(state, loc)) { return glm::vec3(); }
 
 	lua_pushnumber(state, 1);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 1);
 	lua_pushnumber(state, 2);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 2);
 	lua_pushnumber(state, 3);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 3);
 
 	float x = lua_isnumber(state, -3) ? lua_tonumber(state, -3) : 0.0f;
 	float y = lua_isnumber(state, -2) ? lua_tonumber(state, -2) : 0.0f;
@@ -44,13 +52,13 @@ inline glm::quat SCRIPT_UTIL_GetQuaternion(lua_State* state, int loc)
 	if (!lua_istable(state, loc)) { return glm::identity<glm::quat>(); }
 
 	lua_pushnumber(state, 1);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 1);
 	lua_pushnumber(state, 2);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 2);
 	lua_pushnumber(state, 3);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 3);
 	lua_pushnumber(state, 4);
-	lua_gettable(state, loc);
+	lua_gettable(state, loc > 0 ? loc : loc - 4);
 
 	if (!lua_isnumber(state, -4) ||
 	    !lua_isnumber(state, -3) ||
