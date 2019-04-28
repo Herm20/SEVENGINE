@@ -84,6 +84,14 @@ void Application::Init()
 	meshRenderer.material = assetMan->GetMaterial("test");
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(collidable);
 	transform.transform.SetPosition(glm::vec3(0, 2.2, 0));
+	glm::quat collidableRotQuat;
+	float collidableRotAngle = glm::pi<float>() / 4.f;
+	glm::vec3 collidableRotAxis = glm::vec3(0, 0, 1);
+	collidableRotQuat.x = collidableRotAxis.x * sin(collidableRotAngle / 2.f);
+	collidableRotQuat.y = collidableRotAxis.y * sin(collidableRotAngle / 2.f);
+	collidableRotQuat.z = collidableRotAxis.z * sin(collidableRotAngle / 2.f);
+	collidableRotQuat.w = cos(collidableRotAngle / 2.f);
+	transform.transform.SetRotation(collidableRotQuat);
 	manager.registerEntity(collidable);
 
 	ecs::Entity e2 = manager.createEntity();
