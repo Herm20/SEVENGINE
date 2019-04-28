@@ -4,7 +4,13 @@ local lightprefab = {
 		rotation = math.eulerangles({ 0, 0, 0 }),
 		scale    = { 1, 1, 1 }
 	},
-	light = {}
+	light = {
+		position = { 0, 0, 0 },
+		direction = { 0, 0, 1 },
+		color = { 1, 1, 1 },
+		radius = 1,
+		intensity = 1
+	}
 }
 
 local swordprefab = {

@@ -16,7 +16,7 @@
 		direction = { 0, 0, 1 },
 		color = { 0, 0, 0 },
 		radius,
-		intensity = { 0, 0, 0 },
+		intensity = 1
 	},
 	script = {
 		path = "Assets/Scripts/orbiter.lua"
