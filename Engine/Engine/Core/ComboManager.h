@@ -16,6 +16,7 @@ public:
 	ComboManager(std::map<std::string,int>);
 	~ComboManager();
 	void CheckForCombo(int);
+	void ChangeKeyMap(std::map<std::string, int>);
 	
 private:
 	std::map<std::string, int> m_keyMap;

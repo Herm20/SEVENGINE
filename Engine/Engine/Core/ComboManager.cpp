@@ -17,6 +17,14 @@ ComboManager::~ComboManager()
 
 }
 
+void ComboManager::ChangeKeyMap(std::map<std::string, int> keyMap) 
+{
+	m_keyMap.clear();
+	for (auto it = keyMap.begin; it != keyMap.end(); it++) 
+	{
+		m_keyMap[it->first] = it->second;
+	}
+}
 
 void ComboManager::CheckForCombo(int keyValue)//default combofunction to be acessed by the application for checking or contining combos
 {
