@@ -16,7 +16,29 @@
  */
 AssetManager::AssetManager()
 {
+	u8 diffuse[3] = { 255, 255, 255 }; //1px, 3 channel white texture
+	u8 normal[3] = { 128, 128, 255 }; //1px, 3 channel half red, half green, full blue texture
 
+	this->textureShortNames["defaultAlbedo"] = "defaultAlbedo";
+	this->textures["defaultAlbedo"] = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)diffuse));
+	this->textureShortNames["defaultNormal"] = "defaultNormal";
+	this->textures["defaultNormal"] = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)normal));
+	this->textureShortNames["defaultSpecular"] = "defaultSpecular";
+	this->textures["defaultSpecular"] = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)diffuse));
+
+	FileLoader::SetLoaderProperties();
+}
+
+/*! \brief Creates a material with the parameters and puts it in the map
+ *
+ * \param (boost::shared_ptr<Texture>) diffuseTex - The diffuse tex
+ * \param (boost::shared_ptr<Texture>) normalTex - The normal tex
+ * \param (boost::shared_ptr<Texture>) specularTex - The specular tex
+ * \param (boost::shared_ptr<ShaderProgram>) program - The shader program
+ */
+void AssetManager::CreateMaterial(boost::container::string id, boost::shared_ptr<Texture> diff, boost::shared_ptr<Texture> norm, boost::shared_ptr<Texture> spec, boost::shared_ptr<ShaderProgram> program)
+{
+	this->materials[id] = boost::shared_ptr<Material>(new Material(diff, norm, spec, program));
 }
 
 /*! \brief Gets the mesh with the specified id
@@ -60,7 +82,7 @@ boost::shared_ptr<Texture> AssetManager::GetTexture(boost::container::string id)
 	msg += "' not found";
 	Logger::Log(Logger::ERROR, msg.c_str());
 
-	return nullptr;
+	return this->textures.find("defaultAlbedo")->second;
 }
 
 /*! \brief Gets the shader with the specified id
@@ -95,6 +117,25 @@ boost::shared_ptr<ShaderProgram> AssetManager::GetShaderProgram(boost::container
 {
 	if(this->shaderPrograms.find(id) != this->shaderPrograms.end())
 		return this->shaderPrograms.find(id)->second;
+
+	boost::container::string msg = "Asset with ID '";
+	msg += id;
+	msg += "' not found";
+	Logger::Log(Logger::ERROR, msg.c_str());
+
+	return nullptr;
+}
+
+/*! \brief Gets the material with the specified id
+ *
+ * \param (boost::container::string) id - The id of the material in the map
+ *
+ * \return (boost::shared_ptr<Material>) Pointer to the retrieved material
+ */
+boost::shared_ptr<Material> AssetManager::GetMaterial(boost::container::string id) const
+{
+	if(this->materials.find(id) != this->materials.end())
+		return this->materials.find(id)->second;
 
 	boost::container::string msg = "Asset with ID '";
 	msg += id;

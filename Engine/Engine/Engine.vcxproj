@@ -22,7 +22,6 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
-    <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\ComboManager.cpp" />
     <ClCompile Include="Core\ECS\Manager.cpp" />
     <ClCompile Include="Core\ECS\System.cpp" />
@@ -32,16 +31,20 @@
     <ClCompile Include="Core\InputPoller.cpp" />
     <ClCompile Include="Core\Logger.cpp" />
     <ClCompile Include="Core\Main.cpp" />
+    <ClCompile Include="Core\Material.cpp" />
     <ClCompile Include="Core\Mesh.cpp" />
     <ClCompile Include="Core\MeshData.cpp" />
     <ClCompile Include="Core\Object.cpp" />
-    <ClCompile Include="Core\Physics\CollisionManager.cpp" />
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\Systems\Camera.cpp" />
+    <ClCompile Include="Core\Systems\CollisionSystem.cpp" />
+    <ClCompile Include="Core\Systems\LightSystem.cpp" />
     <ClCompile Include="Core\Systems\PlayerControllerSystem.cpp" />
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
     <ClCompile Include="Core\SpriteSheet.cpp" />
+    <ClCompile Include="Core\Systems\ScriptSystem.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
   </ItemGroup>
@@ -49,7 +52,6 @@
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
-    <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\ComboManager.h" />
     <ClInclude Include="Core\ECS\Component.h" />
     <ClInclude Include="Core\ECS\ComponentStore.h" />
@@ -61,19 +63,30 @@
     <ClInclude Include="Core\EventManager.h" />
     <ClInclude Include="Core\FileLoader.h" />
     <ClInclude Include="Core\InputPoller.h" />
+    <ClInclude Include="Core\Light.h" />
     <ClInclude Include="Core\Listener.h" />
     <ClInclude Include="Core\Logger.h" />
+    <ClInclude Include="Core\Material.h" />
     <ClInclude Include="Core\Mesh.h" />
     <ClInclude Include="Core\MeshData.h" />
     <ClInclude Include="Core\Object.h" />
-    <ClInclude Include="Core\Physics\ColliderComponent.h" />
-    <ClInclude Include="Core\Physics\CollisionManager.h" />
     <ClInclude Include="Core\Renderer.h" />
+    <ClInclude Include="Core\Scripting\BindingBase.h" />
+    <ClInclude Include="Core\Scripting\Bindings.h" />
+    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h" />
+    <ClInclude Include="Core\Scripting\Bindings\Input.h" />
+    <ClInclude Include="Core\Scripting\Bindings\Math.h" />
+    <ClInclude Include="Core\Scripting\Bindings\World.h" />
+    <ClInclude Include="Core\Scripting\Utilities.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\Systems\Camera.h" />
+    <ClInclude Include="Core\Systems\CollisionSystem.h" />
+    <ClInclude Include="Core\Systems\LightSystem.h" />
     <ClInclude Include="Core\Systems\PlayerControllerSystem.h" />
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />
     <ClInclude Include="Core\SpriteSheet.h" />
+    <ClInclude Include="Core\Systems\ScriptSystem.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />
@@ -173,7 +186,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -193,7 +206,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -217,7 +230,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -241,7 +254,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(ProjectDir)libraries;$(ProjectDir)boost_1_69_0\stage\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;fmod_vc.lib;assimp-vc140-mt.lib;lua51.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

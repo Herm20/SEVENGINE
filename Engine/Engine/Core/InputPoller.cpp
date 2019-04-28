@@ -12,7 +12,7 @@ void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, 
 {
 	Input::m_keys[key] = (action == GLFW_PRESS || action == GLFW_REPEAT);// modifies the list of key states
 	// GLFW_RELEASE
-	
+
 }
 
 //callback for  mouse presses
@@ -34,7 +34,7 @@ void Input::cursor_position_callback(GLFWwindow* window, double xpos, double ypo
 
 //initializer
 void Input::Init(GLFWwindow* window)
-{	
+{
 	//setting up callbacks
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);

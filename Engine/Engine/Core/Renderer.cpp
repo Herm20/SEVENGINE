@@ -1,11 +1,9 @@
 #include "Renderer.h"
 
-#include "Physics/ColliderComponent.h"
 #include "ECS/Manager.h"
 
 Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 {
-
 	ecs::ComponentTypeSet requiredComponents;
 	requiredComponents.insert(ecs::MeshRendererComponent::_mType);
 	requiredComponents.insert(ecs::TransformComponent::_mType);
@@ -40,8 +38,24 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
+
 }
 
+void Renderer::Init(AssetManager * assetMan) {
+
+	cubeMesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
+
+	u8 colliderColorRed[3] = { 255, 0, 0 };
+	u8 colliderColorGreen[3] = { 0, 255, 0 };
+	colliderTextureRed = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)colliderColorRed));
+	colliderTextureGreen = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)colliderColorGreen));
+
+	assetMan->CreateMaterial("collider-red", colliderTextureRed, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("collider-green", colliderTextureGreen, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	colliderMatRed = assetMan->GetMaterial("collider-red");
+	colliderMatGreen = assetMan->GetMaterial("collider-green");
+
+}
 
 Renderer::~Renderer()
 {
@@ -77,13 +91,30 @@ void Renderer::startFrame(float dt) {
 
 void Renderer::updateEntity(float dt, ecs::Entity entity) {
 
+	// Model
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
+
 	meshRenderer.mesh->Render(
-		transform.transform.GetPosition(),
-		meshRenderer.shaderProgram,
-		meshRenderer.texture
+		transform.transform,
+		curCamera,
+		meshRenderer.material,
+		lights
 	);
+
+	// Collider
+	if (manager.getComponentStore<ecs::ColliderComponent>().has(entity)) {
+		ecs::ColliderComponent& collider = manager.getComponentStore<ecs::ColliderComponent>().get(entity);
+		boost::shared_ptr<Material> colliderMat = collider.isColliding ? colliderMatRed : colliderMatGreen;
+		cubeMesh->Render(
+			transform.transform,
+			curCamera,
+			colliderMat,
+			lights,
+			true
+		);
+	}
+
 }
 
 void Renderer::endFrame(float dt) {

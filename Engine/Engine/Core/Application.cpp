@@ -18,22 +18,36 @@ Application::~Application()
 
 void Application::Init()
 {
-
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
+
 	renderer = new Renderer(manager);
+
 	assetMan = new AssetManager();
-	eventMan = new EventManager();
-	camera = new Camera();
-
-	inputPoller.Init(renderer->GetWindow());
-
 	assetMan->SetAssetDir("Assets");
 	assetMan->LoadAssetsFromAssetDir();
+	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+
+	renderer->Init(assetMan);
+
+	eventMan = new EventManager();
+
+	lightSystem = new LightSystem(manager);
+	lightSystem->SetLightsVector(&renderer->GetLightVector());
+	scriptSystem = new ScriptSystem(manager, assetMan);
+	scriptSystem->Init();
+
+	cameraSystem = new CameraSystem(manager);
+	cameraSystem->Init(renderer->GetWindow());
+
+	renderer->SetCurrentCamera(cameraSystem);
+
+	inputPoller.Init(renderer->GetWindow());
 
 	masterBG = new AudioManager();
 	masterBG->InitSoundBG();
 	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
-	masterBG->Play();
+	//masterBG->Play();
 	masterBG->SetVolume(0.08f);
 
 	masterEffect = new AudioManager();
@@ -44,31 +58,28 @@ void Application::Init()
 	manager.createComponentStore<ecs::KeyboardInputComponent>();
 	manager.createComponentStore<ecs::PlayerStateInfoComponent>();
 	manager.createComponentStore<ecs::RigidBodyComponent>();
+	manager.createComponentStore<ecs::ColliderComponent>();
+	manager.createComponentStore<ecs::LightComponent>();
+	manager.createComponentStore<ecs::ScriptComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
 	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
+	manager.addSystem(ecs::System::Ptr(new CollisionSystem(manager)));
+	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
+	manager.addSystem(ecs::System::Ptr(scriptSystem));
 
-	// Dummy Player Entity
-	player1 = manager.createEntity();
-	manager.addComponent(player1, ecs::MeshRendererComponent());
-	manager.addComponent(player1, ecs::TransformComponent());
-	manager.addComponent(player1, ecs::KeyboardInputComponent());
-	manager.addComponent(player1, ecs::PlayerStateInfoComponent());
-	manager.addComponent(player1, ecs::RigidBodyComponent());
-	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player1);
-	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
-	meshRenderer.shaderProgram = assetMan->GetShaderProgram("def");
-	meshRenderer.texture = assetMan->GetTexture("test");
-	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player1);
-	transform.transform.SetPosition(glm::vec3(0, 0, 0));
-	manager.registerEntity(player1);
-	ecs::KeyboardInputComponent& keyboardInput = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player1);
-	keyboardInput.map["Jump"] = GLFW_KEY_UP;
-	keyboardInput.map["MoveLeft"] = GLFW_KEY_LEFT;
-	keyboardInput.map["MoveRight"] = GLFW_KEY_RIGHT;
-	manager.registerEntity(player1);
+	ecs::Entity gm = manager.createEntity();
+	manager.addComponent(gm, ecs::TransformComponent());
+	manager.addComponent(gm, ecs::ScriptComponent());
+	ecs::ScriptComponent& scriptComp2 = manager.getComponentStore<ecs::ScriptComponent>().get(gm);
+
+	scriptComp2.path = boost::container::string("Assets/Scripts/game-manager.lua");
+	manager.registerEntity(gm);
+
+	reloadHeld = false;
+
 }
 
 void Application::Load()
@@ -87,13 +98,24 @@ void Application::Run()
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
 		Timer::update();
-		CamMovement();
-		camera->update();
+
+		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
+		cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
+		
 		EventManager::ExecuteNext();
+
+		if (Input::GetKey(GLFW_KEY_P))
+		{
+			if (!reloadHeld) { scriptSystem->ReloadScripts(); }
+			reloadHeld = true;
+		}
+		else { reloadHeld = false; }
 
 		manager.updateEntities(Timer::GetDeltaTime());
 
 		glfwPollEvents();
+
+		Input::UpdateKeyStates();// call this after all the inputs have been processed
 	}
 }
 
@@ -109,55 +131,24 @@ void Application::Exit()
 }
 
 /// SUPER TEMP
+void Application::CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey) {
 
-void Application::CamMovement()
-{
-	// FPS Controls
-	int w = renderer->GetWindowWidth();
-	int h = renderer->GetWindowHeight();
-	float sens = .001;
-	double x = 0;
-	double y = 0;
+	ecs::Entity player = manager.createEntity();
+	manager.addComponent(player, ecs::MeshRendererComponent());
+	manager.addComponent(player, ecs::TransformComponent());
+	manager.addComponent(player, ecs::KeyboardInputComponent());
+	manager.addComponent(player, ecs::PlayerStateInfoComponent());
+	manager.addComponent(player, ecs::RigidBodyComponent());
+	manager.addComponent(player, ecs::ColliderComponent());
+	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(player);
+	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sword")));
+	meshRenderer.material = assetMan->GetMaterial("test");
+	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(player);
+	transform.transform.SetPosition(pos);
+	ecs::KeyboardInputComponent& keyboardInput = manager.getComponentStore<ecs::KeyboardInputComponent>().get(player);
+	keyboardInput.map["Jump"] = jumpKey;
+	keyboardInput.map["MoveLeft"] = leftKey;
+	keyboardInput.map["MoveRight"] = rightKey;
+	manager.registerEntity(player);
 
-	if (Input::GetMouse(GLFW_MOUSE_BUTTON_LEFT))
-	{
-		glfwGetCursorPos(renderer->GetWindow(), &x, &y);
-
-		camera->rotation.y -= sens * (x - w * .5f);
-		camera->rotation.x -= sens * (y - h * .5f);
-		camera->rotation.x = glm::clamp(camera->rotation.x, (-.5f * glm::pi<float>()), (.5f * glm::pi<float>()));
-
-		glfwSetCursorPos(renderer->GetWindow(), w * .5f, h * .5f);
-	}
-
-	// move with W,A,S,D
-	glm::mat3 R = (glm::mat3)glm::yawPitchRoll(camera->rotation.y, camera->rotation.x, camera->rotation.z);
-
-	if (Input::GetKey(GLFW_KEY_A))
-		camera->velocity += R * glm::vec3(-1, 0, 0);
-
-	if (Input::GetKey(GLFW_KEY_D))
-		camera->velocity += R * glm::vec3(1, 0, 0);
-
-	if (Input::GetKey(GLFW_KEY_W))
-		camera->velocity += R * glm::vec3(0, 0, -1);
-
-	if (Input::GetKey(GLFW_KEY_S))
-		camera->velocity += R * glm::vec3(0, 0, 1);
-
-	if (Input::GetKey(GLFW_KEY_SPACE))
-		camera->velocity += R * glm::vec3(0, 1, 0);
-
-	if (Input::GetKey(GLFW_KEY_X))
-		camera->velocity += R * glm::vec3(0, -1, 0);
-
-	float speed = 10.0f;
-	if (camera->velocity != glm::vec3())
-	{
-		camera->velocity = glm::normalize(camera->velocity) * speed;
-	}
-
-	camera->position += camera->velocity * Timer::GetDeltaTime();
-	camera->velocity = { 0,0,0 };
 }
-/// SUPER TEMP

@@ -4,6 +4,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/glm.hpp"
 #include "glm/gtx/quaternion.hpp"
+#include "glm/gtx/euler_angles.hpp"
 
 using namespace glm;
 
@@ -52,6 +53,12 @@ public:
 
 	inline void SetPosition(vec3 position) { pos = position; }
 	inline void SetRotation(quat rotation) { rot = rotation; }
+	inline void SetRotation(float angle, vec3 axis) {
+		SetRotation(glm::angleAxis(angle, axis));
+	}
+	inline void SetRotation(float yaw, float pitch, float roll) {
+		SetRotation(glm::toQuat(glm::yawPitchRoll(yaw, pitch, roll)));
+	}
 	inline void SetScale(vec3 scale)       { sca = scale; }
 
 	inline vec3 ForwardVector() const { return rotate(rot, vec3(0.0f, 0.0f, 1.0f)); }
@@ -59,6 +66,7 @@ public:
 	inline vec3 UpVector()      const { return rotate(rot, vec3(0.0f, 1.0f, 0.0f)); }
 
 	inline mat4 GetMatrix() const { return scale(translate(identity<mat4>(), pos) * toMat4(rot), sca); }
+	inline mat3 GetInverseTransposeMatrix() const { return mat3(transpose(inverse((scale(translate(identity<mat4>(), pos) * toMat4(rot), sca))))); }
 
 	// Translate with respect to self
 	inline void TranslateLocal(vec3 v) { pos += rotate(rot, v); }
