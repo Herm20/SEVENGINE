@@ -88,6 +88,9 @@
     <ClCompile Include="Core\Systems\CameraSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\ScriptSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -204,6 +207,24 @@
     <ClInclude Include="Core\Systems\CameraSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Scripting\BindingBase.h">
+      <Filter>Header Files\ECS\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings.h">
+      <Filter>Header Files\ECS\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Utilities.h">
+      <Filter>Header Files\ECS\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Math.h">
+      <Filter>Header Files\ECS\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h">
+      <Filter>Header Files\ECS\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Systems\ScriptSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FragmentShader.frag">
@@ -234,6 +255,12 @@
     </Filter>
     <Filter Include="Source Files\ECS\Systems">
       <UniqueIdentifier>{0f858988-c5bd-49ff-9dde-a8a504977922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Scripting">
+      <UniqueIdentifier>{a9f3c41c-0da3-4f45-885f-45a6d2f3db3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Scripting\Bindings">
+      <UniqueIdentifier>{1c708431-38d1-4fd5-b973-14590ba01e6c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

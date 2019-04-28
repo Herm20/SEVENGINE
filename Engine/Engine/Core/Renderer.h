@@ -11,7 +11,7 @@
 #include "Mesh.h"
 #include "Logger.h"
 #include "ECS/System.h"
-#include "Camera.h"
+#include "Systems/CameraSystem.h"
 #include "Light.h"
 
 using namespace glm;
@@ -25,7 +25,7 @@ private:
 	i32 height = 800;
 	i32 width = 1280;
 
-	const Camera* curCamera = nullptr;
+	const CameraSystem* curCamera = nullptr;
 	boost::container::vector<Light> lights;
 
 public:
@@ -40,7 +40,7 @@ public:
 	virtual void updateEntity(float dt, ecs::Entity entity) override;
 	virtual void endFrame(float dt) override;
 
-	inline void SetCurrentCamera(const Camera* cam) { this->curCamera = cam; }
+	inline void SetCurrentCamera(const CameraSystem* cam) { this->curCamera = cam; }
 	inline boost::container::vector<Light> & GetLightVector() { return this->lights; }
 };
 

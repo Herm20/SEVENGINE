@@ -1,7 +1,6 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#include <map>
 #include "Renderer.h"
 #include "Timer.h"
 #include "AudioManager.h"
@@ -9,7 +8,6 @@
 #include "Camera.h"
 #include "Logger.h"
 #include "ECS/Manager.h"
-#include "InputPoller.h"
 #include "EventManager.h"
 
 // Systems
@@ -17,6 +15,7 @@
 #include "Systems/RigidBodySystem.h"
 #include "Systems/LightSystem.h"
 #include "Systems/ScriptSystem.h"
+#include "Systems/CameraSystem.h"
 
 class Application
 {
@@ -31,15 +30,18 @@ public:
 	Renderer* renderer;
 	AssetManager* assetMan;
 	EventManager* eventMan;
-	Camera* camera;
 	LightSystem* lightSystem;
 	ScriptSystem* scriptSystem;
+	CameraSystem* cameraSystem;
 	// Printing fps
 	static Timer Time;
 
 	ecs::Entity player1;
 	ecs::Entity e2;
 	ecs::Entity se;
+
+	// Camera
+	ecs::Entity cameraEntity;
 
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
@@ -57,10 +59,6 @@ public:
 
 	// Load Assets
 	void Load();
-
-	/// SUPER TEMP
-	void CamMovement();
-	/// SUPER TEMP
 };
 
 #endif

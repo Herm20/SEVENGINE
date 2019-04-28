@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <boost/lexical_cast.hpp>
 #include "Transform.h"
-#include "Camera.h"
+#include "Systems/CameraSystem.h"
 #include "MeshData.h"
 #include "Material.h"
 #include "Light.h"
@@ -23,7 +23,7 @@ public:
 	Mesh(boost::shared_ptr<MeshData> meshData);
 	Mesh(const Mesh &m);
 	const Mesh & operator=(const Mesh &m);
-	void Render(const Transform &trans, const Camera* cam, boost::shared_ptr<Material> material, const boost::container::vector<Light> &lights, bool wireframe = false);
+	void Render(const Transform &trans, const CameraSystem* cam, boost::shared_ptr<Material> material, const boost::container::vector<Light> &lights, bool wireframe = false);
 	void Destroy();
 	~Mesh();
 
