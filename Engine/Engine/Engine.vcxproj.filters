@@ -13,12 +13,6 @@
     <ClCompile Include="Core\InputPoller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Physics\CollisionManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -204,35 +198,14 @@
     <ClInclude Include="Core\Systems\ScriptSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Scripting\BindingBase.h">
-      <Filter>Header Files\ECS\Systems\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings.h">
-      <Filter>Header Files\ECS\Systems\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Utilities.h">
-      <Filter>Header Files\ECS\Systems\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h">
-      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings\Input.h">
-      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings\Math.h">
-      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Scripting\Bindings\World.h">
-      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\FragmentShader.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="Assets\VertexShader.vert">
-      <Filter>Shaders</Filter>
-    </None>
+    <ClInclude Include="Core\Scripting\BindingBase.h" />
+    <ClInclude Include="Core\Scripting\Bindings.h" />
+    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h" />
+    <ClInclude Include="Core\Scripting\Bindings\Input.h" />
+    <ClInclude Include="Core\Scripting\Bindings\Math.h" />
+    <ClInclude Include="Core\Scripting\Bindings\World.h" />
+    <ClInclude Include="Core\Scripting\Utilities.h" />
+    <ClInclude Include="Core\Systems\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -262,5 +235,13 @@
     <Filter Include="Header Files\ECS\Scripting\Bindings">
       <UniqueIdentifier>{1c708431-38d1-4fd5-b973-14590ba01e6c}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\FragmentShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\Shaders\VertexShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

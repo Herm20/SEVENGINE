@@ -94,8 +94,8 @@
     <ClInclude Include="Core\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\FragmentShader.frag" />
-    <None Include="Assets\VertexShader.vert" />
+    <None Include="Assets\Shaders\FragmentShader.frag" />
+    <None Include="Assets\Shaders\VertexShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
