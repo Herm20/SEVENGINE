@@ -35,6 +35,8 @@ void Application::Init()
 	camera = new Camera();
 	lightSystem = new LightSystem(manager);
 	lightSystem->SetLightsVector(&renderer->GetLightVector());
+	scriptSystem = new ScriptSystem(manager, assetMan);
+	scriptSystem->Init();
 
 	renderer->SetCurrentCamera(camera);
 
@@ -63,6 +65,7 @@ void Application::Init()
 	manager.createComponentStore<ecs::RigidBodyComponent>();
 	manager.createComponentStore<ecs::ColliderComponent>();
 	manager.createComponentStore<ecs::LightComponent>();
+	manager.createComponentStore<ecs::ScriptComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
@@ -70,30 +73,17 @@ void Application::Init()
 	manager.addSystem(ecs::System::Ptr(new CollisionSystem(manager)));
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
+	manager.addSystem(ecs::System::Ptr(scriptSystem));
 
-	// Players
-	CreatePlayer(glm::vec3(2, 0, 0), GLFW_KEY_LEFT, GLFW_KEY_RIGHT, GLFW_KEY_UP);
-	CreatePlayer(glm::vec3(-2, 0, 0), GLFW_KEY_J, GLFW_KEY_L, GLFW_KEY_I);
+	ecs::Entity gm = manager.createEntity();
+	manager.addComponent(gm, ecs::TransformComponent());
+	manager.addComponent(gm, ecs::ScriptComponent());
+	ecs::ScriptComponent& scriptComp2 = manager.getComponentStore<ecs::ScriptComponent>().get(gm);
 
-	ecs::Entity collidable = manager.createEntity();
-	manager.addComponent(collidable, ecs::MeshRendererComponent());
-	manager.addComponent(collidable, ecs::TransformComponent());
-	manager.addComponent(collidable, ecs::ColliderComponent());
-	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(collidable);
-	meshRenderer.mesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("sphere")));
-	meshRenderer.material = assetMan->GetMaterial("test");
-	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(collidable);
-	transform.transform.SetPosition(glm::vec3(0, 2.2, 0));
-	transform.transform.SetRotation(0, 0, glm::pi<float>() / 4.f);
-	manager.registerEntity(collidable);
+	scriptComp2.path = boost::container::string("Assets/Scripts/game-manager.lua");
+	manager.registerEntity(gm);
 
-	ecs::Entity e2 = manager.createEntity();
-	manager.addComponent(e2, ecs::TransformComponent());
-	manager.getComponentStore<ecs::TransformComponent>().get(e2).transform.SetRotation(glm::angleAxis(180.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
-	manager.addComponent(e2, ecs::LightComponent());
-	//ecs::LightComponent & light = manager.getComponentStore<ecs::LightComponent>().get(player1);
-	//light.light.color = (glm::vec3(0, 5, -1));
-	manager.registerEntity(e2);
+	reloadHeld = false;
 
 }
 
@@ -117,6 +107,13 @@ void Application::Run()
 		CamMovement();
 		camera->update();
 		EventManager::ExecuteNext();
+
+		if (Input::GetKey(GLFW_KEY_P))
+		{
+			if (!reloadHeld) { scriptSystem->ReloadScripts(); }
+			reloadHeld = true;
+		}
+		else { reloadHeld = false; }
 
 		manager.updateEntities(Timer::GetDeltaTime());
 

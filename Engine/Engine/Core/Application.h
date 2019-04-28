@@ -17,6 +17,7 @@
 #include "Systems/RigidBodySystem.h"
 #include "Systems/CollisionSystem.h"
 #include "Systems/LightSystem.h"
+#include "Systems/ScriptSystem.h"
 
 class Application
 {
@@ -33,11 +34,14 @@ public:
 	EventManager* eventMan;
 	Camera* camera;
 	LightSystem* lightSystem;
+	ScriptSystem* scriptSystem;
 	// Printing fps
 	static Timer Time;
 
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
+
+	bool reloadHeld;
 
 	// Initialize core engine systems and resources
 	void Init();

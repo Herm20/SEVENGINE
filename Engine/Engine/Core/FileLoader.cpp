@@ -17,6 +17,13 @@ namespace FileLoader
 	static void ProcessAINode(aiNode* node, const aiScene* scene, boost::container::vector<Vertex> &verts, boost::container::vector<u32> &inds, boost::container::vector<u32> &offsets, boost::container::vector<u32> &amounts, u32 baseOffset);
 };
 
+/*! \brief Sets up properties for file loaders
+ */
+void FileLoader::SetLoaderProperties()
+{
+	stbi_set_flip_vertically_on_load(true);
+}
+
 /*! \brief Loads a mesh as meshdata
  *
  * \param (const char*) path - Path to the mesh file

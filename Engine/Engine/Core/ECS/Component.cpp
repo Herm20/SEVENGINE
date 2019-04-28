@@ -9,4 +9,5 @@ namespace ecs
 	const ComponentType RigidBodyComponent::_mType;
 	const ComponentType PlayerStateInfoComponent::_mType;
 	const ComponentType LightComponent::_mType;
+	const ComponentType ScriptComponent::_mType;
 }

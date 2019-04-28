@@ -23,6 +23,7 @@
  */
 namespace FileLoader
 {
+	void SetLoaderProperties();
 	boost::shared_ptr<MeshData> LoadQuickMeshData(const char* path);
 	boost::shared_ptr<MeshData> LoadMeshData(const char* path);
 	void LoadTexture(const char* path, unsigned char* &data, i32* width, i32* height, i32* channels);
