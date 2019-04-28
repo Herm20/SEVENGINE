@@ -48,7 +48,7 @@ namespace ecs {
 		void SetKey(std::string key, int value) {
 			map[key] = value;
 		}
-		ComboManager* comboManager = new ComboManager(map);
+		ComboManager* comboManager;
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -61,7 +61,6 @@ namespace ecs {
 		bool isJumping = false;
 		float moveSpeed = 3;
 	};
-
 }
 
 #endif
