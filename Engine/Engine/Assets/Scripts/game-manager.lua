@@ -20,8 +20,8 @@ local swordprefab = {
 		scale    = { 1, 1, 1 }
 	},
 	meshrenderer = {
-		mesh = "sword",
-		material = "test"
+		mesh = "quad",
+		material = "spritesheet"
 	}
 }
 
