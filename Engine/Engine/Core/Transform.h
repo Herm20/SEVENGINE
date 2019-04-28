@@ -52,6 +52,14 @@ public:
 
 	inline void SetPosition(vec3 position) { pos = position; }
 	inline void SetRotation(quat rotation) { rot = rotation; }
+	inline void SetRotation(vec3 axis, float angle) {
+		glm::quat q;
+		q.x = axis.x * sin(angle / 2.f);
+		q.y = axis.y * sin(angle / 2.f);
+		q.z = axis.z * sin(angle / 2.f);
+		q.w = cos(angle / 2.f);
+		SetRotation(q);
+	}
 	inline void SetScale(vec3 scale)       { sca = scale; }
 
 	inline vec3 ForwardVector() const { return rotate(rot, vec3(0.0f, 0.0f, 1.0f)); }
