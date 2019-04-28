@@ -23,8 +23,8 @@ public:
 	static inline int GetKey(int key) { return m_keys[key]; }
 	static inline int GetMouse(int button) { return m_mouse_buttons[button]; }
 	static void UpdateKeyStates();// keeps track of the current keystates to be checked in the next frame
-	static bool GetKeyDown(int);
-	static bool GetKeyUp(int);
+	static bool GetKeyDown(int button);
+	static bool GetKeyUp(int button);
 
 private:
 	static void key_callback(GLFWwindow* , int, int, int , int); // callback for keys
