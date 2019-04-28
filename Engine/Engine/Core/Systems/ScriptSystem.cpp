@@ -6,6 +6,8 @@
 #include "../Scripting/Bindings.h"
 #include "../Scripting/Utilities.h"
 
+#include "../AssetManager.h"
+
 // PRIVATE
 
 void ScriptSystem::LoadScript(ecs::Entity entity, ecs::ScriptComponent& script)
@@ -64,9 +66,10 @@ void ScriptSystem::LoadScript(ecs::Entity entity, ecs::ScriptComponent& script)
 
 // PUBLIC
 
-ScriptSystem::ScriptSystem(ecs::Manager& manager) :
+ScriptSystem::ScriptSystem(ecs::Manager& manager, AssetManager* assetManager) :
 	ecs::System(manager),
 	state(nullptr),
+	assetMan(assetManager),
 	nextID(1),
 	currentEntity(0)
 {

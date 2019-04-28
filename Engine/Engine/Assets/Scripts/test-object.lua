@@ -1,14 +1,29 @@
+local testspawn = {
+	transform = {
+		position = { 2, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 1, 1, 1 }
+	},
+	meshrenderer = {
+		mesh = "box",
+		material = "test"
+	},
+	script = {
+		path = "Assets/Scripts/orbiter.lua"
+	}
+}
+
 function init(self)
 	print("Hello World")
-	
-	for k,v in pairs(input.keys) do
-		print(k)
-	end
 	
 	self.tt = 0
 	self.rot = 0
 	self.h = 0
 	self.longestframe = 0
+	
+	self.destroyedentity = false
+	
+	print(world.spawnentity(testspawn))
 end
 
 function update(self, dt)
@@ -43,25 +58,32 @@ function update(self, dt)
 		local xpos = math.sin(self.tt) * 2
 		local zpos = math.cos(self.tt) * 2
 		local ypos = 0 -- math.sin(self.tt * 20 / 2) + 3
-		entity.setposition({xpos, ypos, zpos})
+		-- entity.setposition({xpos, ypos, zpos})
 	end
 	
 	local epos = entity.getposition()
 	entity.setposition({epos[1], self.h, epos[3]})
 	
 	local quat = math.eulerangles({self.rot, self.tt, 0})
-	entity.setrotation(quat)
+	-- entity.setrotation(quat)
+	
+	self.tt = self.tt + dt
 		
 	for i, v in ipairs(scripts) do
 		if not (v.scriptid == self.scriptid) then
 			world.sendmessage(v.entityid, v.scriptid, "Hello", self.scriptid)
 		end
 	end
+	
+	if self.tt > 2 and not self.destroyedentity then
+		-- world.destroyentity(1)
+		self.destroyedentity = true
+	end
 end
 
 function onmessage(self, message, data)
-	print("I'm script #" .. tostring(self.scriptid))
+	-- print("I'm script #" .. tostring(self.scriptid))
 	-- print(message, type(data), data, data.val)
-	print("Hello from script #" .. tostring(data))
-	print("--------------------")
+	-- print("Hello from script #" .. tostring(data))
+	-- print("--------------------")
 end

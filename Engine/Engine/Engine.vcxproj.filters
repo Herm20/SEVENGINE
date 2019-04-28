@@ -85,6 +85,9 @@
     <ClCompile Include="Core\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Core\Systems\ScriptSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -198,6 +201,30 @@
     <ClInclude Include="Core\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Systems\ScriptSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\BindingBase.h">
+      <Filter>Header Files\ECS\Systems\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings.h">
+      <Filter>Header Files\ECS\Systems\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Utilities.h">
+      <Filter>Header Files\ECS\Systems\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Input.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Math.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\World.h">
+      <Filter>Header Files\ECS\Systems\Scripting\Bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\FragmentShader.frag">
@@ -228,6 +255,12 @@
     </Filter>
     <Filter Include="Source Files\ECS\Systems">
       <UniqueIdentifier>{0f858988-c5bd-49ff-9dde-a8a504977922}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Systems\Scripting">
+      <UniqueIdentifier>{3fa2bdbf-3e30-41f2-ac9d-154e48ab388a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Systems\Scripting\Bindings">
+      <UniqueIdentifier>{093973b0-b675-4287-8c30-19f9ac71fe82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

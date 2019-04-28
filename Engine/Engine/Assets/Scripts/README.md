@@ -38,6 +38,16 @@ The SEVENGINE Lua scripting API offers simple access to player input :
 
 * `input.getkey` - Takes a key ID (number), and returns a boolean representing whether that key is currently down
 
+### World
+
+The SEVENGINE Lua scripting API offers functionality for interacting with the rest of the game world through its `world` library :
+
+* `world.sendmessage` - Takes the target entity ID, target script ID, message (string), and data (any type), and sends the message with additional data to the specified script
+
+* `world.spawnentity` - Takes an entity descriptor table (see `SPAWN_EXAMPLE.lua` for format example), and spawns an entity, returning the spawned entity's ID
+
+* `world.destroyentity` - Takes an entity ID (number) and destroys the entity
+
 ### Entity
 
 The SEVENGINE Lua scripting API contains all Entity-interfacing functionality within the `entity` library :
