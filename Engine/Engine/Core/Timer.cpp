@@ -2,14 +2,10 @@
 
 float Timer::totalTime = 0;
 float Timer::deltaTime = 0;
-clock_t Timer::curr;
-clock_t Timer::prev;
+clock_t Timer::curr = clock();
+clock_t Timer::prev = clock();
+std::chrono::high_resolution_clock::time_point Timer::startTime = std::chrono::high_resolution_clock::now();
 
-Timer::Timer()
-{
-	startTime = std::chrono::high_resolution_clock::now();
-	prev = curr = clock();
-}
 
 void Timer::update()
 {

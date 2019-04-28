@@ -6,7 +6,7 @@ class Timer
 {
 private:
 	static clock_t curr, prev;
-	std::chrono::high_resolution_clock::time_point startTime;
+	static std::chrono::high_resolution_clock::time_point startTime;
 	static float totalTime; //! Time in seconds since starting
 	static float deltaTime; //! Time in seconds between 2 most recent updates
 public:
@@ -14,7 +14,7 @@ public:
 	static float GetTotalTime();
 	static float GetDeltaTime();
 	static void update();
-	std::chrono::duration<float> currentTime();
+	static std::chrono::duration<float> currentTime();
 };
 #endif // TIMER_H_
 
