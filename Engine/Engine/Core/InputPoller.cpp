@@ -2,6 +2,7 @@
 //#include "InputManager.h"
 bool Input::m_keys[Max_keys] = {};
 bool Input::m_mouse_buttons[Max_Buttons] = {};
+bool Input::lastKeyStates[Max_keys] = {};
 double Input::mouseX;
 double Input::mouseY;
 
@@ -38,4 +39,30 @@ void Input::Init(GLFWwindow* window)
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
+}
+
+void Input::UpdateKeyStates()/////////////This should be called in the update loop after the all the input has been processsed for that update loop
+{
+	for (int i = 0; i < Max_keys; i++)
+	{
+		lastKeyStates[i] = m_keys[i];
+	}
+}
+
+bool Input::GetKeyDown(int keyValue)
+{
+	if (!lastKeyStates[keyValue] && m_keys[keyValue])
+	{
+		return true;
+	}
+	return false;
+}
+
+bool Input::GetKeyUp(int keyValue)
+{
+	if (lastKeyStates[keyValue] && !m_keys[keyValue])
+	{
+		return true;
+	}
+	return false;
 }

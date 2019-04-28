@@ -97,6 +97,8 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
+		glfwPollEvents();
+
 		Timer::update();
 
 		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
@@ -113,7 +115,7 @@ void Application::Run()
 
 		manager.updateEntities(Timer::GetDeltaTime());
 
-		glfwPollEvents();
+		Input::UpdateKeyStates();// call this after all the inputs have been processed
 	}
 }
 

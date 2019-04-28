@@ -15,12 +15,14 @@
 #include <glm/glm.hpp>
 #include <boost/container/string.hpp>
 #include <map>
+#include <vector>
 #include <string>
 
 #include "ComponentType.h"
 #include <glm/glm.hpp>
 #include "../Transform.h"
 #include "../Mesh.h"
+#include "ComboManager.h"
 #include "../Material.h"
 #include "../Light.h"
 #include "../Types.h"
@@ -48,6 +50,7 @@ namespace ecs {
 		void SetKey(std::string key, int value) {
 			map[key] = value;
 		}
+		ComboManager* comboManager;
 	};
 
 	struct RigidBodyComponent : public Component {

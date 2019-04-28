@@ -64,9 +64,6 @@
     <ClCompile Include="Core\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Timer_Sad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\ECS\System.cpp">
       <Filter>Source Files\ECS</Filter>
     </ClCompile>
@@ -78,6 +75,9 @@
     </ClCompile>
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\ComboManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Core\Systems\CollisionSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
@@ -162,9 +162,6 @@
     <ClInclude Include="Core\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Timer_Sad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Core\ECS\Entity.h">
       <Filter>Header Files\ECS</Filter>
     </ClInclude>
@@ -188,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="Core\Renderer.h">
       <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\ComboManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\Systems\CollisionSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>

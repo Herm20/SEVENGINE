@@ -79,6 +79,7 @@ int Renderer::GetWindowWidth()
 	return width;
 }
 
+#include <iostream>
 void Renderer::startFrame(float dt) {
 
 	//Wipe the screen with that sweet sweet cornflower blue

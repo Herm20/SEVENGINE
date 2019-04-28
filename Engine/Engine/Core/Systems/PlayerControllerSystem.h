@@ -6,9 +6,6 @@
 
 class PlayerControllerSystem : public ecs::System {
 
-private:
-
-
 public:
 
 	explicit PlayerControllerSystem(ecs::Manager& manager);
