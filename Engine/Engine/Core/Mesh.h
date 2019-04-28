@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <boost/lexical_cast.hpp>
 #include "Transform.h"
-#include "Systems/CameraSystem.h"
+#include "Systems/Camera.h"
 #include "MeshData.h"
 #include "Material.h"
 #include "Light.h"

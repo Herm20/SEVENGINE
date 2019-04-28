@@ -1,13 +1,11 @@
-#include "CameraSystem.h"
+#include "Camera.h"
 
 #include "../ECS/Component.h"
 #include "../ECS/Manager.h"
 
-CameraSystem::CameraSystem(ecs::Manager& manager) : ecs::System(manager)
+CameraSystem::CameraSystem(ecs::Manager& manager)
 {
-	ecs::ComponentTypeSet requiredComponents;
-	requiredComponents.insert(ecs::CameraComponent::_mType);
-	setRequiredComponents(std::move(requiredComponents));
+
 }
 
 CameraSystem::~CameraSystem()
@@ -116,16 +114,4 @@ glm::vec3 CameraSystem::GetPosition()
 glm::vec3 CameraSystem::GetVelocity()
 {
 	return velocity;
-}
-
-void CameraSystem::startFrame(float dt)
-{
-}
-
-void CameraSystem::updateEntity(float dt, ecs::Entity entity)
-{
-}
-
-void CameraSystem::endFrame(float dt)
-{
 }

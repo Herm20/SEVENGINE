@@ -11,7 +11,7 @@
 #include "Mesh.h"
 #include "Logger.h"
 #include "ECS/System.h"
-#include "Systems/CameraSystem.h"
+#include "Systems/Camera.h"
 #include "Light.h"
 
 using namespace glm;

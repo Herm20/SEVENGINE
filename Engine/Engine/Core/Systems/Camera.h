@@ -11,7 +11,7 @@
 #include "../ECS/System.h"
 #include "InputPoller.h"
 
-class CameraSystem : public ecs::System
+class CameraSystem
 {
 public:
 	CameraSystem(ecs::Manager& manager); // Setting required components
@@ -30,11 +30,6 @@ public:
 	glm::vec3 GetRotation();
 	glm::vec3 GetPosition();
 	glm::vec3 GetVelocity();
-
-	// Inherited Functions from system
-	virtual void startFrame(float dt) override;
-	virtual void updateEntity(float dt, ecs::Entity entity) override;
-	virtual void endFrame(float dt) override;
 
 private:
 	// Variable for view matrix

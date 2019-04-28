@@ -18,7 +18,6 @@ Application::~Application()
 
 void Application::Init()
 {
-
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 	scriptSystem = new ScriptSystem(manager);
 	scriptSystem->Init();
@@ -57,7 +56,6 @@ void Application::Init()
 	manager.createComponentStore<ecs::RigidBodyComponent>();
 	manager.createComponentStore<ecs::LightComponent>();
 	manager.createComponentStore<ecs::ScriptComponent>();
-	manager.createComponentStore<ecs::CameraComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
@@ -65,7 +63,6 @@ void Application::Init()
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 	manager.addSystem(ecs::System::Ptr(scriptSystem));
-	manager.addSystem(ecs::System::Ptr(cameraSystem));
 
 	// Dummy Player Entity
 	player1 = manager.createEntity();
@@ -103,13 +100,6 @@ void Application::Init()
 	ecs::ScriptComponent& scriptComp = manager.getComponentStore<ecs::ScriptComponent>().get(se);
 	scriptComp.path = boost::container::string("Assets/Scripts/test-object.lua\0");
 	manager.registerEntity(se);
-
-
-	// Testing Camera Entity
-	cameraEntity = manager.createEntity();
-	manager.addComponent(cameraEntity, ecs::CameraComponent());
-	manager.registerEntity(cameraEntity);
-	//
 
 	reloadHeld = false;
 }

@@ -71,11 +71,6 @@ namespace ecs {
 		boost::container::string path;
 		u64 id = U64_MAX;
 	};
-
-	struct CameraComponent : public Component {
-		static const ecs::ComponentType _mType = 8;
-
-	};
 }
 
 #endif

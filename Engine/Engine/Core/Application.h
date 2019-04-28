@@ -5,7 +5,6 @@
 #include "Timer.h"
 #include "AudioManager.h"
 #include "AssetManager.h"
-#include "Camera.h"
 #include "Logger.h"
 #include "ECS/Manager.h"
 #include "EventManager.h"
@@ -15,7 +14,7 @@
 #include "Systems/RigidBodySystem.h"
 #include "Systems/LightSystem.h"
 #include "Systems/ScriptSystem.h"
-#include "Systems/CameraSystem.h"
+#include "Systems/Camera.h"
 
 class Application
 {

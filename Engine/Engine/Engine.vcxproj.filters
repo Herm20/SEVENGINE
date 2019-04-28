@@ -16,9 +16,6 @@
     <ClCompile Include="Core\Physics\CollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -85,10 +82,10 @@
     <ClCompile Include="Core\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Systems\CameraSystem.cpp">
+    <ClCompile Include="Core\Systems\ScriptSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Systems\ScriptSystem.cpp">
+    <ClCompile Include="Core\Systems\Camera.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,9 +97,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\AudioManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Core\InputPoller.h">
@@ -204,9 +198,6 @@
     <ClInclude Include="Core\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Systems\CameraSystem.h">
-      <Filter>Header Files\ECS\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Scripting\BindingBase.h">
       <Filter>Header Files\ECS\Scripting</Filter>
     </ClInclude>
@@ -223,6 +214,9 @@
       <Filter>Header Files\ECS\Scripting\Bindings</Filter>
     </ClInclude>
     <ClInclude Include="Core\Systems\ScriptSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Systems\Camera.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
