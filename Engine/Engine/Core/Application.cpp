@@ -78,8 +78,6 @@ void Application::Init()
 	scriptComp2.path = boost::container::string("Assets/Scripts/game-manager.lua");
 	manager.registerEntity(gm);
 
-	reloadHeld = false;
-
 }
 
 void Application::Load()
@@ -97,7 +95,6 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
-		glfwPollEvents();
 
 		Timer::update();
 
@@ -106,16 +103,16 @@ void Application::Run()
 		
 		EventManager::ExecuteNext();
 
-		if (Input::GetKey(GLFW_KEY_P))
+		if (Input::GetKeyDown(GLFW_KEY_P))
 		{
-			if (!reloadHeld) { scriptSystem->ReloadScripts(); }
-			reloadHeld = true;
+			scriptSystem->ReloadScripts();
 		}
-		else { reloadHeld = false; }
 
 		manager.updateEntities(Timer::GetDeltaTime());
 
 		Input::UpdateKeyStates();// call this after all the inputs have been processed
+		glfwPollEvents();
+
 	}
 }
 

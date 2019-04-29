@@ -76,8 +76,6 @@ function init(self)
 	print("Hello World")
 	
 	world.spawnentity(lightprefab)
-	world.spawnentity(swordprefab)
-	world.spawnentity(orbiterprefab)
 	world.spawnentity(playerprefab)
 	world.spawnentity(playerprefab)
 end
