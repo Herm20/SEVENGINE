@@ -63,12 +63,10 @@ function update(self, dt)
 	-- Update position for use by other scripts
 	self.position = entity.getposition()
 
-	-- Health control (test)
-	self.tt = self.tt + dt
-	self.health = math.abs(math.sin(self.tt)) * 100
-
 end
 
 function onmessage(self, message, data)
 	print("Script #" .. tostring(self.scriptid) .. " received message : " .. message)
+	self.health = self.health - 10
+	self.health = math.max(0, self.health)
 end

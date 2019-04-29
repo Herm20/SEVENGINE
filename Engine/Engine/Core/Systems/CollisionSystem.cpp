@@ -71,7 +71,6 @@ CollisionSystem::CollisionSystem(ecs::Manager& manager, ScriptSystem* scriptSys)
 void CollisionSystem::startFrame(float dt) {
 }
 
-#include <iostream>
 void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 	const std::unordered_map<ecs::Entity, ecs::ColliderComponent> allColliders = manager.getComponentStore<ecs::ColliderComponent>().getComponents();
@@ -95,7 +94,7 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 			// If first frame of collision
 			if (colliding && !collider.collisions[otherEntity] && ecs::ColliderType::Hurtbox == collider.type) {
-				scriptSystem->SendMessage(entity, 3, "oncollision", "01");
+				scriptSystem->SendMessage(entity, 3, "oncollisionhurtbox", "");
 			}
 			collider.collisions[otherEntity] = colliding;
 
