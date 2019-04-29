@@ -1,3 +1,6 @@
+
+GRAVITY = -30
+
 local lightprefab = {
 	transform = {
 		position = { 0, 0, 0 },
@@ -41,7 +44,29 @@ local orbiterprefab = {
 	collider = {
 		type = "hitbox",
 		shape = "cube",
-		size = { 0.6, 3, 0.3 },
+		size = { 1, 1, 1 },
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 })
+	}
+}
+
+local playerprefab = {
+	transform = {
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 1, 1, 1 }
+	},
+	meshrenderer = {
+		mesh = "sphere",
+		material = "test"
+	},
+	script = {
+		path = "Assets/Scripts/player.lua"
+	},
+	collider = {
+		type = "hitbox",
+		shape = "cube",
+		size = { 1, 1, 1 },
 		position = { 0, 0, 0 },
 		rotation = math.eulerangles({ 0, 0, 0 })
 	}
@@ -53,6 +78,8 @@ function init(self)
 	world.spawnentity(lightprefab)
 	world.spawnentity(swordprefab)
 	world.spawnentity(orbiterprefab)
+	world.spawnentity(playerprefab)
+	world.spawnentity(playerprefab)
 end
 
 function update(self, dt)
