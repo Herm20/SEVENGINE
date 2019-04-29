@@ -433,6 +433,15 @@ void AssetManager::LoadAssetsFromAssetDir()
 		shaderPrograms["def"]->AttachShader(GetShader("FragmentShader").get());
 		shaderPrograms["def"]->Link();
 	}
+
+	if (shaderPrograms.find("spritesheet") == shaderPrograms.end())
+	{
+		shaderPrograms["spritesheet"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["spritesheet"]->AttachShader(GetShader("SpriteSheetVertexShader").get());
+		shaderPrograms["spritesheet"]->AttachShader(GetShader("SpriteSheetFragmentShader").get());
+		shaderPrograms["spritesheet"]->Link();
+	}
+
 }
 
 /*! \brief Asset loader destructor

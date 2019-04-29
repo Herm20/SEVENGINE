@@ -27,7 +27,7 @@ void Application::Init()
 	assetMan->LoadAssetsFromAssetDir();
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("othersheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("othersheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
 
 	renderer->Init(assetMan);
 

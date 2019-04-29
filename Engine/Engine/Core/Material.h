@@ -66,7 +66,7 @@ public:
 	inline void SetShaderProgram(boost::shared_ptr<ShaderProgram> program) { this->shaderProgram = program; }
 
 	const Material & operator=(const Material &m);
-	~Material();
+	virtual ~Material();
 };
 
 #endif // !MESH_H_

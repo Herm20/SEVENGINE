@@ -7,7 +7,6 @@ layout (location = 3) in vec3 tan;
 layout (location = 4) in vec3 bitan;
 
 uniform mat4 model;
-uniform mat3 invTrans;
 uniform mat4 cameraMatrix;
 
 out VS_OUT
@@ -17,6 +16,6 @@ out VS_OUT
 
 void main(void)
 {
-	gl_Position = cameraMatrix * worldPos;
+	gl_Position = cameraMatrix * model * vec4(position, 1.0);
 	vsOut.uv = uv;
 }
