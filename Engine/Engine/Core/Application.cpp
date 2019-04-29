@@ -65,7 +65,7 @@ void Application::Init()
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
 	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
-	manager.addSystem(ecs::System::Ptr(new CollisionSystem(manager)));
+	manager.addSystem(ecs::System::Ptr(new CollisionSystem(manager, scriptSystem)));
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 	manager.addSystem(ecs::System::Ptr(scriptSystem));

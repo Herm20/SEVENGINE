@@ -84,6 +84,7 @@ namespace ecs {
 		mat3 rotation;
 		bool active = false;
 		bool isColliding = false;
+		std::map<ecs::Entity, bool> collisions;
 	};
 
 	struct LightComponent : public Component {

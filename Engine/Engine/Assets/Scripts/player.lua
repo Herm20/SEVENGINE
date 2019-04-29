@@ -25,6 +25,12 @@ function init(self)
 	self.jumping = false
 	self.jumpHeight = 10
 	self.yVel = 0
+	
+	self.position = {0, 0, 0}
+
+	self.maxhealth = 100
+	self.health = self.maxhealth
+	self.tt = 0
 
 end
 
@@ -53,6 +59,13 @@ function update(self, dt)
 		self.jumping = false
 	end
 	entity.translate({ 0, self.yVel * dt, 0 })
+
+	-- Update position for use by other scripts
+	self.position = entity.getposition()
+
+	-- Health control (test)
+	self.tt = self.tt + dt
+	self.health = math.abs(math.sin(self.tt)) * 100
 
 end
 

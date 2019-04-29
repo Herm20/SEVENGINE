@@ -64,7 +64,7 @@ local playerprefab = {
 		path = "Assets/Scripts/player.lua"
 	},
 	collider = {
-		type = "hitbox",
+		type = "hurtbox",
 		shape = "cube",
 		size = { 1, 1, 1 },
 		position = { 0, 0, 0 },
@@ -72,12 +72,32 @@ local playerprefab = {
 	}
 }
 
+local healthbarprefab = {
+	transform = {
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 1, 1, 1 }
+	},
+	meshrenderer = {
+		mesh = "quad",
+		material = "test"
+	},
+	script = {
+		path = "Assets/Scripts/healthbar.lua"
+	},
+}
+
 function init(self)
 	print("Hello World")
 	
 	world.spawnentity(lightprefab)
+	world.spawnentity(orbiterprefab)
+
 	world.spawnentity(playerprefab)
 	world.spawnentity(playerprefab)
+
+	world.spawnentity(healthbarprefab)
+	world.spawnentity(healthbarprefab)
 end
 
 function update(self, dt)

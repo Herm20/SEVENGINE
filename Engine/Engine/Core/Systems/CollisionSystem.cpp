@@ -57,18 +57,21 @@ bool CollidesOBBvOBB(const ecs::ColliderComponent& a, const ecs::ColliderCompone
 
 }
 
-CollisionSystem::CollisionSystem(ecs::Manager& manager) : ecs::System(manager) {
+CollisionSystem::CollisionSystem(ecs::Manager& manager, ScriptSystem* scriptSys) : ecs::System(manager) {
 
 	ecs::ComponentTypeSet requiredComponents;
 	requiredComponents.insert(ecs::TransformComponent::_mType);
 	requiredComponents.insert(ecs::ColliderComponent::_mType);
 	setRequiredComponents(std::move(requiredComponents));
 
+	scriptSystem = scriptSys;
+
 }
 
 void CollisionSystem::startFrame(float dt) {
 }
 
+#include <iostream>
 void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 	const std::unordered_map<ecs::Entity, ecs::ColliderComponent> allColliders = manager.getComponentStore<ecs::ColliderComponent>().getComponents();
@@ -83,14 +86,20 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 	for (auto it = allColliders.begin(); it != allColliders.end(); it++) {
 		
-		if (it->first != entity) {
+		ecs::Entity otherEntity = it->first;
+		if (otherEntity != entity) {
 
 			ecs::ColliderComponent otherCollider = it->second;
 			if (!otherCollider.active) return;
 			bool colliding = CollidesOBBvOBB(collider, otherCollider);
-			if (colliding) {
-				collider.isColliding = true;
+
+			// If first frame of collision
+			if (colliding && !collider.collisions[otherEntity] && ecs::ColliderType::Hurtbox == collider.type) {
+				scriptSystem->SendMessage(entity, 3, "oncollision", "01");
 			}
+			collider.collisions[otherEntity] = colliding;
+
+			if (colliding) collider.isColliding = true;
 
 		}
 
