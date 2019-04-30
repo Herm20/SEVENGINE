@@ -11,6 +11,7 @@ class ComboManager
 private:
 	bool ContinueCombo(std::string);
 	Timer* timer;
+	int ComboInterval;
 
 public:
 	ComboManager(std::map<std::string,int>);

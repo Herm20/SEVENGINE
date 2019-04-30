@@ -1,23 +1,24 @@
 #include "ComboManager.h"
 #include <iostream>
 
-ComboManager::ComboManager(std::map<std::string, int> keyMap) 
+ComboManager::ComboManager(std::map<std::string, int> keyMap)
 {
-	m_comboList.push_back({"Jab","Hook","FrontKick","RoundKick"});
-	m_comboList.push_back({"Jab","Jab","Hook","Hook"});
-	m_comboList.push_back({"Hook","Hook","RoundKick","FrontKick"});
-	m_comboList.push_back({"RoundKick","FrontKick","FrontKick","RoundKick"});
+	m_comboList.push_back({ "Jab","Hook","FrontKick","RoundKick" });
+	m_comboList.push_back({ "Jab","Jab","Hook","Hook" });
+	m_comboList.push_back({ "Hook","Hook","RoundKick","FrontKick" });
+	m_comboList.push_back({ "RoundKick","FrontKick","FrontKick","RoundKick" });
 
 	comboCount = 0;
 	m_keyMap = keyMap;
+	ComboInterval = 500;
 }
 
-ComboManager::~ComboManager() 
+ComboManager::~ComboManager()
 {
 
 }
 
-void ComboManager::ChangeKeyMap(std::map<std::string, int> keyMap) 
+void ComboManager::ChangeKeyMap(std::map<std::string, int> keyMap)
 {
 	m_keyMap = keyMap;
 }
@@ -26,9 +27,9 @@ void ComboManager::CheckForCombo(int keyValue)//default combofunction to be aces
 {
 	std::string move;
 
-	for (auto it = m_keyMap.begin(); it != m_keyMap.end(); it++) 
+	for (auto it = m_keyMap.begin(); it != m_keyMap.end(); it++)
 	{
-		if (it->second = keyValue) 
+		if (it->second == keyValue)
 		{
 			move = it->first;
 		}
@@ -36,9 +37,9 @@ void ComboManager::CheckForCombo(int keyValue)//default combofunction to be aces
 
 	if (!ContinueCombo(move))
 	{
-		possibleCombos.clear();
+		comboCount = 0;
 		//pushes in all possible combos starting with this move if a comborun was not already in development
-		for (int i = 0; i < m_comboList.size(); i++) 
+		for (int i = 0; i < m_comboList.size(); i++)
 		{
 			if (move == m_comboList[i][0])
 			{
@@ -46,44 +47,51 @@ void ComboManager::CheckForCombo(int keyValue)//default combofunction to be aces
 			}
 		}
 		lastMoveTime = timer->GetCurrentTime();
+		if (possibleCombos.size() > 0)comboCount++;
 	}
 }
 
 bool ComboManager::ContinueCombo(std::string move)
 {
+	if (possibleCombos.size() == 0)return false;
+
 	std::chrono::duration<float> currentTime = Timer::GetCurrentTime();
-	if(possibleCombos.size() == 0)return false;
-	
-	if (std::chrono::milliseconds(500) > std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime))
-	{
-		std::cout << "combo failed!\n";
-		return false;
-	}
 
 	int t = 0;
-	for (int i = 0; i < possibleCombos.size()+t; i++) 
+	for (int i = 0; i < possibleCombos.size() + t; i++)
 	{
-		if (move != possibleCombos[i-t][comboCount]) 
+		if (move != possibleCombos[i - t][comboCount])
 		{
 			possibleCombos.erase(possibleCombos.begin() + i - t);
+			t++;
 		}
 	}
 
-	if (possibleCombos.size() > 0) 
+	if (std::chrono::milliseconds(ComboInterval) < std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastMoveTime))
 	{
-		if ((possibleCombos.size() == 1)) 
+		possibleCombos.clear();
+		return false;
+	}
+
+	if (possibleCombos.size() > 0)
+	{
+		std::cout << "COMBO DAMAGE: " << comboCount + 1 << "X!\n";
+		if ((possibleCombos.size() == 1))
 		{
 			if ((possibleCombos[0].size() - 1) == comboCount)
 			{
 				//EXECUTE COMBO
 				std::cout << "COMBO SUCCESSFULL\n";
+				possibleCombos.clear();
+				comboCount = -1;
 			}
 		}
+		comboCount++;
 		return true;
 	}
-	else 
+	else
 	{
-		comboCount = 0;
+		possibleCombos.clear();
 		return false;
 	}
 }
