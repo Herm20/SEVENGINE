@@ -28,6 +28,8 @@ void Application::Init()
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 
+	assetMan->CreateMaterial("redNoSpecular", assetMan->GetTexture("red"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
+
 	renderer->Init(assetMan);
 
 	eventMan = new EventManager();

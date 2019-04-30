@@ -80,7 +80,7 @@ local healthbarprefab = {
 	},
 	meshrenderer = {
 		mesh = "quad",
-		material = "test"
+		material = "redNoSpecular"
 	},
 	script = {
 		path = "Assets/Scripts/healthbar.lua"

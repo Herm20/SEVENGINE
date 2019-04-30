@@ -54,10 +54,10 @@ void Renderer::Init(AssetManager * assetMan) {
 	colliderTextureBlue = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)colliderColorBlue));
 	colliderTextureGray = boost::shared_ptr<Texture>(new Texture(1, 1, 3, GL_TEXTURE_2D, GL_UNSIGNED_BYTE, (const void*)colliderColorGray));
 
-	assetMan->CreateMaterial("collider-red", colliderTextureRed, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("collider-green", colliderTextureGreen, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("collider-blue", colliderTextureBlue, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("collider-gray", colliderTextureGray, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("collider-red", colliderTextureRed, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("collider-green", colliderTextureGreen, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("collider-blue", colliderTextureBlue, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
+	assetMan->CreateMaterial("collider-gray", colliderTextureGray, assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
 	colliderMatRed = assetMan->GetMaterial("collider-red");
 	colliderMatGreen = assetMan->GetMaterial("collider-green");
 	colliderMatBlue = assetMan->GetMaterial("collider-blue");
