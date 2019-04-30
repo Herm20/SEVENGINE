@@ -8,12 +8,13 @@ in VS_OUT
 uniform sampler2D diffuse;
 
 uniform vec2 scaleSize;
+uniform vec2 offset;
 
 out vec4 fragColor;
 
 void main()
 {
-	vec2 uv = (fsIn.uv * vec2(0.05, 0.08)) + vec2(0, 0.92);
+	vec2 uv = (fsIn.uv * scaleSize) + offset;
 	vec4 color = texture(diffuse, uv);
 
 	if(color.a < 0.25)

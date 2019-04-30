@@ -1,16 +1,29 @@
 #include "SpriteSheet.h"
 
-SpriteSheet::SpriteSheet(int cellWidth, int cellHeight)
+SpriteSheet::SpriteSheet()
 {
-	scaleSize.x = cellWidth;
-	scaleSize.y = cellHeight;
+
 }
 
+void SpriteSheet::Generate(glm::uvec2 cellSize, boost::shared_ptr<Texture> diff)
+{
+	int totalFrames_w = diff->GetWidth() / cellSize.x;
+	int totalFrames_h = diff->GetHeight() / cellSize.y;
+
+	glm::vec2 wh(diff->GetWidth(), diff->GetHeight());
+
+	scaleSize = glm::vec2(cellSize) / wh;
+
+	for (int i = 0; i <= totalFrames_h; i++)
+	{
+		for (int j = 0; j <= totalFrames_w; j++)
+		{
+			offsets.push_back((glm::vec2(j, i) * glm::vec2(cellSize)) / wh);
+		}
+	}
+}
 
 SpriteSheet::~SpriteSheet()
 {
-}
 
-void SpriteSheet::GenerateFrames()
-{
 }

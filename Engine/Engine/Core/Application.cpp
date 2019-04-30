@@ -27,7 +27,7 @@ void Application::Init()
 	assetMan->LoadAssetsFromAssetDir();
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("othersheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
+	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("jocksheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
 
 	renderer->Init(assetMan);
 
@@ -62,6 +62,7 @@ void Application::Init()
 	manager.createComponentStore<ecs::ColliderComponent>();
 	manager.createComponentStore<ecs::LightComponent>();
 	manager.createComponentStore<ecs::ScriptComponent>();
+	manager.createComponentStore<ecs::SpriteSheetComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
@@ -70,6 +71,7 @@ void Application::Init()
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 	manager.addSystem(ecs::System::Ptr(scriptSystem));
+	manager.addSystem(ecs::System::Ptr(new SpriteSheetSystem(manager)));
 
 	ecs::Entity gm = manager.createEntity();
 	manager.addComponent(gm, ecs::TransformComponent());

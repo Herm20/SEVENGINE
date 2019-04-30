@@ -3,18 +3,22 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-#include "Material.h"
 #include <glm/glm.hpp>
+#include <boost/container/vector.hpp>
+#include <boost/shared_ptr.hpp>
+#include "Texture.h"
+#include "Animation.h"
 
-class SpriteSheet : public Material
+class SpriteSheet
 {
 public:
-	SpriteSheet(int cellWidth, int cellHeight);
+	SpriteSheet();
+	void Generate(glm::uvec2 cellSize, boost::shared_ptr<Texture> diff);
 	~SpriteSheet();
-	void GenerateFrames();
-
-private:
 	glm::vec2 scaleSize;
-	glm::vec2 frames[];
+	boost::container::vector<glm::vec2> offsets;
+	int currFrame;
+private:
+	
 };
 #endif // ! SPRITESHEET_H_

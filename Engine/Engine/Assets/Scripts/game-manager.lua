@@ -22,6 +22,24 @@ local swordprefab = {
 	meshrenderer = {
 		mesh = "quad",
 		material = "spritesheet"
+	},
+	spritesheet = {
+		size = { 1050, 870, 0 },
+		texture = "jocksheet",
+		anim = {
+			{
+			animSpeed = 3000,
+			startFrame = 0,
+			endFrame = 6,
+			doesLoop = false
+			},
+			{
+			animSpeed = 3000,
+			startFrame = 0,
+			endFrame = 6,
+			doesLoop = false
+			}
+		}
 	}
 }
 

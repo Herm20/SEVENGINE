@@ -10,4 +10,5 @@ namespace ecs
 	const ComponentType PlayerStateInfoComponent::_mType;
 	const ComponentType LightComponent::_mType;
 	const ComponentType ScriptComponent::_mType;
+	const ComponentType SpriteSheetComponent::_mType;
 }

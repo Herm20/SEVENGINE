@@ -31,6 +31,7 @@ AssetManager::AssetManager()
 
 /*! \brief Creates a material with the parameters and puts it in the map
  *
+ * \param (boost::container::string) id - The id for the material
  * \param (boost::shared_ptr<Texture>) diffuseTex - The diffuse tex
  * \param (boost::shared_ptr<Texture>) normalTex - The normal tex
  * \param (boost::shared_ptr<Texture>) specularTex - The specular tex

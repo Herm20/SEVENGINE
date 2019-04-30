@@ -22,6 +22,7 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
+    <ClCompile Include="Core\ECS\Component.cpp" />
     <ClCompile Include="Core\ECS\Manager.cpp" />
     <ClCompile Include="Core\ECS\System.cpp" />
     <ClCompile Include="Core\Event.cpp" />
@@ -44,11 +45,13 @@
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
     <ClCompile Include="Core\SpriteSheet.cpp" />
     <ClCompile Include="Core\Systems\ScriptSystem.cpp" />
+    <ClCompile Include="Core\Systems\SpriteSheetSystem.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
     <ClCompile Include="Core\Timer_Sad.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Animation.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
@@ -86,6 +89,7 @@
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />
     <ClInclude Include="Core\SpriteSheet.h" />
     <ClInclude Include="Core\Systems\ScriptSystem.h" />
+    <ClInclude Include="Core\Systems\SpriteSheetSystem.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Timer_Sad.h" />
