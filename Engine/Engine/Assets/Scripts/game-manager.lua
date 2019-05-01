@@ -24,8 +24,8 @@ local swordprefab = {
 		material = "spritesheet"
 	},
 	spritesheet = {
-		size = { 1050, 870, 0 },
-		texture = "jocksheet",
+		size = { 175, 175, 0 },
+		texture = "spiderSheet",
 		anim = {
 			{
 			animSpeed = 3000,
