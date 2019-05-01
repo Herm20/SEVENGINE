@@ -25,21 +25,7 @@ local swordprefab = {
 	},
 	spritesheet = {
 		size = { 175, 175, 0 },
-		texture = "spiderSheet",
-		anim = {
-			{
-			animSpeed = 3000,
-			startFrame = 0,
-			endFrame = 6,
-			doesLoop = false
-			},
-			{
-			animSpeed = 3000,
-			startFrame = 0,
-			endFrame = 6,
-			doesLoop = false
-			}
-		}
+		texture = "spiderSheet"
 	}
 }
 
@@ -63,7 +49,7 @@ function init(self)
 	
 	world.spawnentity(lightprefab)
 	world.spawnentity(swordprefab)
-	world.spawnentity(orbiterprefab)
+	--world.spawnentity(orbiterprefab)
 end
 
 function update(self, dt)

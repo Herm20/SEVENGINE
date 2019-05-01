@@ -31,13 +31,19 @@ void SpriteSheetSystem::updateEntity(float dt, ecs::Entity entity)
 
 	Animation anim = ss.animations["idle"];
 
+	if (!ss.frameSet)
+	{
+		ss.ss.currFrame = anim.startFrame;
+		ss.frameSet = true;
+	}
+
 	while (ss.currFrameTime >= anim.animRate)
 	{
 		if (ss.ss.currFrame != anim.endFrame || anim.doesLoop) 
 		{
 			ss.ss.currFrame++;
 		}
-		
+		printf("%i ", ss.ss.currFrame);
 		ss.currFrameTime -= anim.animRate;
 
 		if (ss.ss.currFrame > anim.endFrame)

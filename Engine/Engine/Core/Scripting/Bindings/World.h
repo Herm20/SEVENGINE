@@ -165,9 +165,9 @@ void SCRIPT_World_SpawnEntity_SpriteSheetComponent(lua_State* state, AssetManage
 	comp.ss.Generate(glm::uvec2(size.x, size.y), assetMan->GetTexture(texName));
 
 	Animation idle;
-	idle.animRate = 1.0f;
-	idle.startFrame = 0;
-	idle.endFrame = 10;
+	idle.animRate = 0.5f;
+	idle.startFrame = 44;
+	idle.endFrame = 53;
 	idle.doesLoop = true;
 	comp.animations["idle"] = idle;
 

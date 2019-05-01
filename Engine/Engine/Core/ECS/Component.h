@@ -100,6 +100,7 @@ namespace ecs {
 		SpriteSheet ss;
 		boost::container::string currentAnimationId;
 		float currFrameTime;
+		bool frameSet = false;
 		std::map<boost::container::string, Animation> animations;
 	};
 }
