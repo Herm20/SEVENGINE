@@ -18,6 +18,7 @@ void CameraSystem::Init(GLFWwindow* window)
 	rotation = { 0,0,0 };
 	velocity = { 0,0,0 };
 	inputPoller.Init(window);
+	
 }
 
 void CameraSystem::Update(int winWidth, int winHeight)
@@ -43,6 +44,8 @@ void CameraSystem::Update(int winWidth, int winHeight)
 
 	// update to the world veiw matrix
 	cameraMatrix = perspectiveMat * lookAtMat;
+
+
 }
 
 void CameraSystem::Movement(GLFWwindow* window, int winWidth, int winHeight)

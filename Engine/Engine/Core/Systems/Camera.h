@@ -9,7 +9,8 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include "../ECS/System.h"
-#include "InputPoller.h"
+#include "../InputPoller.h"
+
 
 class CameraSystem
 {
@@ -31,12 +32,16 @@ public:
 	glm::vec3 GetPosition();
 	glm::vec3 GetVelocity();
 
+
+
 private:
 	// Variable for view matrix
 	float fieldOfView;
 	float aspectRatio;
 	float nearDistance;
 	float farDistance;
+
+	
 };
 #endif // CAMERASYSTEM_H_
 

@@ -15,17 +15,16 @@
 #include <glm/glm.hpp>
 #include <boost/container/string.hpp>
 #include <map>
-#include <vector>
 #include <string>
 
 #include "ComponentType.h"
 #include <glm/glm.hpp>
 #include "../Transform.h"
 #include "../Mesh.h"
-#include "../ComboManager.h"
 #include "../Material.h"
 #include "../Light.h"
 #include "../Types.h"
+#include "../SpriteSheet.h"
 
 namespace ecs {
 
@@ -50,7 +49,6 @@ namespace ecs {
 		void SetKey(std::string key, int value) {
 			map[key] = value;
 		}
-		ComboManager* comboManager;
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -95,6 +93,15 @@ namespace ecs {
 		static const ecs::ComponentType _mType = 8;
 		boost::container::string path;
 		u64 id = U64_MAX;
+	};
+
+	struct SpriteSheetComponent : public Component {
+		static const ecs::ComponentType _mType = 9;
+		SpriteSheet ss;
+		boost::container::string currentAnimationId;
+		float currFrameTime;
+		bool frameSet = false;
+		//std::map<boost::container::string, Animation> animations;
 	};
 }
 

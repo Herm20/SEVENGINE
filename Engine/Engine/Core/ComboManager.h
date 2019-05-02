@@ -12,6 +12,7 @@ private:
 	bool ContinueCombo(std::string);
 	Timer* timer;
 	int ComboInterval;
+	int callcount;
 
 public:
 	ComboManager(std::map<std::string,int>);

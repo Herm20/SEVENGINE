@@ -10,6 +10,7 @@
 #include "MeshData.h"
 #include "Material.h"
 #include "Light.h"
+#include "SpriteSheet.h"
 
 class Mesh {
 private:

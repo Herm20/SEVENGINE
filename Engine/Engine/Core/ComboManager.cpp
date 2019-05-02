@@ -11,6 +11,7 @@ ComboManager::ComboManager(std::map<std::string, int> keyMap)
 	comboCount = 0;
 	m_keyMap = keyMap;
 	ComboInterval = 500;
+	callcount = 0;
 }
 
 ComboManager::~ComboManager()
@@ -25,6 +26,8 @@ void ComboManager::ChangeKeyMap(std::map<std::string, int> keyMap)
 
 void ComboManager::CheckForCombo(int keyValue)//default combofunction to be acessed by the application for checking or contining combos
 {
+	callcount++;
+
 	std::string move;
 
 	for (auto it = m_keyMap.begin(); it != m_keyMap.end(); it++)
@@ -53,6 +56,7 @@ void ComboManager::CheckForCombo(int keyValue)//default combofunction to be aces
 
 bool ComboManager::ContinueCombo(std::string move)
 {
+	//std::cout << "key Pressed : " << move << "\n";
 	if (possibleCombos.size() == 0)return false;
 
 	std::chrono::duration<float> currentTime = Timer::GetCurrentTime();
@@ -75,13 +79,11 @@ bool ComboManager::ContinueCombo(std::string move)
 
 	if (possibleCombos.size() > 0)
 	{
-		std::cout << "COMBO DAMAGE: " << comboCount + 1 << "X!\n";
 		if ((possibleCombos.size() == 1))
 		{
 			if ((possibleCombos[0].size() - 1) == comboCount)
 			{
 				//EXECUTE COMBO
-				std::cout << "COMBO SUCCESSFULL\n";
 				possibleCombos.clear();
 				comboCount = -1;
 			}

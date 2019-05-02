@@ -18,6 +18,12 @@ Application::~Application()
 
 void Application::Init()
 {
+	keys["Jab"] = GLFW_KEY_H;
+	keys["Hook"] = GLFW_KEY_J;
+	keys["FrontKick"] = GLFW_KEY_N;
+	keys["RoundKick"] = GLFW_KEY_M;
+	combo = new ComboManager(keys);
+
 	Logger::Log(Logger::LogType::MSG, "Initializing engine");
 
 	renderer = new Renderer(manager);
@@ -99,6 +105,8 @@ void Application::Run()
 	{
 		glfwPollEvents();
 
+		TestingCombo();
+
 		Timer::update();
 
 		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
@@ -116,6 +124,31 @@ void Application::Run()
 		manager.updateEntities(Timer::GetDeltaTime());
 
 		Input::UpdateKeyStates();// call this after all the inputs have been processed
+
+
+	}
+}
+
+void Application::TestingCombo() 
+{
+	if (Input::GetKeyDown(keys["Jab"]))
+	{
+		combo->CheckForCombo(keys["Jab"]);
+	}
+
+	if (Input::GetKeyDown(keys["Hook"]))
+	{
+		combo->CheckForCombo(keys["Hook"]);
+	}
+
+	if (Input::GetKeyDown(keys["FrontKick"]))
+	{
+		combo->CheckForCombo(keys["FrontKick"]);
+	}
+
+	if (Input::GetKeyDown(keys["RoundKick"]))
+	{
+		combo->CheckForCombo(keys["RoundKick"]);
 	}
 }
 
