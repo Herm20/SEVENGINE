@@ -433,6 +433,14 @@ void AssetManager::LoadAssetsFromAssetDir()
 		shaderPrograms["def"]->AttachShader(GetShader("FragmentShader").get());
 		shaderPrograms["def"]->Link();
 	}
+	//TODO: make this less awful as well I suppose
+	if (shaderPrograms.find("sky") == shaderPrograms.end())
+	{
+		shaderPrograms["sky"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["sky"]->AttachShader(GetShader("SkyBoxVS").get());
+		shaderPrograms["sky"]->AttachShader(GetShader("SkyBoxFS").get());
+		shaderPrograms["sky"]->Link();
+	}
 }
 
 /*! \brief Asset loader destructor
