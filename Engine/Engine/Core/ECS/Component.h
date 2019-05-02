@@ -22,7 +22,7 @@
 #include <glm/glm.hpp>
 #include "../Transform.h"
 #include "../Mesh.h"
-#include "ComboManager.h"
+#include "../ComboManager.h"
 #include "../Material.h"
 #include "../Light.h"
 #include "../Types.h"
