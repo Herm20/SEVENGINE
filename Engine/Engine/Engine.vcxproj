@@ -38,6 +38,7 @@
     <ClCompile Include="Core\Renderer.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
     <ClCompile Include="Core\ShaderProgram.cpp" />
+    <ClCompile Include="Core\SkyBox.cpp" />
     <ClCompile Include="Core\Systems\Camera.cpp" />
     <ClCompile Include="Core\Systems\CollisionSystem.cpp" />
     <ClCompile Include="Core\Systems\LightSystem.cpp" />
@@ -80,6 +81,7 @@
     <ClInclude Include="Core\Scripting\Utilities.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\ShaderProgram.h" />
+    <ClInclude Include="Core\SkyBox.h" />
     <ClInclude Include="Core\Systems\Camera.h" />
     <ClInclude Include="Core\Systems\CollisionSystem.h" />
     <ClInclude Include="Core\Systems\LightSystem.h" />

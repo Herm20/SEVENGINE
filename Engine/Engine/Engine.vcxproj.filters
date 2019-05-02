@@ -88,6 +88,9 @@
     <ClCompile Include="Core\Systems\Camera.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\SkyBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -206,6 +209,9 @@
     <ClInclude Include="Core\Scripting\Bindings\World.h" />
     <ClInclude Include="Core\Scripting\Utilities.h" />
     <ClInclude Include="Core\Systems\Camera.h" />
+    <ClInclude Include="Core\SkyBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

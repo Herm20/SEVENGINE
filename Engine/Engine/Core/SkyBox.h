@@ -9,12 +9,13 @@
 class SkyBox
 {
 private:
+	u32 skyTextureID;
 	boost::shared_ptr<Mesh> skyMesh;
 	boost::shared_ptr<ShaderProgram> skyShaders;
 public:
 	SkyBox();
 	SkyBox(AssetManager * assets);
-	void Render(CameraSystem * cam);
+	void Render(const CameraSystem * cam);
 	~SkyBox();
 };
 #endif

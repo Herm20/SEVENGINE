@@ -13,6 +13,7 @@
 #include "ECS/System.h"
 #include "Systems/Camera.h"
 #include "Light.h"
+#include "SkyBox.h"
 
 using namespace glm;
 using namespace std;
@@ -28,6 +29,8 @@ private:
 
 	const CameraSystem* curCamera = nullptr;
 	boost::container::vector<Light> lights;
+
+	SkyBox * sky;
 
 	// Collider rendering
 	boost::shared_ptr<Mesh> cubeMesh;

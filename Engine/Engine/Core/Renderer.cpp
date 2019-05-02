@@ -35,6 +35,9 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 		return;
 	}
 
+	//SkyBox
+	sky = 0;
+
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glEnable(GL_DEPTH_TEST);
@@ -44,6 +47,8 @@ Renderer::Renderer(ecs::Manager& manager) : ecs::System(manager)
 void Renderer::Init(AssetManager * assetMan) {
 
 	cubeMesh = boost::shared_ptr<Mesh>(new Mesh(assetMan->GetMesh("box")));
+
+	sky = new SkyBox(assetMan);
 
 	u8 colliderColorRed[3] = { 255, 0, 0 };
 	u8 colliderColorGreen[3] = { 0, 255, 0 };
@@ -59,6 +64,9 @@ void Renderer::Init(AssetManager * assetMan) {
 
 Renderer::~Renderer()
 {
+	delete sky;
+	sky = 0;
+
 	//delete [] entities;
 	glfwTerminate();
 }
@@ -95,6 +103,8 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 	// Model
 	ecs::MeshRendererComponent& meshRenderer = manager.getComponentStore<ecs::MeshRendererComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
+
+	sky->Render(curCamera);
 
 	meshRenderer.mesh->Render(
 		transform.transform,
