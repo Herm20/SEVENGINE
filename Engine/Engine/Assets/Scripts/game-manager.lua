@@ -16,7 +16,7 @@ local lightprefab = {
 	}
 }
 
-local player1prefab = {
+local playerprefab = {
 	transform = {
 		position = { 0, 0, 0 },
 		rotation = math.eulerangles({ 0, 0, 0 }),
@@ -75,70 +75,7 @@ local player1prefab = {
                 loops = true
             }
         },
-        animkey = "uppercut"
-	}
-}
-
-local player2prefab = {
-	transform = {
-		position = { 0, 0, 0 },
-		rotation = math.eulerangles({ 0, 0, 0 }),
-		scale    = { 1, 1, 1 }
-	},
-	meshrenderer = {
-		mesh = "quad",
-		material = "spritesheetp2"
-	},
-	script = {
-		path = "Assets/Scripts/player.lua"
-	},
-	collider = {
-		type = "hurtbox",
-		shape = "cube",
-		offset = { 0, 0, 0 }
-	},
-	spritesheet = {
-		size = { 175, 175, 0 },
-		texture = "NewspiderSheet",
-        animations = {
-            idle = {
-                rate = 0.25,
-                startframe = 11,
-                endframe = 19,
-                loops = true
-            },
-            walk = {
-                rate = 0.15,
-                startframe = 21,
-                endframe = 31,
-                loops = true
-            },
-            jump = {
-                rate = 0.15,
-                startframe = 33,
-                endframe = 47,
-                loops = true
-            },
-            punch = {
-                rate = 0.25,
-                startframe = 48,
-                endframe = 53,
-                loops = true
-            },
-            uppercut = {
-                rate = 0.15,
-                startframe = 54,
-                endframe = 61,
-                loops = true
-            },
-            kick = {
-                rate = 0.15,
-                startframe = 62,
-                endframe = 65,
-                loops = true
-            }
-        },
-        animkey = "kick"
+        animkey = "idle"
 	}
 }
 
@@ -176,8 +113,13 @@ function init(self)
     
     self.tt = 0
 
-	world.spawnentity(player1prefab)
-	world.spawnentity(player2prefab)
+	playerprefab.meshrenderer.material = "spritesheetp1"
+	playerprefab.spritesheet.animkey = "uppercut"
+	world.spawnentity(playerprefab)
+
+	playerprefab.meshrenderer.material = "spritesheetp2"
+	playerprefab.spritesheet.animkey = "kick"
+	world.spawnentity(playerprefab)
 
 	world.spawnentity(healthbarprefab)
 	world.spawnentity(healthbarprefab)
