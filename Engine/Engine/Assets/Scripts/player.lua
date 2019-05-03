@@ -70,12 +70,14 @@ function update(self, dt)
 			xDir = -1
 		end
 		entity.translate({ self.speed * xDir * dt, 0, 0 })
+        --entity.setanimkey("walk");
 	end
 
 	-- Jumping
 	if (not (self.state == "JUMP")) and (not (self.state == "ATTACK")) and input.getkeydown(input.keys[self.keybinds.jump]) then
 		self.yVel = self.jumpHeight
 		self.state = "JUMP"
+        --entity.setanimkey("jump");
 	end
 	self.yVel = self.yVel + GRAVITY * dt
 
@@ -84,6 +86,8 @@ function update(self, dt)
 		entity.setposition({ pos[1], 0, pos[3] })
 		self.yVel = 0
 		if self.state == "JUMP" then
+            animkey = "idle"
+            --entity.setanimkey("idle");
 			self.state = "GROUND"
 		end
 	end
@@ -108,6 +112,8 @@ function update(self, dt)
 
 	if (not (self.state == "JUMP")) and (not (self.state == "ATTACK")) and input.getkeydown(input.keys[self.keybinds.punch]) then
 		self.state = "ATTACK"
+        animkey = "punch"
+       -- entity.setanimkey("punch");
 		punchprefab.transform.position = self.position
 		if not facingright then
 			punchprefab.collider.offset[1] = -math.abs(punchprefab.collider.offset[1])

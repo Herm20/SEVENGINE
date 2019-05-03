@@ -48,14 +48,12 @@ void Application::Init()
 
 	inputPoller.Init(renderer->GetWindow());
 
-	masterBG = new AudioManager();
-	masterBG->InitSoundBG();
-	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
-	//masterBG->Play();
-	masterBG->SetVolume(0.08f);
+	AudioManager::InitSoundBG();
+	AudioManager::LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
+	AudioManager::Play();
+	AudioManager::SetVolume(0.08f);
 
-	masterEffect = new AudioManager();
-	masterEffect->InitSoundEffect();
+	AudioManager::InitSoundEffect();
 
 	manager.createComponentStore<ecs::MeshRendererComponent>();
 	manager.createComponentStore<ecs::TransformComponent>();
@@ -103,7 +101,6 @@ void Application::Run()
 	{
 
 		Timer::update();
-
 		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
 		//cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
 		
