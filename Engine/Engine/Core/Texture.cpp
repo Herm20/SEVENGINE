@@ -15,7 +15,7 @@ Texture::Texture(i32 width, i32 height, i32 channels, uint32_t textureType, uint
 	glTexParameteri(this->textureType, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
 	glTexParameteri(this->textureType, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(this->textureType, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, iFormat, this->width, this->height, 0, GL_RGBA, dataType, data);
+	glTexImage2D(this->textureType, 0, iFormat, this->width, this->height, 0, GL_RGBA, dataType, data);
 	glGenerateMipmap(this->textureType);
 	glBindTexture(this->textureType, 0);
 }
@@ -50,6 +50,16 @@ const Texture & Texture::operator=(const Texture &t)
 	this->textureId = t.textureId;
 
 	return *this;
+}
+
+i32 Texture::GetWidth()
+{
+	return width;
+}
+
+i32 Texture::GetHeight()
+{
+	return height;
 }
 
 Texture::~Texture()

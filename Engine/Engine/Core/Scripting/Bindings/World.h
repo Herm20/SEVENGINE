@@ -5,6 +5,7 @@
 #include "../Utilities.h"
 
 #include "../../AssetManager.h"
+#include "../../Animation.h"
 
 #include <cstdio>
 
@@ -142,13 +143,80 @@ void SCRIPT_World_SpawnEntity_ScriptComponent(lua_State* state, ecs::ScriptCompo
 	}
 }
 
+void SCRIPT_World_SpawnEntity_SpriteSheetComponent_Animations(lua_State* state, ecs::SpriteSheetComponent& comp)
+{
+	lua_pushnil(state);
+	Animation anim;
+
+	while (lua_next(state, -2))
+	{
+		lua_getfield(state, -1, "rate");
+		anim.animRate = lua_tonumber(state, -1);
+		lua_pop(state, 1);
+
+		lua_getfield(state, -1, "startframe");
+		anim.startFrame = (int)(lua_tonumber(state, -1));
+		lua_pop(state, 1);
+
+		lua_getfield(state, -1, "endframe");
+		anim.endFrame = (int)(lua_tonumber(state, -1));
+		lua_pop(state, 1);
+
+		lua_getfield(state, -1, "loops");
+		anim.doesLoop = lua_toboolean(state, -1);
+		lua_pop(state, 1);
+
+		comp.animations[lua_tostring(state, -2)] = anim;
+
+		lua_pop(state, 1);
+	}
+}
+
+void SCRIPT_Animation_SetKey(lua_State* state, boost::container::string key, ecs::SpriteSheetComponent& comp)
+{
+	lua_pushnil(state);
+
+	comp.currentAnimationId = key;
+
+	lua_pop(state, 1);
+}
+
+void SCRIPT_World_SpawnEntity_SpriteSheetComponent(lua_State* state, AssetManager* assetMan, ecs::SpriteSheetComponent& comp)
+{
+	lua_pushnil(state);
+
+	glm::vec3 size;
+	boost::container::string texName;
+	boost::container::string animKey;
+
+	while (lua_next(state, -2))
+	{
+		boost::container::string ckey = boost::container::string(lua_tostring(state, -2));
+
+		if (ckey == boost::container::string("size"))
+			size = SCRIPT_UTIL_GetVector(state, -1);
+		else if (ckey == boost::container::string("texture"))
+			texName = boost::container::string(lua_tostring(state, -1));
+		else if (ckey == boost::container::string("animations"))
+			SCRIPT_World_SpawnEntity_SpriteSheetComponent_Animations(state, comp);
+		else if (ckey == boost::container::string("animkey"))
+		{
+			animKey = boost::container::string(lua_tostring(state, -1));
+			SCRIPT_Animation_SetKey(state, animKey, comp);
+		}
+
+		lua_pop(state, 1);
+	}
+
+	comp.ss.Generate(glm::uvec2(size.x, size.y), assetMan->GetTexture(texName));
+}
+	
 void SCRIPT_World_SpawnEntity_ColliderComponent(lua_State* state, ecs::ColliderComponent& comp)
 {
 	lua_pushnil(state);
 	while (lua_next(state, -2))
 	{
 		boost::container::string ckey(lua_tostring(state, -2));
-
 		if (ckey == boost::container::string("type"))
 		{
 			const char* val = lua_tostring(state, -1);
@@ -171,6 +239,7 @@ void SCRIPT_World_SpawnEntity_ColliderComponent(lua_State* state, ecs::ColliderC
 
 		lua_pop(state, 1);
 	}
+
 }
 
 void ScriptSystem::SCRIPT_World_SpawnEntity()
@@ -211,6 +280,12 @@ void ScriptSystem::SCRIPT_World_SpawnEntity()
 		{
 			manager.addComponent(spawned, ecs::ScriptComponent());
 			SCRIPT_World_SpawnEntity_ScriptComponent(state, manager.getComponentStore<ecs::ScriptComponent>().get(spawned));
+		}
+		
+		else if (ekey == boost::container::string("spritesheet"))
+		{
+			manager.addComponent(spawned, ecs::SpriteSheetComponent());
+			SCRIPT_World_SpawnEntity_SpriteSheetComponent(state, assetMan, manager.getComponentStore<ecs::SpriteSheetComponent>().get(spawned));
 		}
 
 		lua_pop(state, 1);

@@ -3,6 +3,7 @@
 
 #include "../Types.h"
 #include "../ECS/System.h"
+#include "Camera.h"
 #include "../ECS/Component.h"
 
 #include <boost/container/string.hpp>
@@ -22,8 +23,9 @@ private:
 
 public:
 	ecs::Entity currentEntity;
+	CameraSystem* cam;
 
-	ScriptSystem(ecs::Manager& manager, AssetManager* assetManager);
+	ScriptSystem(ecs::Manager& manager, AssetManager* assetManager, CameraSystem* cams);
 	~ScriptSystem();
 
 	void Init();
@@ -57,6 +59,8 @@ public:
 	void SCRIPT_Entity_RotateLocal(glm::quat quat);
 	void SCRIPT_Entity_Scale(glm::vec3 vec);
 	void SCRIPT_Entity_ScaleAdd(glm::vec3 vec);
+	void SCRIPT_Animation_SetKey(boost::container::string key);
+	void SCRIPT_Audio_PlayEffect(const char* file);
 };
 
 #endif

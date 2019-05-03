@@ -31,6 +31,7 @@ AssetManager::AssetManager()
 
 /*! \brief Creates a material with the parameters and puts it in the map
  *
+ * \param (boost::container::string) id - The id for the material
  * \param (boost::shared_ptr<Texture>) diffuseTex - The diffuse tex
  * \param (boost::shared_ptr<Texture>) normalTex - The normal tex
  * \param (boost::shared_ptr<Texture>) specularTex - The specular tex
@@ -433,6 +434,31 @@ void AssetManager::LoadAssetsFromAssetDir()
 		shaderPrograms["def"]->AttachShader(GetShader("FragmentShader").get());
 		shaderPrograms["def"]->Link();
 	}
+
+	if (shaderPrograms.find("spritesheetp1") == shaderPrograms.end())
+	{
+		shaderPrograms["spritesheetp1"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["spritesheetp1"]->AttachShader(GetShader("SpriteSheetVertexShader").get());
+		shaderPrograms["spritesheetp1"]->AttachShader(GetShader("SpriteSheetFragmentShader").get());
+		shaderPrograms["spritesheetp1"]->Link();
+	}
+
+	if (shaderPrograms.find("spritesheetp2") == shaderPrograms.end())
+	{
+		shaderPrograms["spritesheetp2"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["spritesheetp2"]->AttachShader(GetShader("SpriteSheetVertexShaderP2").get());
+		shaderPrograms["spritesheetp2"]->AttachShader(GetShader("SpriteSheetFragmentShaderP2").get());
+		shaderPrograms["spritesheetp2"]->Link();
+	}
+
+	if (shaderPrograms.find("rawcolor") == shaderPrograms.end())
+	{
+		shaderPrograms["rawcolor"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["rawcolor"]->AttachShader(GetShader("RawColorVertexShader").get());
+		shaderPrograms["rawcolor"]->AttachShader(GetShader("RawColorFragmentShader").get());
+		shaderPrograms["rawcolor"]->Link();
+	}
+
 }
 
 /*! \brief Asset loader destructor

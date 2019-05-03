@@ -27,7 +27,9 @@ void Application::Init()
 	assetMan->LoadAssetsFromAssetDir();
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-
+	assetMan->CreateMaterial("spritesheetp1", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheetp1"));
+	assetMan->CreateMaterial("spritesheetp2", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheetp2"));
+	assetMan->CreateMaterial("stage", assetMan->GetTexture("Stage_Texture"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("redNoSpecular", assetMan->GetTexture("red"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
 
 	renderer->Init(assetMan);
@@ -36,24 +38,23 @@ void Application::Init()
 
 	lightSystem = new LightSystem(manager);
 	lightSystem->SetLightsVector(&renderer->GetLightVector());
-	scriptSystem = new ScriptSystem(manager, assetMan);
-	scriptSystem->Init();
 
 	cameraSystem = new CameraSystem(manager);
 	cameraSystem->Init(renderer->GetWindow());
+
+	scriptSystem = new ScriptSystem(manager, assetMan, cameraSystem);
+	scriptSystem->Init();
 
 	renderer->SetCurrentCamera(cameraSystem);
 
 	inputPoller.Init(renderer->GetWindow());
 
-	masterBG = new AudioManager();
-	masterBG->InitSoundBG();
-	masterBG->LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
-	//masterBG->Play();
-	masterBG->SetVolume(0.08f);
+	AudioManager::InitSoundBG();
+	AudioManager::LoadBGFile("Assets/Audio/Background/upbeat.wav");
+	AudioManager::Play();
+	AudioManager::SetVolume(0.08f);
 
-	masterEffect = new AudioManager();
-	masterEffect->InitSoundEffect();
+	AudioManager::InitSoundEffect();
 
 	manager.createComponentStore<ecs::MeshRendererComponent>();
 	manager.createComponentStore<ecs::TransformComponent>();
@@ -63,6 +64,7 @@ void Application::Init()
 	manager.createComponentStore<ecs::ColliderComponent>();
 	manager.createComponentStore<ecs::LightComponent>();
 	manager.createComponentStore<ecs::ScriptComponent>();
+	manager.createComponentStore<ecs::SpriteSheetComponent>();
 
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
@@ -71,6 +73,7 @@ void Application::Init()
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 	manager.addSystem(ecs::System::Ptr(scriptSystem));
+	manager.addSystem(ecs::System::Ptr(new SpriteSheetSystem(manager)));
 
 	ecs::Entity gm = manager.createEntity();
 	manager.addComponent(gm, ecs::TransformComponent());
@@ -99,7 +102,6 @@ void Application::Run()
 	{
 
 		Timer::update();
-
 		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
 		//cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
 		
@@ -129,7 +131,6 @@ void Application::Exit()
 	delete assetMan;
 }
 
-/// SUPER TEMP
 void Application::CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey) {
 
 	ecs::Entity player = manager.createEntity();
@@ -149,5 +150,4 @@ void Application::CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jum
 	keyboardInput.map["MoveLeft"] = leftKey;
 	keyboardInput.map["MoveRight"] = rightKey;
 	manager.registerEntity(player);
-
 }

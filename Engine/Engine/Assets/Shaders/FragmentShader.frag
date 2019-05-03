@@ -52,10 +52,10 @@ void main()
 		vec3 l = normalize(-lights[i].dir);
 		vec3 h = reflect(-l, norm);//normalize(l + v);
 
-		vec3 tex = texture(diffuse, fsIn.uv).xyz;
+		vec3 tex = texture(diffuse, fsIn.uv).rgb;
 		vec3 amb = 0.1 * tex;
 		vec3 diff = max(dot(norm, l), 0.0) * tex;
-		vec3 spec = pow(max(dot(v, h), 0.0), 256) * texture(specular, fsIn.uv).xyz;
+		vec3 spec = pow(max(dot(v, h), 0.0), 256) * texture(specular, fsIn.uv).rgb;
 
 		finalColor += vec4(lights[i].color * (amb + diff + spec), 1.0);
 	}

@@ -25,6 +25,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Material.h"
+#include "SpriteSheet.h"
 #include "Logger.h"
 
 /*! \class AssetManager
@@ -54,6 +55,7 @@ public:
 	boost::shared_ptr<Shader> GetShader(boost::container::string id) const;
 	boost::shared_ptr<ShaderProgram> GetShaderProgram(boost::container::string id) const;
 	boost::shared_ptr<Material> GetMaterial(boost::container::string id) const;
+
 	void SaveAssets();
 	void SaveAssetToFile(const char* dir, const char* filename, const char* content);
 

@@ -66,10 +66,11 @@ void ScriptSystem::LoadScript(ecs::Entity entity, ecs::ScriptComponent& script)
 
 // PUBLIC
 
-ScriptSystem::ScriptSystem(ecs::Manager& manager, AssetManager* assetManager) :
+ScriptSystem::ScriptSystem(ecs::Manager& manager, AssetManager* assetManager, CameraSystem* cams) :
 	ecs::System(manager),
 	state(nullptr),
 	assetMan(assetManager),
+	cam(cams),
 	nextID(1),
 	currentEntity(0)
 {

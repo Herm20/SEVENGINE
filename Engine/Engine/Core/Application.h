@@ -16,6 +16,7 @@
 #include "Systems/LightSystem.h"
 #include "Systems/ScriptSystem.h"
 #include "Systems/Camera.h"
+#include "Systems/SpriteSheetSystem.h"
 
 class Application
 {

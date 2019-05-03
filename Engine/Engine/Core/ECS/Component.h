@@ -26,6 +26,7 @@
 #include "../Material.h"
 #include "../Light.h"
 #include "../Types.h"
+#include "../SpriteSheet.h"
 
 namespace ecs {
 
@@ -96,6 +97,19 @@ namespace ecs {
 		static const ecs::ComponentType _mType = 8;
 		boost::container::string path;
 		u64 id = U64_MAX;
+	};
+
+	struct SpriteSheetComponent : public Component {
+		static const ecs::ComponentType _mType = 9;
+		SpriteSheet ss;
+		boost::container::string currentAnimationId = "idle";
+		float currFrameTime;
+		bool frameSet = false;
+		std::map<boost::container::string, Animation> animations;
+	};
+
+	struct CameraComponent : public Component {
+		
 	};
 }
 

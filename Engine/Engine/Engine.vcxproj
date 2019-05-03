@@ -22,6 +22,7 @@
     <ClCompile Include="Core\Application.cpp" />
     <ClCompile Include="Core\AssetManager.cpp" />
     <ClCompile Include="Core\AudioManager.cpp" />
+    <ClCompile Include="Core\ECS\Component.cpp" />
     <ClCompile Include="Core\ComboManager.cpp" />
     <ClCompile Include="Core\ECS\Manager.cpp" />
     <ClCompile Include="Core\ECS\System.cpp" />
@@ -45,10 +46,12 @@
     <ClCompile Include="Core\Systems\RigidBodySystem.cpp" />
     <ClCompile Include="Core\SpriteSheet.cpp" />
     <ClCompile Include="Core\Systems\ScriptSystem.cpp" />
+    <ClCompile Include="Core\Systems\SpriteSheetSystem.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Animation.h" />
     <ClInclude Include="Core\Application.h" />
     <ClInclude Include="Core\AssetManager.h" />
     <ClInclude Include="Core\AudioManager.h" />
@@ -73,6 +76,7 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Scripting\BindingBase.h" />
     <ClInclude Include="Core\Scripting\Bindings.h" />
+    <ClInclude Include="Core\Scripting\Bindings\Camera.h" />
     <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h" />
     <ClInclude Include="Core\Scripting\Bindings\Input.h" />
     <ClInclude Include="Core\Scripting\Bindings\Math.h" />
@@ -87,6 +91,7 @@
     <ClInclude Include="Core\Systems\RigidBodySystem.h" />
     <ClInclude Include="Core\SpriteSheet.h" />
     <ClInclude Include="Core\Systems\ScriptSystem.h" />
+    <ClInclude Include="Core\Systems\SpriteSheetSystem.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Timer.h" />
     <ClInclude Include="Core\Transform.h" />
@@ -95,6 +100,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\FragmentShader.frag" />
+    <None Include="Assets\Shaders\SpriteSheetFragmentShader.frag" />
+    <None Include="Assets\Shaders\SpriteSheetFragmentShaderP2.frag" />
+    <None Include="Assets\Shaders\SpriteSheetVertexShader.vert" />
+    <None Include="Assets\Shaders\SpriteSheetVertexShaderP2.vert" />
     <None Include="Assets\Shaders\VertexShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -102,7 +111,7 @@
     <ProjectGuid>{3AE4E03C-C0B8-46CB-B76C-CDC947B0BAAE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Engine</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

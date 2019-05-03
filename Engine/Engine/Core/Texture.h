@@ -22,6 +22,8 @@ public:
 	void bind(u32 bindPoint);
 	void unbind(u32 bindPoint);
 	const Texture & operator=(const Texture &t);
+	i32 GetWidth();
+	i32 GetHeight();
 	~Texture();
 };
 

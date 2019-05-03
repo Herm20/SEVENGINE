@@ -88,6 +88,12 @@
     <ClCompile Include="Core\Systems\Camera.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="Core\ECS\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Systems\SpriteSheetSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Application.h">
@@ -206,6 +212,15 @@
     <ClInclude Include="Core\Scripting\Bindings\World.h" />
     <ClInclude Include="Core\Scripting\Utilities.h" />
     <ClInclude Include="Core\Systems\Camera.h" />
+    <ClInclude Include="Core\Systems\SpriteSheetSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Camera.h">
+      <Filter>Header Files\ECS\Scripting\Bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -240,7 +255,19 @@
     <None Include="Assets\Shaders\FragmentShader.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Assets\Shaders\SpriteSheetFragmentShader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\Shaders\SpriteSheetVertexShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
     <None Include="Assets\Shaders\VertexShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\Shaders\SpriteSheetFragmentShaderP2.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\Shaders\SpriteSheetVertexShaderP2.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

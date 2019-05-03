@@ -28,4 +28,9 @@
 	script = {
 		path = "Assets/Scripts/orbiter.lua"
 	}
+
+	spritesheet = {
+		size = { 1050, 870, 1 },
+		texture = "jocksheet"
+	}
 }

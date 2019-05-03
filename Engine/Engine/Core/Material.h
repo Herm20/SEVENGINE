@@ -6,11 +6,13 @@
 #include "Texture.h"
 
 class Material {
-private:
+protected:
 	boost::shared_ptr<Texture> diffuseTex;
 	boost::shared_ptr<Texture> normalTex;
 	boost::shared_ptr<Texture> specularTex;
 	boost::shared_ptr<ShaderProgram> shaderProgram;
+	glm::vec2 uvSize = glm::vec2(1.0f, 1.0f);
+	glm::vec2 uvOffset = glm::vec2();
 
 public:
 	Material();
@@ -65,8 +67,32 @@ public:
 	 */
 	inline void SetShaderProgram(boost::shared_ptr<ShaderProgram> program) { this->shaderProgram = program; }
 
+	/*! \brief Gets the UV size
+	 *
+	 * \return (const glm::vec2 &) The uv size
+	 */
+	inline const glm::vec2 & GetUVSize() { return this->uvSize; }
+
+	/*! \brief Sets the UV size
+	 *
+	 * \param (glm::vec2) uvSize - The uv size to set
+	 */
+	inline void SetUVSize(const glm::vec2 &uvSize) { this->uvSize = uvSize; }
+
+	/*! \brief Gets the UV offsets
+	 *
+	 * \return (const glm::vec2 &) The uv offset
+	 */
+	inline const glm::vec2 & GetUVOffset() { return this->uvOffset; }
+
+	/*! \brief Sets the UV offsets
+	 *
+	 * \param (glm::vec2) uvOffsets - The uv offsets to set
+	 */
+	inline void SetUVOffset(const glm::vec2 &offsets) { this->uvOffset = offsets; }
+
 	const Material & operator=(const Material &m);
-	~Material();
+	virtual ~Material();
 };
 
 #endif // !MESH_H_

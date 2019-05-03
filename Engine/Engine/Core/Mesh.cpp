@@ -128,13 +128,22 @@ void Mesh::Render(const Transform &trans, const CameraSystem* cam, boost::shared
 	glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "camPos"), 1, &cam->position[0]);
 	material->GetDiffuseTexture()->bind(0);
 	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "diffuse"), 0);
-	material->GetNormalTexture()->bind(1);
-	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "normal"), 1);
-	material->GetSpecularTexture()->bind(2);
-	glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "specular"), 2);
+
+	if (material->GetNormalTexture() != nullptr) {
+		material->GetNormalTexture()->bind(1);
+		glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "normal"), 1);
+	}
+
+	if (material->GetSpecularTexture() != nullptr) {
+		material->GetSpecularTexture()->bind(2);
+		glUniform1i(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "specular"), 2);
+	}
+
+	glUniform2fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "scaleSize"), 1, &material->GetUVSize()[0]);
+	glUniform2fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), "offset"), 1, &material->GetUVOffset()[0]);
 
 	boost::container::string str;
-	for(u32 i = 0; i < lights.size(); i++)
+	for (u32 i = 0; i < lights.size(); i++)
 	{
 		str = "lights[";
 		str += boost::lexical_cast<boost::container::string>(i);
@@ -145,7 +154,7 @@ void Mesh::Render(const Transform &trans, const CameraSystem* cam, boost::shared
 		glUniform1f(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".intensity").c_str()), lights[i].intensity);
 		glUniform3fv(glGetUniformLocation(material->GetShaderProgram()->GetProgram(), boost::container::string(str + ".dir").c_str()), 1, &lights[i].dir[0]);
 	}
-
+	
 	glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
 	for (u32 i = 0; i < this->subMeshData->GetIndAmountCount(); i++) {
 		glDrawElements(
@@ -154,9 +163,14 @@ void Mesh::Render(const Transform &trans, const CameraSystem* cam, boost::shared
 			GL_UNSIGNED_INT,
 			(const void*)(this->subMeshData->GetIndOffsets()[i] * sizeof(u32)));
 	}
+
 	material->GetDiffuseTexture()->unbind(0);
-	material->GetNormalTexture()->unbind(1);
-	material->GetSpecularTexture()->unbind(2);
+
+	if (material->GetNormalTexture() != nullptr)
+		material->GetNormalTexture()->unbind(1);
+
+	if (material->GetSpecularTexture() != nullptr)
+		material->GetSpecularTexture()->unbind(2);
 }
 
 /*! \brief Cleans up a mesh

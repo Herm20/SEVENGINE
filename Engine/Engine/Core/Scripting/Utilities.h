@@ -27,6 +27,34 @@ inline void lua_swap(lua_State* state)
 	lua_replace(state, -2);
 }
 
+inline boost::container::string SCRIPT_UTIL_GetString(lua_State* state, int loc)
+{
+	if (!lua_istable(state, loc)) { return boost::container::string(""); }
+
+	lua_pushnumber(state, 1);
+	lua_gettable(state, loc > 0 ? loc : loc - 1);
+
+	boost::container::string name = lua_isstring(state, -1) ? lua_tostring(state, -1) : boost::container::string("");
+
+	lua_pop(state, 1);
+
+	return name;
+}
+
+inline const char* SCRIPT_UTIL_GetCharString(lua_State* state, int loc)
+{
+	if (!lua_istable(state, loc)) { return ""; }
+
+	lua_pushnumber(state, 1);
+	lua_gettable(state, loc > 0 ? loc : loc - 1);
+
+	const char* name = lua_isstring(state, -1) ? lua_tostring(state, -1) : "";
+
+	lua_pop(state, 1);
+
+	return name;
+}
+
 inline glm::vec3 SCRIPT_UTIL_GetVector(lua_State* state, int loc)
 {
 	if (!lua_istable(state, loc)) { return glm::vec3(); }
