@@ -51,9 +51,9 @@ void SpriteSheetSystem::updateEntity(float dt, ecs::Entity entity)
 			ss.ss.currFrame++;
 		}
 
-		if (ss.ss.currFrame > anim.endFrame)
+		if (ss.ss.currFrame > anim.endFrame || ss.ss.currFrame < anim.startFrame)
 		{
-			ss.ss.currFrame = anim.startFrame ;
+			ss.ss.currFrame = anim.startFrame;
 		}
 
 		ss.currFrameTime -= anim.animRate;

@@ -39,40 +39,40 @@ local playerprefab = {
 		texture = "NewspiderSheet",
         animations = {
             idle = {
-                rate = 0.25,
+                rate = 0.0333,
                 startframe = 10,
                 endframe = 19,
                 loops = true
             },
             walk = {
-                rate = 0.15,
+                rate = 0.0333,
                 startframe = 20,
                 endframe = 31,
                 loops = true
             },
             jump = {
-                rate = 0.15,
+                rate = 0.0333,
                 startframe = 32,
                 endframe = 46,
-                loops = true
+                loops = false
             },
             punch = {
-                rate = 0.25,
+                rate = 0.0333,
                 startframe = 47,
                 endframe = 52,
-                loops = true
+                loops = false
             },
             uppercut = {
-                rate = 0.15,
+                rate = 0.0333,
                 startframe = 53,
                 endframe = 60,
-                loops = true
+                loops = false
             },
             kick = {
-                rate = 0.15,
+                rate = 0.0333,
                 startframe = 60,
                 endframe = 64,
-                loops = true
+                loops = false
             }
         },
         animkey = "idle"

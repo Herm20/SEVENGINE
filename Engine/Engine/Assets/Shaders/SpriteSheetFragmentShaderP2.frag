@@ -14,7 +14,7 @@ out vec4 fragColor;
 
 void main()
 {
-	vec2 uv = (vec2(-fsIn.uv.x, fsIn.uv.y) * scaleSize) + offset;
+	vec2 uv = (vec2(1-fsIn.uv.x, fsIn.uv.y) * scaleSize) + offset;
 
 	vec4 color = texture(diffuse, uv);
 
