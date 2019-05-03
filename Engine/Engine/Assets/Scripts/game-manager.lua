@@ -75,7 +75,7 @@ local player1prefab = {
                 loops = true
             }
         },
-        animkey = "punch"
+        animkey = "uppercut"
 	}
 }
 
@@ -103,42 +103,42 @@ local player2prefab = {
         animations = {
             idle = {
                 rate = 0.25,
-                startframe = 10,
+                startframe = 11,
                 endframe = 19,
                 loops = true
             },
             walk = {
                 rate = 0.15,
-                startframe = 20,
+                startframe = 21,
                 endframe = 31,
                 loops = true
             },
             jump = {
                 rate = 0.15,
-                startframe = 32,
-                endframe = 46,
+                startframe = 33,
+                endframe = 47,
                 loops = true
             },
             punch = {
                 rate = 0.25,
-                startframe = 47,
-                endframe = 52,
+                startframe = 48,
+                endframe = 53,
                 loops = true
             },
             uppercut = {
                 rate = 0.15,
-                startframe = 53,
-                endframe = 60,
+                startframe = 54,
+                endframe = 61,
                 loops = true
             },
             kick = {
                 rate = 0.15,
-                startframe = 60,
-                endframe = 64,
+                startframe = 62,
+                endframe = 65,
                 loops = true
             }
         },
-        animkey = "idle"
+        animkey = "kick"
 	}
 }
 
