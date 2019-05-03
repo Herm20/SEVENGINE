@@ -121,6 +121,8 @@ end
 
 function onmessage(self, message, data)
 	print("Script #" .. tostring(self.scriptid) .. " received message : " .. message)
-	self.health = self.health - 10
-	self.health = math.max(0, self.health)
+	if message == "oncollisionhurtbox" then
+		self.health = self.health - 10
+		self.health = math.max(0, self.health)
+	end
 end
