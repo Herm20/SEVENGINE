@@ -9,7 +9,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include "../ECS/System.h"
-#include "InputPoller.h"
+#include "../InputPoller.h"
 
 class CameraSystem
 {

@@ -8,6 +8,7 @@ namespace ecs
 	const ComponentType KeyboardInputComponent::_mType;
 	const ComponentType RigidBodyComponent::_mType;
 	const ComponentType PlayerStateInfoComponent::_mType;
+	const ComponentType ColliderComponent::_mType;
 	const ComponentType LightComponent::_mType;
 	const ComponentType ScriptComponent::_mType;
 	const ComponentType SpriteSheetComponent::_mType;
