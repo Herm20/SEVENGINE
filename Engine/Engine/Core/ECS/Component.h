@@ -15,12 +15,14 @@
 #include <glm/glm.hpp>
 #include <boost/container/string.hpp>
 #include <map>
+#include <vector>
 #include <string>
 
 #include "ComponentType.h"
 #include <glm/glm.hpp>
 #include "../Transform.h"
 #include "../Mesh.h"
+#include "../ComboManager.h"
 #include "../Material.h"
 #include "../Light.h"
 #include "../Types.h"
@@ -49,6 +51,7 @@ namespace ecs {
 		void SetKey(std::string key, int value) {
 			map[key] = value;
 		}
+		ComboManager* comboManager;
 	};
 
 	struct RigidBodyComponent : public Component {
@@ -77,11 +80,12 @@ namespace ecs {
 		static const ecs::ComponentType _mType = 6;
 		ColliderType type;
 		ColliderShape shape;
-		vec3 size = vec3(1, 1, 1);
-		vec3 position;
-		mat3 rotation;
+		Transform transform;
+		glm::vec3 offset = glm::vec3(0, 0, 0);
+		glm::vec3 scale = glm::vec3(1, 1, 1);
 		bool active = false;
 		bool isColliding = false;
+		std::map<ecs::Entity, bool> collisions;
 	};
 
 	struct LightComponent : public Component {

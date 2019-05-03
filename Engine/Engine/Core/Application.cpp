@@ -29,6 +29,8 @@ void Application::Init()
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
 
+	assetMan->CreateMaterial("redNoSpecular", assetMan->GetTexture("red"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
+
 	renderer->Init(assetMan);
 
 	eventMan = new EventManager();
@@ -68,7 +70,7 @@ void Application::Init()
 	// Systems will run in the order they are added
 	manager.addSystem(ecs::System::Ptr(new PlayerControllerSystem(manager)));
 	manager.addSystem(ecs::System::Ptr(new RigidBodySystem(manager)));
-	manager.addSystem(ecs::System::Ptr(new CollisionSystem(manager)));
+	manager.addSystem(ecs::System::Ptr(new CollisionSystem(manager, scriptSystem)));
 	manager.addSystem(ecs::System::Ptr(lightSystem));
 	manager.addSystem(ecs::System::Ptr(renderer));
 	manager.addSystem(ecs::System::Ptr(scriptSystem));
@@ -81,8 +83,6 @@ void Application::Init()
 
 	scriptComp2.path = boost::container::string("Assets/Scripts/game-manager.lua");
 	manager.registerEntity(gm);
-
-	reloadHeld = false;
 
 }
 
@@ -101,23 +101,24 @@ void Application::Run()
 	// Game loop
 	while (!glfwWindowShouldClose(renderer->GetWindow()) && !Input::GetKey(GLFW_KEY_ESCAPE))
 	{
+
 		Timer::update();
 
 		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
-		cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
+		//cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
 		
 		EventManager::ExecuteNext();
 
-		if (Input::GetKey(GLFW_KEY_P))
+		if (Input::GetKeyDown(GLFW_KEY_P))
 		{
-			if (!reloadHeld) { scriptSystem->ReloadScripts(); }
-			reloadHeld = true;
+			scriptSystem->ReloadScripts();
 		}
-		else { reloadHeld = false; }
 
 		manager.updateEntities(Timer::GetDeltaTime());
 
+		Input::UpdateKeyStates();// call this after all the inputs have been processed
 		glfwPollEvents();
+
 	}
 }
 

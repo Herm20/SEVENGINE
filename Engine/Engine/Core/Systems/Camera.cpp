@@ -14,7 +14,7 @@ CameraSystem::~CameraSystem()
 
 void CameraSystem::Init(GLFWwindow* window)
 {
-	position = { 0,0,5 };
+	position = { 0,1,5 };
 	rotation = { 0,0,0 };
 	velocity = { 0,0,0 };
 	inputPoller.Init(window);

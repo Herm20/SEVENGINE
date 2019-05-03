@@ -20,6 +20,34 @@ extern "C" {
 
 		return 1;
 	}
+
+	int SCRIPT_Input_GetKeyDown(lua_State* state)
+	{
+		// Get the input
+		if (!lua_isnumber(state, 1))
+		{
+			lua_pushboolean(state, false);
+			return 1;
+		}
+
+		lua_pushboolean(state, Input::GetKeyDown(lua_tonumber(state, 1)));
+
+		return 1;
+	}
+
+	int SCRIPT_Input_GetKeyUp(lua_State* state)
+	{
+		// Get the input
+		if (!lua_isnumber(state, 1))
+		{
+			lua_pushboolean(state, false);
+			return 1;
+		}
+
+		lua_pushboolean(state, Input::GetKeyUp(lua_tonumber(state, 1)));
+
+		return 1;
+	}
 }
 
 inline void SCRIPT_Input_CreateKeys(lua_State* state)
@@ -181,6 +209,10 @@ inline void SCRIPT_BIND_Input(lua_State* state)
 	// Push the functions and add them to the library table
 	lua_pushcfunction(state, SCRIPT_Input_GetKey);
 	lua_setfield(state, -2, "getkey");
+	lua_pushcfunction(state, SCRIPT_Input_GetKeyDown);
+	lua_setfield(state, -2, "getkeydown");
+	lua_pushcfunction(state, SCRIPT_Input_GetKeyUp);
+	lua_setfield(state, -2, "getkeyup");
 
 	// Pop the library table back off the stack
 	lua_pop(state, 1);
