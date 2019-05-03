@@ -103,6 +103,12 @@ extern "C" {
 		SCRIPT_system->SCRIPT_Animation_SetKey(SCRIPT_UTIL_GetString(state, 1));
 		return 0;
 	}
+
+	int SCRIPT_Audio_PlayEffect(lua_State* state)
+	{
+		SCRIPT_system->SCRIPT_Audio_PlayEffect(SCRIPT_UTIL_GetCharString(state, 1));
+		return 0;
+	}
 }
 
 void ScriptSystem::SCRIPT_Entity_GetPosition()
@@ -201,6 +207,12 @@ void ScriptSystem::SCRIPT_Animation_SetKey(boost::container::string key)
 	ss.currentAnimationId = key;
 }
 
+void ScriptSystem::SCRIPT_Audio_PlayEffect(const char* file)
+{
+	AudioManager::LoadEffectFile(file);
+	AudioManager::PlayEffect();
+}
+
 inline void SCRIPT_BIND_EntityTransform(lua_State* state)
 {
 	// Create the entity library table and put it on the stack
@@ -241,6 +253,8 @@ inline void SCRIPT_BIND_EntityTransform(lua_State* state)
 	lua_setfield(state, -2, "scaleadd");
 	lua_pushcfunction(state, SCRIPT_Animation_SetKey);
 	lua_setfield(state, -2, "setanimkey");
+	lua_pushcfunction(state, SCRIPT_Audio_PlayEffect);
+	lua_setfield(state, -2, "playeffect");
 
 	// Pop the library table back off the stack
 	lua_pop(state, 1);

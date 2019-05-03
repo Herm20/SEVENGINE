@@ -50,7 +50,7 @@ void Application::Init()
 	inputPoller.Init(renderer->GetWindow());
 
 	AudioManager::InitSoundBG();
-	AudioManager::LoadBGFile("Assets/Audio/Background/gameMusic.mp3");
+	AudioManager::LoadBGFile("Assets/Audio/Background/upbeat.wav");
 	AudioManager::Play();
 	AudioManager::SetVolume(0.08f);
 
