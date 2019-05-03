@@ -18,6 +18,13 @@
 		radius,
 		intensity = { 0, 0, 0 },
 	},
+	collider = {
+		type = "hitbox",
+		shape = "cube",
+		size = { 1, 1, 1 },
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 })
+	},
 	script = {
 		path = "Assets/Scripts/orbiter.lua"
 	}

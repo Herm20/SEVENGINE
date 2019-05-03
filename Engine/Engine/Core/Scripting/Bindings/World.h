@@ -142,6 +142,37 @@ void SCRIPT_World_SpawnEntity_ScriptComponent(lua_State* state, ecs::ScriptCompo
 	}
 }
 
+void SCRIPT_World_SpawnEntity_ColliderComponent(lua_State* state, ecs::ColliderComponent& comp)
+{
+	lua_pushnil(state);
+	while (lua_next(state, -2))
+	{
+		boost::container::string ckey(lua_tostring(state, -2));
+
+		if (ckey == boost::container::string("type"))
+		{
+			const char* val = lua_tostring(state, -1);
+			if (val[1] == 'i') { comp.type = ecs::ColliderType::Hitbox; }
+			else if (val[1] == 'u') { comp.type = ecs::ColliderType::Hurtbox; }
+			else if (val[1] == 'r') { comp.type = ecs::ColliderType::Grabbox; }
+		}
+		else if (ckey == boost::container::string("shape"))
+		{
+			const char* val = lua_tostring(state, -1);
+			if (val[0] == 'c') { comp.shape = ecs::ColliderShape::Cube; }
+			else if (val[0] == 's') { comp.shape = ecs::ColliderShape::Sphere; }
+		}
+		else if (ckey == boost::container::string("offset")) {
+			comp.offset = SCRIPT_UTIL_GetVector(state, -1);
+		}
+		else if (ckey == boost::container::string("scale")) {
+			comp.scale = SCRIPT_UTIL_GetVector(state, -1);
+		}
+
+		lua_pop(state, 1);
+	}
+}
+
 void ScriptSystem::SCRIPT_World_SpawnEntity()
 {
 	ecs::Entity spawned = manager.createEntity();
@@ -170,6 +201,11 @@ void ScriptSystem::SCRIPT_World_SpawnEntity()
 		{
 			manager.addComponent(spawned, ecs::LightComponent());
 			SCRIPT_World_SpawnEntity_LightComponent(state, manager.getComponentStore<ecs::LightComponent>().get(spawned));
+		}
+		else if (ekey == boost::container::string("collider"))
+		{
+			manager.addComponent(spawned, ecs::ColliderComponent());
+			SCRIPT_World_SpawnEntity_ColliderComponent(state, manager.getComponentStore<ecs::ColliderComponent>().get(spawned));
 		}
 		else if (ekey == boost::container::string("script"))
 		{

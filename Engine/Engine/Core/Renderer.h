@@ -30,11 +30,16 @@ private:
 	boost::container::vector<Light> lights;
 
 	// Collider rendering
+	bool renderColliders = false;
 	boost::shared_ptr<Mesh> cubeMesh;
 	boost::shared_ptr<Texture> colliderTextureRed;
 	boost::shared_ptr<Texture> colliderTextureGreen;
+	boost::shared_ptr<Texture> colliderTextureBlue;
+	boost::shared_ptr<Texture> colliderTextureGray;
 	boost::shared_ptr<Material> colliderMatRed;
 	boost::shared_ptr<Material> colliderMatGreen;
+	boost::shared_ptr<Material> colliderMatBlue;
+	boost::shared_ptr<Material> colliderMatGray;
 
 public:
 	explicit Renderer(ecs::Manager& manager);

@@ -43,8 +43,6 @@ public:
 	AudioManager* masterBG;
 	AudioManager* masterEffect;
 
-	bool reloadHeld;
-
 	// Initialize core engine systems and resources
 	void Init();
 

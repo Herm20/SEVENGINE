@@ -1,3 +1,6 @@
+
+GRAVITY = -30
+
 local lightprefab = {
 	transform = {
 		position = { 0, 0, 0 },
@@ -32,11 +35,64 @@ local orbiterprefab = {
 		scale    = { 1, 1, 1 }
 	},
 	meshrenderer = {
-		mesh = "box",
+		mesh = "sword",
 		material = "test"
 	},
 	script = {
 		path = "Assets/Scripts/orbiter.lua"
+	},
+	collider = {
+		type = "hitbox",
+		shape = "cube",
+		scale = { 0.8, 5.4, 0.1 },
+		offset = { 0, 1.5, 0 }
+	}
+}
+
+local playerprefab = {
+	transform = {
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 1, 1, 1 }
+	},
+	meshrenderer = {
+		mesh = "sphere",
+		material = "test"
+	},
+	script = {
+		path = "Assets/Scripts/player.lua"
+	},
+	collider = {
+		type = "hurtbox",
+		shape = "cube",
+		offset = { 0, 0, 0 }
+	}
+}
+
+local healthbarprefab = {
+	transform = {
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 1, 1, 1 }
+	},
+	meshrenderer = {
+		mesh = "quad",
+		material = "redNoSpecular"
+	},
+	script = {
+		path = "Assets/Scripts/healthbar.lua"
+	}
+}
+
+local stageprefab = {
+	transform = {
+		position = { 0, -0.5, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 5, 5, 5 }
+	},
+	meshrenderer = {
+		mesh = "stage",
+		material = "test"
 	}
 }
 
@@ -44,8 +100,23 @@ function init(self)
 	print("Hello World")
 	
 	world.spawnentity(lightprefab)
-	world.spawnentity(swordprefab)
-	world.spawnentity(orbiterprefab)
+
+	world.spawnentity(playerprefab)
+	world.spawnentity(playerprefab)
+
+	world.spawnentity(healthbarprefab)
+	world.spawnentity(healthbarprefab)
+
+	world.spawnentity(stageprefab)
+
+	--
+	--for i, v in pairs(scripts) do
+	--	if v.entityid == eid then
+	--		sid = i
+	--	end
+	--end
+	--
+
 end
 
 function update(self, dt)
