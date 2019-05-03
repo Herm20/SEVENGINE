@@ -75,6 +75,7 @@
     <ClInclude Include="Core\Renderer.h" />
     <ClInclude Include="Core\Scripting\BindingBase.h" />
     <ClInclude Include="Core\Scripting\Bindings.h" />
+    <ClInclude Include="Core\Scripting\Bindings\Camera.h" />
     <ClInclude Include="Core\Scripting\Bindings\EntityTransform.h" />
     <ClInclude Include="Core\Scripting\Bindings\Input.h" />
     <ClInclude Include="Core\Scripting\Bindings\Math.h" />

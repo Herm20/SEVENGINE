@@ -218,6 +218,9 @@
     <ClInclude Include="Core\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Scripting\Bindings\Camera.h">
+      <Filter>Header Files\ECS\Scripting\Bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

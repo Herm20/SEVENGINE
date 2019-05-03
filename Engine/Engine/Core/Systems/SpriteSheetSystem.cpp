@@ -29,7 +29,7 @@ void SpriteSheetSystem::updateEntity(float dt, ecs::Entity entity)
 
 	ss.currFrameTime += Timer::GetDeltaTime();
 
-	Animation anim = ss.animations["idle"];
+	Animation anim = ss.animations["jump"];
 
 	if (!ss.frameSet)
 	{
@@ -43,13 +43,15 @@ void SpriteSheetSystem::updateEntity(float dt, ecs::Entity entity)
 		{
 			ss.ss.currFrame++;
 		}
-		printf("%i ", ss.ss.currFrame);
-		ss.currFrameTime -= anim.animRate;
+		//printf("%i ", ss.ss.currFrame);
 
 		if (ss.ss.currFrame > anim.endFrame)
 		{
-			ss.ss.currFrame = anim.startFrame;
+			ss.ss.currFrame = anim.startFrame ;
+			printf("start Frame: %i", anim.startFrame);
 		}
+
+		ss.currFrameTime -= anim.animRate;
 	}
 
 	mesh.material->SetUVOffset(ss.ss.offsets[ss.ss.currFrame]);

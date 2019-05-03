@@ -25,7 +25,27 @@ local swordprefab = {
 	},
 	spritesheet = {
 		size = { 175, 175, 0 },
-		texture = "spiderSheet"
+		texture = "NewspiderSheet",
+        animations = {
+            idle = {
+                rate = 0.25,
+                startframe = 10,
+                endframe = 19,
+                loops = true
+            },
+            walk = {
+                rate = 0.15,
+                startframe = 20,
+                endframe = 31,
+                loops = true
+            },
+            jump = {
+                rate = 0.15,
+                startframe = 32,
+                endframe = 44,
+                loops = true
+            }
+        }
 	}
 }
 
@@ -50,9 +70,14 @@ function init(self)
 	world.spawnentity(lightprefab)
 	world.spawnentity(swordprefab)
 	--world.spawnentity(orbiterprefab)
+    
+    self.tt = 0
 end
 
 function update(self, dt)
+    self.tt = self.tt + dt
+    
+    camera.setposition({ 0, self.tt, 5 })
 end
 
 function onmessage(self, message, data)

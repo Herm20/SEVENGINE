@@ -31,6 +31,10 @@ public:
 	glm::vec3 GetPosition();
 	glm::vec3 GetVelocity();
 
+	inline void SetPosition(glm::vec3 newpos) { position = newpos; }
+	inline void SetRotation(glm::vec3 newrot) { rotation = newrot; }
+	inline void SetVelocity(glm::vec3 newvel) { velocity = newvel; }
+
 private:
 	// Variable for view matrix
 	float fieldOfView;

@@ -14,13 +14,17 @@ void SpriteSheet::Generate(glm::uvec2 cellSize, boost::shared_ptr<Texture> diff)
 
 	scaleSize = glm::vec2(cellSize) / wh;
 
-	for (int i = 0; i <= totalFrames_h; i++)
+	for (int i = totalFrames_h; i >= 0; i--)
 	{
 		for (int j = 0; j <= totalFrames_w; j++)
 		{
-			offsets.push_back((glm::vec2(j, i) * glm::vec2(cellSize)) / wh);
+			if (j != totalFrames_w) 
+			{
+				offsets.push_back((glm::vec2(j, i) * glm::vec2(cellSize)) / wh);
+			}
 		}
 	}
+
 }
 
 SpriteSheet::~SpriteSheet()

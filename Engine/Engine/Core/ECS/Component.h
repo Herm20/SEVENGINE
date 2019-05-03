@@ -103,6 +103,10 @@ namespace ecs {
 		bool frameSet = false;
 		std::map<boost::container::string, Animation> animations;
 	};
+
+	struct CameraComponent : public Component {
+		
+	};
 }
 
 #endif

@@ -27,7 +27,7 @@ void Application::Init()
 	assetMan->LoadAssetsFromAssetDir();
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("spiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
+	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
 
 	renderer->Init(assetMan);
 
@@ -35,11 +35,12 @@ void Application::Init()
 
 	lightSystem = new LightSystem(manager);
 	lightSystem->SetLightsVector(&renderer->GetLightVector());
-	scriptSystem = new ScriptSystem(manager, assetMan);
-	scriptSystem->Init();
 
 	cameraSystem = new CameraSystem(manager);
 	cameraSystem->Init(renderer->GetWindow());
+
+	scriptSystem = new ScriptSystem(manager, assetMan, cameraSystem);
+	scriptSystem->Init();
 
 	renderer->SetCurrentCamera(cameraSystem);
 

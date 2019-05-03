@@ -3,6 +3,7 @@
 
 #include "../Types.h"
 #include "../ECS/System.h"
+#include "Camera.h"
 #include "../ECS/Component.h"
 
 #include <boost/container/string.hpp>
@@ -22,8 +23,9 @@ private:
 
 public:
 	ecs::Entity currentEntity;
+	CameraSystem* cam;
 
-	ScriptSystem(ecs::Manager& manager, AssetManager* assetManager);
+	ScriptSystem(ecs::Manager& manager, AssetManager* assetManager, CameraSystem* cams);
 	~ScriptSystem();
 
 	void Init();
