@@ -116,11 +116,12 @@ function init(self)
 
 	playerprefab.meshrenderer.material = "spritesheetp1"
 	playerprefab.spritesheet.animkey = "uppercut"
-	world.spawnentity(playerprefab)
+	local player1id = world.spawnentity(playerprefab)
 
 	playerprefab.meshrenderer.material = "spritesheetp2"
 	playerprefab.spritesheet.animkey = "kick"
 	world.spawnentity(playerprefab)
+	local player2id = world.spawnentity(playerprefab)
 
 	world.spawnentity(healthbarprefab)
 	world.spawnentity(healthbarprefab)
