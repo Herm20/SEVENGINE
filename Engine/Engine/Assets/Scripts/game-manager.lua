@@ -80,8 +80,8 @@ local playerprefab = {
 		scale    = { 1, 1, 1 }
 	},
 	meshrenderer = {
-		mesh = "sphere",
-		material = "test"
+		mesh = "quad",
+		material = "spritesheet"
 	},
 	script = {
 		path = "Assets/Scripts/player.lua"
@@ -90,6 +90,30 @@ local playerprefab = {
 		type = "hurtbox",
 		shape = "cube",
 		offset = { 0, 0, 0 }
+	},
+	spritesheet = {
+		size = { 175, 175, 0 },
+		texture = "NewspiderSheet",
+        animations = {
+            idle = {
+                rate = 0.25,
+                startframe = 10,
+                endframe = 19,
+                loops = true
+            },
+            walk = {
+                rate = 0.15,
+                startframe = 20,
+                endframe = 31,
+                loops = true
+            },
+            jump = {
+                rate = 0.15,
+                startframe = 32,
+                endframe = 44,
+                loops = true
+            }
+        }
 	}
 }
 

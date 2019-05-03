@@ -25,10 +25,10 @@ function init(self)
 		entity.setposition({ -2, 0, 0 })
 		self.facingright = true
 		self.keybinds = {
-			left = "j",
-			right = "l",
-			jump = "i",
-			punch = "period"
+			left = "a",
+			right = "d",
+			jump = "w",
+			punch = "t"
 		}
 	else
 		print("Creating Player 2")
@@ -38,7 +38,8 @@ function init(self)
 		self.keybinds = {
 			left = "left",
 			right = "right",
-			jump = "up"
+			jump = "up",
+			punch = "period"
 		}
 	end
 
