@@ -44,9 +44,8 @@ local orbiterprefab = {
 	collider = {
 		type = "hitbox",
 		shape = "cube",
-		size = { 1, 1, 1 },
-		position = { 0, 0, 0 },
-		rotation = math.eulerangles({ 0, 0, 0 })
+		scale = { 0.8, 5.4, 0.1 },
+		offset = { 0, 1.5, 0 }
 	}
 }
 
@@ -66,9 +65,7 @@ local playerprefab = {
 	collider = {
 		type = "hurtbox",
 		shape = "cube",
-		size = { 1, 1, 1 },
-		position = { 0, 0, 0 },
-		rotation = math.eulerangles({ 0, 0, 0 })
+		offset = { 0, 0, 0 }
 	}
 }
 
@@ -84,20 +81,42 @@ local healthbarprefab = {
 	},
 	script = {
 		path = "Assets/Scripts/healthbar.lua"
+	}
+}
+
+local stageprefab = {
+	transform = {
+		position = { 0, -0.5, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 5, 5, 5 }
 	},
+	meshrenderer = {
+		mesh = "stage",
+		material = "test"
+	}
 }
 
 function init(self)
 	print("Hello World")
 	
 	world.spawnentity(lightprefab)
-	world.spawnentity(orbiterprefab)
 
 	world.spawnentity(playerprefab)
 	world.spawnentity(playerprefab)
 
 	world.spawnentity(healthbarprefab)
 	world.spawnentity(healthbarprefab)
+
+	world.spawnentity(stageprefab)
+
+	--
+	--for i, v in pairs(scripts) do
+	--	if v.entityid == eid then
+	--		sid = i
+	--	end
+	--end
+	--
+
 end
 
 function update(self, dt)

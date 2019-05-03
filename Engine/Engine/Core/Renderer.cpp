@@ -125,7 +125,7 @@ void Renderer::updateEntity(float dt, ecs::Entity entity) {
 				colliderMat = colliderMatBlue;
 			}
 			cubeMesh->Render(
-				transform.transform,
+				collider.transform,
 				curCamera,
 				colliderMat,
 				lights,

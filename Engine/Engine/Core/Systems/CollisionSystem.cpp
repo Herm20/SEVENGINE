@@ -5,9 +5,9 @@
 
 using namespace glm;
 
-inline vec3 e(const ecs::ColliderComponent& coll) { return coll.size; }
-inline vec3 c(const ecs::ColliderComponent& coll) { return coll.position; }
-inline mat3 u(const ecs::ColliderComponent& coll) { return coll.rotation; };
+inline vec3 e(const ecs::ColliderComponent& coll) { return coll.transform.GetScale(); }
+inline vec3 c(const ecs::ColliderComponent& coll) { return coll.transform.GetPosition(); }
+inline mat3 u(const ecs::ColliderComponent& coll) { return glm::toMat3(coll.transform.GetRotation()); }
 
 bool TestAxis(vec3 L, vec3 cA, vec3 cB, vec3 rA, vec3 rB) {
 	return abs(dot(L, (cA - cB))) > abs(dot(L, rA)) + abs(dot(L, rB));
@@ -78,8 +78,9 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 	ecs::ColliderComponent& collider = manager.getComponentStore<ecs::ColliderComponent>().get(entity);
 	ecs::TransformComponent& transform = manager.getComponentStore<ecs::TransformComponent>().get(entity);
 
-	collider.position = transform.transform.GetPosition();
-	collider.rotation = toMat3(transform.transform.GetRotation());
+	collider.transform = transform.transform;
+	collider.transform.TranslateLocal(collider.offset);
+	collider.transform.ScaleMul(collider.scale);
 	collider.active = true;
 	collider.isColliding = false;
 
@@ -94,7 +95,10 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 
 			// If first frame of collision
 			if (colliding && !collider.collisions[otherEntity] && ecs::ColliderType::Hurtbox == collider.type) {
-				scriptSystem->SendMessage(entity, 3, "oncollisionhurtbox", "");
+				if (manager.getComponentStore<ecs::ScriptComponent>().has(entity)) {
+					u64 scriptId = manager.getComponentStore<ecs::ScriptComponent>().get(entity).id;
+					scriptSystem->SendMessage(entity, scriptId, "oncollisionhurtbox", "");
+				}
 			}
 			collider.collisions[otherEntity] = colliding;
 

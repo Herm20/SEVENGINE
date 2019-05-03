@@ -79,9 +79,9 @@ namespace ecs {
 		static const ecs::ComponentType _mType = 6;
 		ColliderType type;
 		ColliderShape shape;
-		vec3 size = vec3(1, 1, 1);
-		vec3 position;
-		mat3 rotation;
+		Transform transform;
+		glm::vec3 offset = glm::vec3(0, 0, 0);
+		glm::vec3 scale = glm::vec3(1, 1, 1);
 		bool active = false;
 		bool isColliding = false;
 		std::map<ecs::Entity, bool> collisions;

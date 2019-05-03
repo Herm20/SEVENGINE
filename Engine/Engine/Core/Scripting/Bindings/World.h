@@ -162,12 +162,12 @@ void SCRIPT_World_SpawnEntity_ColliderComponent(lua_State* state, ecs::ColliderC
 			if (val[0] == 'c') { comp.shape = ecs::ColliderShape::Cube; }
 			else if (val[0] == 's') { comp.shape = ecs::ColliderShape::Sphere; }
 		}
-		else if (ckey == boost::container::string("size"))
-			comp.size = SCRIPT_UTIL_GetVector(state, -1);
-		else if (ckey == boost::container::string("position"))
-			comp.position = SCRIPT_UTIL_GetVector(state, -1);
-		else if (ckey == boost::container::string("rotation"))
-			comp.rotation = glm::toMat3(SCRIPT_UTIL_GetQuaternion(state, -1));
+		else if (ckey == boost::container::string("offset")) {
+			comp.offset = SCRIPT_UTIL_GetVector(state, -1);
+		}
+		else if (ckey == boost::container::string("scale")) {
+			comp.scale = SCRIPT_UTIL_GetVector(state, -1);
+		}
 
 		lua_pop(state, 1);
 	}
