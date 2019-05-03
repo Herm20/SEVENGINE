@@ -9,7 +9,25 @@ local punchprefab = {
 		type = "hitbox",
 		shape = "cube",
 		scale = { 0.2, 0.2, 0.1 },
-		offset = { 1.5, 0, 0 }
+		offset = { 0.82, -0.2, 0 }
+	},
+	meshrenderer = {
+		mesh = "none",
+		material = "test"
+	}
+}
+
+local uppercutprefab = {
+	transform = {
+		position = { 0, 0, 0 },
+		rotation = math.eulerangles({ 0, 0, 0 }),
+		scale    = { 1, 1, 1 }
+	},
+	collider = {
+		type = "hitbox",
+		shape = "cube",
+		scale = { 0.2, 0.4, 0.1 },
+		offset = { 0.82, 0, 0 }
 	},
 	meshrenderer = {
 		mesh = "none",
@@ -54,6 +72,7 @@ function init(self)
 	self.health = self.maxhealth
 	self.tt = 0
 
+	self.attackstringcount = 0
 	self.hitboxlifetime = 0
 	self.hitboxid = -1
 
@@ -92,6 +111,7 @@ function update(self, dt)
 		entity.setposition({ pos[1], 0, pos[3] })
 		self.yVel = 0
 		if self.state == "JUMP" then
+			self.attackstringcount = 0
             entity.setanimkey({"idle"});
 			self.state = "GROUND"
 		end
@@ -106,13 +126,35 @@ function update(self, dt)
 		facingright = (self.position[1] < player1.position[1])
 	end
 
-	-- Punching
+	-- Attacking
 	if self.state == "ATTACK" then
 		self.hitboxlifetime = self.hitboxlifetime - dt
 		if self.hitboxlifetime < 0  and not (self.hitboxid == -1) then
 			world.destroyentity(self.hitboxid)
-			self.state = "GROUND"
+			if self.attackstringcount == 2 then
+				entity.setanimkey({"uppercut"});
+				uppercutprefab.transform.position = self.position
+				if not facingright then
+					uppercutprefab.collider.offset[1] = -math.abs(uppercutprefab.collider.offset[1])
+				else
+					uppercutprefab.collider.offset[1] = math.abs(uppercutprefab.collider.offset[1])
+				end
+				self.hitboxid = world.spawnentity(uppercutprefab)
+				self.hitboxlifetime = 0.2
+				self.attackstringcount = 3
+			else
+				self.state = "GROUND"
+			end
 		end
+	end
+
+	if (self.state == "JUMP" and not (self.attackstringcount == 4) and input.getkeydown(input.keys[self.keybinds.punch])) then
+		self.attackstringcount = 4
+		entity.setanimkey({"kick"})
+	end
+
+	if (self.state == "ATTACK" and self.attackstringcount == 1 and input.getkeydown(input.keys[self.keybinds.punch])) then
+		self.attackstringcount = 2
 	end
 
 	if (not (self.state == "JUMP")) and (not (self.state == "ATTACK")) and input.getkeydown(input.keys[self.keybinds.punch]) then
@@ -126,6 +168,7 @@ function update(self, dt)
 		end
 		self.hitboxid = world.spawnentity(punchprefab)
 		self.hitboxlifetime = 0.2
+		self.attackstringcount = 1
 	end
 
 	if self == player then

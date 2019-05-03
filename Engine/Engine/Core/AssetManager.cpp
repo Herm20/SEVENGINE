@@ -451,6 +451,14 @@ void AssetManager::LoadAssetsFromAssetDir()
 		shaderPrograms["spritesheetp2"]->Link();
 	}
 
+	if (shaderPrograms.find("rawcolor") == shaderPrograms.end())
+	{
+		shaderPrograms["rawcolor"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["rawcolor"]->AttachShader(GetShader("RawColorVertexShader").get());
+		shaderPrograms["rawcolor"]->AttachShader(GetShader("RawColorFragmentShader").get());
+		shaderPrograms["rawcolor"]->Link();
+	}
+
 }
 
 /*! \brief Asset loader destructor

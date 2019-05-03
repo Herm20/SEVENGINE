@@ -32,7 +32,8 @@ local playerprefab = {
 	collider = {
 		type = "hurtbox",
 		shape = "cube",
-		offset = { 0, 0, 0 }
+		offset = { 0.1, -0.3, 0 },
+		scale = { 0.5, 0.5, 0.5 }
 	},
 	spritesheet = {
 		size = { 175, 175, 0 },
