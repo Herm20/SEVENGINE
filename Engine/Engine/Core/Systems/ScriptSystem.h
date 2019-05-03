@@ -59,6 +59,7 @@ public:
 	void SCRIPT_Entity_RotateLocal(glm::quat quat);
 	void SCRIPT_Entity_Scale(glm::vec3 vec);
 	void SCRIPT_Entity_ScaleAdd(glm::vec3 vec);
+	void SCRIPT_Animation_SetKey(boost::container::string key);
 };
 
 #endif

@@ -17,6 +17,13 @@ SpriteSheetSystem::~SpriteSheetSystem()
 
 }
 
+void SpriteSheetSystem::SetAnimKey(boost::container::string key, ecs::Entity entity)
+{
+	ecs::SpriteSheetComponent & ss = manager.getComponentStore<ecs::SpriteSheetComponent>().get(entity);
+
+	ss.currentAnimationId = key;
+}
+
 void SpriteSheetSystem::startFrame(float dt)
 {
 	
@@ -29,7 +36,7 @@ void SpriteSheetSystem::updateEntity(float dt, ecs::Entity entity)
 
 	ss.currFrameTime += Timer::GetDeltaTime();
 
-	Animation anim = ss.animations["jump"];
+	Animation anim = ss.animations[ss.currentAnimationId];
 
 	if (!ss.frameSet)
 	{
@@ -43,12 +50,10 @@ void SpriteSheetSystem::updateEntity(float dt, ecs::Entity entity)
 		{
 			ss.ss.currFrame++;
 		}
-		//printf("%i ", ss.ss.currFrame);
 
 		if (ss.ss.currFrame > anim.endFrame)
 		{
 			ss.ss.currFrame = anim.startFrame ;
-			printf("start Frame: %i", anim.startFrame);
 		}
 
 		ss.currFrameTime -= anim.animRate;

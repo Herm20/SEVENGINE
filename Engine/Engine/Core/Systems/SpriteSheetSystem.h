@@ -13,6 +13,7 @@ class SpriteSheetSystem : public ecs::System
 public:
 	explicit SpriteSheetSystem(ecs::Manager& manager);
 	~SpriteSheetSystem();
+	void SetAnimKey(boost::container::string key, ecs::Entity entity);
 	virtual void startFrame(float dt) override;
 	virtual void updateEntity(float dt, ecs::Entity entity) override;
 	virtual void endFrame(float dt) override;

@@ -102,7 +102,7 @@ namespace ecs {
 	struct SpriteSheetComponent : public Component {
 		static const ecs::ComponentType _mType = 9;
 		SpriteSheet ss;
-		boost::container::string currentAnimationId;
+		boost::container::string currentAnimationId = "idle";
 		float currFrameTime;
 		bool frameSet = false;
 		std::map<boost::container::string, Animation> animations;

@@ -16,63 +16,6 @@ local lightprefab = {
 	}
 }
 
-local swordprefab = {
-	transform = {
-		position = { 0, 0, 0 },
-		rotation = math.eulerangles({ 0, 0, 0 }),
-		scale    = { 1, 1, 1 }
-	},
-	meshrenderer = {
-		mesh = "quad",
-		material = "spritesheet"
-	},
-	spritesheet = {
-		size = { 175, 175, 0 },
-		texture = "NewspiderSheet",
-        animations = {
-            idle = {
-                rate = 0.25,
-                startframe = 10,
-                endframe = 19,
-                loops = true
-            },
-            walk = {
-                rate = 0.15,
-                startframe = 20,
-                endframe = 31,
-                loops = true
-            },
-            jump = {
-                rate = 0.15,
-                startframe = 32,
-                endframe = 44,
-                loops = true
-            }
-        }
-	}
-}
-
-local orbiterprefab = {
-	transform = {
-		position = { 0, 0, 0 },
-		rotation = math.eulerangles({ 0, 0, 0 }),
-		scale    = { 1, 1, 1 }
-	},
-	meshrenderer = {
-		mesh = "sword",
-		material = "test"
-	},
-	script = {
-		path = "Assets/Scripts/orbiter.lua"
-	},
-	collider = {
-		type = "hitbox",
-		shape = "cube",
-		scale = { 0.8, 5.4, 0.1 },
-		offset = { 0, 1.5, 0 }
-	}
-}
-
 local playerprefab = {
 	transform = {
 		position = { 0, 0, 0 },
@@ -110,10 +53,29 @@ local playerprefab = {
             jump = {
                 rate = 0.15,
                 startframe = 32,
-                endframe = 44,
+                endframe = 46,
+                loops = true
+            },
+            punch = {
+                rate = 0.25,
+                startframe = 47,
+                endframe = 52,
+                loops = true
+            },
+            uppercut = {
+                rate = 0.15,
+                startframe = 53,
+                endframe = 60,
+                loops = true
+            },
+            kick = {
+                rate = 0.15,
+                startframe = 60,
+                endframe = 64,
                 loops = true
             }
-        }
+        },
+        animkey = "punch"
 	}
 }
 
@@ -148,7 +110,6 @@ function init(self)
 	print("Hello World")
 	
 	world.spawnentity(lightprefab)
-	world.spawnentity(swordprefab)
     
     self.tt = 0
 

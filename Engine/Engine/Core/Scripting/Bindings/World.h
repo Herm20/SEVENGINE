@@ -172,12 +172,22 @@ void SCRIPT_World_SpawnEntity_SpriteSheetComponent_Animations(lua_State* state, 
 	}
 }
 
+void SCRIPT_Animation_SetKey(lua_State* state, boost::container::string key, ecs::SpriteSheetComponent& comp)
+{
+	lua_pushnil(state);
+
+	comp.currentAnimationId = key;
+
+	lua_pop(state, 1);
+}
+
 void SCRIPT_World_SpawnEntity_SpriteSheetComponent(lua_State* state, AssetManager* assetMan, ecs::SpriteSheetComponent& comp)
 {
 	lua_pushnil(state);
 
 	glm::vec3 size;
 	boost::container::string texName;
+	boost::container::string animKey;
 
 	while (lua_next(state, -2))
 	{
@@ -189,6 +199,11 @@ void SCRIPT_World_SpawnEntity_SpriteSheetComponent(lua_State* state, AssetManage
 			texName = boost::container::string(lua_tostring(state, -1));
 		else if (ckey == boost::container::string("animations"))
 			SCRIPT_World_SpawnEntity_SpriteSheetComponent_Animations(state, comp);
+		else if (ckey == boost::container::string("animkey"))
+		{
+			animKey = boost::container::string(lua_tostring(state, -1));
+			SCRIPT_Animation_SetKey(state, animKey, comp);
+		}
 
 		lua_pop(state, 1);
 	}
