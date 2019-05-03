@@ -60,6 +60,7 @@ public:
 	void SCRIPT_Entity_Scale(glm::vec3 vec);
 	void SCRIPT_Entity_ScaleAdd(glm::vec3 vec);
 	void SCRIPT_Animation_SetKey(boost::container::string key);
+	void SCRIPT_Audio_PlayEffect(const char* file);
 };
 
 #endif
