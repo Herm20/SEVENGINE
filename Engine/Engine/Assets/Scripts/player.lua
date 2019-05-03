@@ -9,12 +9,12 @@ local punchprefab = {
 		type = "hitbox",
 		shape = "cube",
 		scale = { 0.2, 0.2, 0.1 },
-		offset = { 1.2, 0, 0 }
+		offset = { 1.5, 0, 0 }
 	},
-	meshrenderer = {
-		mesh = "quad",
-		material = "test"
-	}
+	--meshrenderer = {
+	--	mesh = "quad",
+	--	material = "test"
+	--}
 }
 
 function init(self)

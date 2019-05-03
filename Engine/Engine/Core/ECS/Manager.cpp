@@ -68,6 +68,10 @@ namespace ecs{
 		}
 		auto entityComponents = (*entity).second;
 
+		getComponentStore<ecs::ColliderComponent>().remove(_entity);
+		getComponentStore<ecs::TransformComponent>().remove(_entity);
+		getComponentStore<ecs::MeshRendererComponent>().remove(_entity);
+
 		for (auto system = systems.begin(); system != systems.end(); system++) {
 			associatedSystemsCount += (*system)->unregisterEntity(_entity);
 		}

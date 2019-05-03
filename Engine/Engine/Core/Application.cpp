@@ -101,7 +101,7 @@ void Application::Run()
 		Timer::update();
 
 		cameraSystem->Update(renderer->GetWindowWidth(), renderer->GetWindowHeight());
-		cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
+		//cameraSystem->Movement(renderer->GetWindow(),renderer->GetWindowWidth(), renderer->GetWindowHeight());
 		
 		EventManager::ExecuteNext();
 
