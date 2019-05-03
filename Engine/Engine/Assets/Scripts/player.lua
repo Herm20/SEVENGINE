@@ -113,7 +113,7 @@ function update(self, dt)
 	if (not (self.state == "JUMP")) and (not (self.state == "ATTACK")) and input.getkeydown(input.keys[self.keybinds.punch]) then
 		self.state = "ATTACK"
         animkey = "punch"
-       -- entity.setanimkey("punch");
+       	entity.setanimkey({"punch"});
 		punchprefab.transform.position = self.position
 		if not facingright then
 			punchprefab.collider.offset[1] = -math.abs(punchprefab.collider.offset[1])

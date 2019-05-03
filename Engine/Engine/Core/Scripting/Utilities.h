@@ -29,12 +29,12 @@ inline void lua_swap(lua_State* state)
 
 inline boost::container::string SCRIPT_UTIL_GetString(lua_State* state, int loc)
 {
-	if (!lua_istable(state, loc)) { return ""; }
+	if (!lua_istable(state, loc)) { return boost::container::string(""); }
 
 	lua_pushnumber(state, 1);
 	lua_gettable(state, loc > 0 ? loc : loc - 1);
 
-	boost::container::string name = lua_isstring(state, -1) ? lua_tostring(state, -1) : "";
+	boost::container::string name = lua_isstring(state, -1) ? lua_tostring(state, -1) : boost::container::string("");
 
 	lua_pop(state, 1);
 
