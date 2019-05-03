@@ -103,7 +103,7 @@ local stageprefab = {
 	},
 	meshrenderer = {
 		mesh = "stage",
-		material = "test"
+		material = "stage"
 	}
 }
 

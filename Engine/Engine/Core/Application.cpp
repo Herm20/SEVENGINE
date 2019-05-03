@@ -29,7 +29,7 @@ void Application::Init()
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("spritesheetp1", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheetp1"));
 	assetMan->CreateMaterial("spritesheetp2", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheetp2"));
-
+	assetMan->CreateMaterial("stage", assetMan->GetTexture("Stage_Texture"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("redNoSpecular", assetMan->GetTexture("red"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
 
 	renderer->Init(assetMan);

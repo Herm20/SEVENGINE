@@ -103,6 +103,7 @@ function update(self, dt)
 		self.yVel = self.jumpHeight
 		self.state = "JUMP"
         entity.setanimkey({"jump"});
+        entity.playeffect({"Assets/Audio/Effects/jump.mp3"});
 	end
 	self.yVel = self.yVel + GRAVITY * dt
 
@@ -133,6 +134,7 @@ function update(self, dt)
 			world.destroyentity(self.hitboxid)
 			if self.attackstringcount == 2 then
 				entity.setanimkey({"uppercut"});
+                entity.playeffect({"Assets/Audio/Effects/uppercut.mp3"});
 				uppercutprefab.transform.position = self.position
 				if not facingright then
 					uppercutprefab.collider.offset[1] = -math.abs(uppercutprefab.collider.offset[1])
@@ -151,6 +153,7 @@ function update(self, dt)
 	if (self.state == "JUMP" and not (self.attackstringcount == 4) and input.getkeydown(input.keys[self.keybinds.punch])) then
 		self.attackstringcount = 4
 		entity.setanimkey({"kick"})
+        entity.playeffect({"Assets/Audio/Effects/kick.mp3"});
 	end
 
 	if (self.state == "ATTACK" and self.attackstringcount == 1 and input.getkeydown(input.keys[self.keybinds.punch])) then
@@ -160,6 +163,7 @@ function update(self, dt)
 	if (not (self.state == "JUMP")) and (not (self.state == "ATTACK")) and input.getkeydown(input.keys[self.keybinds.punch]) then
 		self.state = "ATTACK"
        	entity.setanimkey({"punch"});
+        entity.playeffect({"Assets/Audio/Effects/punch.mp3"});
 		punchprefab.transform.position = self.position
 		if not facingright then
 			punchprefab.collider.offset[1] = -math.abs(punchprefab.collider.offset[1])
