@@ -84,25 +84,29 @@ void CollisionSystem::updateEntity(float dt, ecs::Entity entity) {
 	collider.active = true;
 	collider.isColliding = false;
 
-	for (auto it = allColliders.begin(); it != allColliders.end(); it++) {
-		
-		ecs::Entity otherEntity = it->first;
-		if (otherEntity != entity) {
+	if (ecs::ColliderType::Hurtbox == collider.type) {
 
-			ecs::ColliderComponent otherCollider = it->second;
-			if (!otherCollider.active) return;
-			bool colliding = CollidesOBBvOBB(collider, otherCollider);
+		for (auto it = allColliders.begin(); it != allColliders.end(); it++) {
 
-			// If first frame of collision
-			if (colliding && !collider.collisions[otherEntity] && ecs::ColliderType::Hurtbox == collider.type) {
-				if (manager.getComponentStore<ecs::ScriptComponent>().has(entity)) {
-					u64 scriptId = manager.getComponentStore<ecs::ScriptComponent>().get(entity).id;
-					scriptSystem->SendMessage(entity, scriptId, "oncollisionhurtbox", "");
+			ecs::Entity otherEntity = it->first;
+			if (otherEntity != entity) {
+
+				ecs::ColliderComponent otherCollider = it->second;
+				if (!otherCollider.active || ecs::ColliderType::Hitbox != otherCollider.type) continue;
+				bool colliding = CollidesOBBvOBB(collider, otherCollider);
+
+				// If first frame of collision
+				if (colliding && !collider.collisions[otherEntity]) {
+					if (manager.getComponentStore<ecs::ScriptComponent>().has(entity)) {
+						u64 scriptId = manager.getComponentStore<ecs::ScriptComponent>().get(entity).id;
+						scriptSystem->SendMessage(entity, scriptId, "oncollisionhurtbox", "");
+					}
 				}
-			}
-			collider.collisions[otherEntity] = colliding;
+				collider.collisions[otherEntity] = colliding;
 
-			if (colliding) collider.isColliding = true;
+				if (colliding) collider.isColliding = true;
+
+			}
 
 		}
 

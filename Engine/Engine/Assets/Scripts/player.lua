@@ -9,10 +9,10 @@ local punchprefab = {
 		type = "hitbox",
 		shape = "cube",
 		scale = { 0.2, 0.2, 0.1 },
-		offset = { 1.2, 0, 0 }
+		offset = { 1.5, 0, 0 }
 	},
 	meshrenderer = {
-		mesh = "quad",
+		mesh = "none",
 		material = "test"
 	}
 }
@@ -23,6 +23,7 @@ function init(self)
 		print("Creating Player 1")
 		player1 = self
 		entity.setposition({ -2, 0, 0 })
+		self.facingright = true
 		self.keybinds = {
 			left = "j",
 			right = "l",
@@ -33,6 +34,7 @@ function init(self)
 		print("Creating Player 2")
 		player2 = self
 		entity.setposition({ 2, 0, 0 })
+		self.facingright = false
 		self.keybinds = {
 			left = "left",
 			right = "right",
@@ -88,6 +90,11 @@ function update(self, dt)
 
 	-- Update position for use by other scripts
 	self.position = entity.getposition()
+	if player1 == self then
+		facingright = (self.position[1] < player2.position[1])
+	else
+		facingright = (self.position[1] < player1.position[1])
+	end
 
 	-- Punching
 	if self.state == "ATTACK" then
@@ -101,6 +108,11 @@ function update(self, dt)
 	if (not (self.state == "JUMP")) and (not (self.state == "ATTACK")) and input.getkeydown(input.keys[self.keybinds.punch]) then
 		self.state = "ATTACK"
 		punchprefab.transform.position = self.position
+		if not facingright then
+			punchprefab.collider.offset[1] = -math.abs(punchprefab.collider.offset[1])
+		else
+			punchprefab.collider.offset[1] = math.abs(punchprefab.collider.offset[1])
+		end
 		self.hitboxid = world.spawnentity(punchprefab)
 		self.hitboxlifetime = 0.05
 	end
@@ -109,6 +121,8 @@ end
 
 function onmessage(self, message, data)
 	print("Script #" .. tostring(self.scriptid) .. " received message : " .. message)
-	self.health = self.health - 10
-	self.health = math.max(0, self.health)
+	if message == "oncollisionhurtbox" then
+		self.health = self.health - 10
+		self.health = math.max(0, self.health)
+	end
 end
