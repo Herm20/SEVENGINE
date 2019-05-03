@@ -27,7 +27,8 @@ void Application::Init()
 	assetMan->LoadAssetsFromAssetDir();
 	assetMan->CreateMaterial("default", assetMan->GetTexture("defaultAlbedo"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
 	assetMan->CreateMaterial("test", assetMan->GetTexture("test"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("def"));
-	assetMan->CreateMaterial("spritesheet", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheet"));
+	assetMan->CreateMaterial("spritesheetp1", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheetp1"));
+	assetMan->CreateMaterial("spritesheetp2", assetMan->GetTexture("NewspiderSheet"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("defaultSpecular"), assetMan->GetShaderProgram("spritesheetp2"));
 
 	assetMan->CreateMaterial("redNoSpecular", assetMan->GetTexture("red"), assetMan->GetTexture("defaultNormal"), assetMan->GetTexture("black"), assetMan->GetShaderProgram("def"));
 
@@ -130,7 +131,6 @@ void Application::Exit()
 	delete assetMan;
 }
 
-/// SUPER TEMP
 void Application::CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jumpKey) {
 
 	ecs::Entity player = manager.createEntity();
@@ -150,5 +150,4 @@ void Application::CreatePlayer(glm::vec3 pos, int leftKey, int rightKey, int jum
 	keyboardInput.map["MoveLeft"] = leftKey;
 	keyboardInput.map["MoveRight"] = rightKey;
 	manager.registerEntity(player);
-
 }

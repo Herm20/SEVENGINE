@@ -435,12 +435,20 @@ void AssetManager::LoadAssetsFromAssetDir()
 		shaderPrograms["def"]->Link();
 	}
 
-	if (shaderPrograms.find("spritesheet") == shaderPrograms.end())
+	if (shaderPrograms.find("spritesheetp1") == shaderPrograms.end())
 	{
-		shaderPrograms["spritesheet"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
-		shaderPrograms["spritesheet"]->AttachShader(GetShader("SpriteSheetVertexShader").get());
-		shaderPrograms["spritesheet"]->AttachShader(GetShader("SpriteSheetFragmentShader").get());
-		shaderPrograms["spritesheet"]->Link();
+		shaderPrograms["spritesheetp1"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["spritesheetp1"]->AttachShader(GetShader("SpriteSheetVertexShader").get());
+		shaderPrograms["spritesheetp1"]->AttachShader(GetShader("SpriteSheetFragmentShader").get());
+		shaderPrograms["spritesheetp1"]->Link();
+	}
+
+	if (shaderPrograms.find("spritesheetp2") == shaderPrograms.end())
+	{
+		shaderPrograms["spritesheetp2"] = boost::shared_ptr<ShaderProgram>(new ShaderProgram());
+		shaderPrograms["spritesheetp2"]->AttachShader(GetShader("SpriteSheetVertexShaderP2").get());
+		shaderPrograms["spritesheetp2"]->AttachShader(GetShader("SpriteSheetFragmentShaderP2").get());
+		shaderPrograms["spritesheetp2"]->Link();
 	}
 
 }

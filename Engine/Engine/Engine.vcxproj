@@ -101,7 +101,9 @@
   <ItemGroup>
     <None Include="Assets\Shaders\FragmentShader.frag" />
     <None Include="Assets\Shaders\SpriteSheetFragmentShader.frag" />
+    <None Include="Assets\Shaders\SpriteSheetFragmentShaderP2.frag" />
     <None Include="Assets\Shaders\SpriteSheetVertexShader.vert" />
+    <None Include="Assets\Shaders\SpriteSheetVertexShaderP2.vert" />
     <None Include="Assets\Shaders\VertexShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

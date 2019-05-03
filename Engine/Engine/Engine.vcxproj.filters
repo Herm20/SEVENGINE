@@ -264,5 +264,11 @@
     <None Include="Assets\Shaders\VertexShader.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Assets\Shaders\SpriteSheetFragmentShaderP2.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Assets\Shaders\SpriteSheetVertexShaderP2.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
