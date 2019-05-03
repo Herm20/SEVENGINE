@@ -182,5 +182,8 @@ function onmessage(self, message, data)
 	if message == "oncollisionhurtbox" then
 		self.health = self.health - 10
 		self.health = math.max(0, self.health)
+		if self.health <= 0 then
+			world.destroyentity(self.worldid)
+		end
 	end
 end
